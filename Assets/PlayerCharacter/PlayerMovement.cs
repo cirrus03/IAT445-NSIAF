@@ -45,9 +45,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isGrounded() && moveAction.ReadValue<Vector2>().x == 0) {
             body.linearVelocity *= drag;
-            Debug.Log(moveAction.ReadValue<Vector2>().x);
+            // Debug.Log(moveAction.ReadValue<Vector2>().x);
         }
-        Debug.Log(body.linearVelocityX);
+        // Debug.Log(body.linearVelocityX);
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -79,10 +79,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if(Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
         {   
-            Debug.Log("grounded");
+            // Debug.Log("grounded");
             return true;
         }
-        Debug.Log("not grounded");
+        // Debug.Log("not grounded");
         return false;
     }
 
