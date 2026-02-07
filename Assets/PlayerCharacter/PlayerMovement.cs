@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,9 +27,14 @@ public class PlayerMovement : MonoBehaviour
     InputAction moveAction;
     InputAction jumpAction;
 
+    //flipping code stuff
+    public bool isFacingRight = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        body = GetComponent<Rigidbody2D>();
+        
         moveAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
     }
@@ -53,6 +59,15 @@ public class PlayerMovement : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         xMovement = context.ReadValue<Vector2>().x;
+
+        if (xMovement > 0 && isFacingRight)
+        {
+            FlipSprite();
+        }
+        else if (xMovement < 0 && !isFacingRight)
+        {
+            FlipSprite();
+        }
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -73,6 +88,16 @@ public class PlayerMovement : MonoBehaviour
         
         
 
+    }
+
+    //flipping sprite functions
+    private void FlipSprite()
+    {
+        isFacingRight = !isFacingRight;
+
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 
     private bool isGrounded()
@@ -104,4 +129,5 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.color = Color.white;
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
     }
+
 }
