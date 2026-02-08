@@ -1,133 +1,248 @@
-using System;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody2D body;
-    [Header("Movement")]
+    [Header("References")]
+    public Rigidbody2D rb;
+    public Animator animator;
+    bool isFacingRight = true;
+
+    [Header("MovementSpeed")]
     public float moveSpeed = 5f;
-    float xMovement;
-    public float drag = 0.9f;
+    float horizontalMovement;
 
     [Header("Jumping")]
     public float jumpPower = 10f;
+    public int maxJumps = 2;
+    int jumpsRemaining;
 
-    [Header("Ground checking")]
+    [Header("GroundCheck")]
     public Transform groundCheckPos;
-    public Vector2 groundCheckSize = new Vector2(0.05f, 0.05f);
+    public Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
     public LayerMask groundLayer;
+    bool isGrounded;
+
+    [Header("WallCheck")]
+    public Transform wallCheckPos;
+    public Vector2 wallCheckSize = new Vector2(0.5f, 0.05f);
+    public LayerMask wallLayer;
 
     [Header("Gravity")]
-    public float baseGravity = 2f;
-    public float maxFallSpeed= 18f;
-    public float fallSpeedMultiplier = 2f;
+    public float baseGravity = 3f;
+    public float maxFallSpeed = 25f;
+    public float fallSpeedMultiplier = 1.5f;
 
-    InputAction moveAction;
-    InputAction jumpAction;
+    [Header("WallMovement")]
+    public float wallSlideSpeed = 3;
+    bool isWallSliding;
 
-    //flipping code stuff
-    public bool isFacingRight = true;
+    [Header("Wall Jump")]
+    bool isWallJumping;
+    float wallJumpDirection;
+    private float wallJumpTimer;
+    public float wallJumpTime = 0.05f; // how long the wall jump window stays open
+    public Vector2 wallJumpPower = new Vector2(5f, 10f); // x pushes away from wall
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Ability Toggles (so we can use these as unlocks as abilities)")]
+    public bool canDoubleJump = false;
+    public bool canWallSlide = false;
+    public bool canWallJump = false;
+
     void Start()
     {
-        body = GetComponent<Rigidbody2D>();
-        
-        moveAction = InputSystem.actions.FindAction("Move");
-        jumpAction = InputSystem.actions.FindAction("Jump");
+        ResetJumps();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // body.linearVelocity = moveAction.ReadValue<Vector2>();
-        body.linearVelocity = new Vector2(xMovement*moveSpeed, body.linearVelocityY);
-        HandleGravity();
-    }
+        
+        GroundCheck();
+        ProcessGravity();
+        ProcessWallSlide();
+        ProcessWallJump();
+        
 
-    void FixedUpdate()
-    {
-        if(isGrounded() && moveAction.ReadValue<Vector2>().x == 0) {
-            body.linearVelocity *= drag;
-            // Debug.Log(moveAction.ReadValue<Vector2>().x);
+        if (!isWallJumping)
+        {
+            rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
+            Flip();
         }
-        // Debug.Log(body.linearVelocityX);
+        animator.SetFloat("yVelocity", rb.linearVelocity.y);
+        animator.SetFloat("magnitude", rb.linearVelocity.magnitude);
+        // animator.SetBool("isWallSliding", isWallSliding);
     }
 
     public void Move(InputAction.CallbackContext context)
     {
-        xMovement = context.ReadValue<Vector2>().x;
-
-        if (xMovement > 0 && isFacingRight)
-        {
-            FlipSprite();
-        }
-        else if (xMovement < 0 && !isFacingRight)
-        {
-            FlipSprite();
-        }
+        horizontalMovement = context.ReadValue<Vector2>().x;
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if(isGrounded())
+        
+        if (jumpsRemaining > 0)
         {
             if (context.performed)
-        {
-            body.linearVelocity = new Vector2(body.linearVelocityX, jumpPower);
-
-        } else if (context.canceled)
-        {
-            body.linearVelocity = new Vector2(body.linearVelocityX, body.linearVelocityY*0.5f);
-            // Debug.Log(body.linearVelocity);
+            {
+                // hold down jump for full height
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
+                jumpsRemaining--;
+                animator.SetTrigger("Jump"); //mine is uppercase so it upper case :')
+            }
+            else if (context.canceled && rb.linearVelocity.y > 0)
+            {
+                // light tap of jump for short jump (half height)
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
+                jumpsRemaining--;
+                animator.SetTrigger("Jump");
+            }
         }
+        // wall jump
+        if (context.performed && canWallJump && wallJumpTimer > 0f)
+        {
+            isWallJumping = true;
+            rb.linearVelocity = new Vector2(wallJumpDirection * wallJumpPower.x, wallJumpPower.y);//jump away from wall
+            wallJumpTimer = 0;
+            animator.SetTrigger("Jump");
+
+            ResetJumps();
+
+            // force flip
+            if (transform.localScale.x != wallJumpDirection)
+            {
+                isFacingRight = !isFacingRight;
+                Vector3 ls = transform.localScale;
+                ls.x *= -1f;
+                transform.localScale = ls;
+            }
+
+            Invoke(nameof(CancelWallJump), wallJumpTime + 0.1f);
+            return;
         }
-
-        
-        
-
     }
 
-    //flipping sprite functions
-    private void FlipSprite()
+    private void GroundCheck()
     {
-        isFacingRight = !isFacingRight;
-
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-    }
-
-    private bool isGrounded()
-    {
-        if(Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
-        {   
-            // Debug.Log("grounded");
-            return true;
+        if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
+        {
+            isGrounded = true;
+            ResetJumps();
         }
-        // Debug.Log("not grounded");
-        return false;
-    }
-
-    private void HandleGravity()
-    {
-        if(body.linearVelocityY < 0)
+        else
         {
-            body.gravityScale = baseGravity*fallSpeedMultiplier;
-            body.linearVelocity = new Vector2(body.linearVelocityX, Mathf.Max(body.linearVelocityY, -maxFallSpeed));
-        } else
-        {
-            body.gravityScale = baseGravity;
+            isGrounded = false;
         }
     }
 
+    private bool WallCheck()
+    {
+        return Physics2D.OverlapBox(wallCheckPos.position, wallCheckSize, 0, wallLayer);
+    }
 
-    private void OnDrawGizmosSelected()
+    private void ProcessGravity()
+    {
+        if (rb.linearVelocity.y < 0)
+        {
+            rb.gravityScale = baseGravity * fallSpeedMultiplier;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -maxFallSpeed));
+        }
+        else
+        {
+            rb.gravityScale = baseGravity;
+        }
+    }
+
+    private void ProcessWallSlide()
+    {
+        if (!canWallSlide)//gating it for later
+        {
+            isWallSliding = false;
+            return;
+        }
+
+        // not grounded + on a wall + moving
+        if (!isGrounded & WallCheck() & horizontalMovement != 0)
+        {
+            isWallSliding = true;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -wallSlideSpeed));
+        }
+        else
+        {
+            isWallSliding = false;
+        }
+    }
+
+    private void ProcessWallJump()
+    {
+        if (!canWallJump)//gating for later (toggle)
+        {
+            wallJumpTimer = 0f;
+            return;
+        }
+
+        if (isWallSliding)
+        {
+            isWallJumping = false;
+            wallJumpDirection = -Mathf.Sign(horizontalMovement); // push away from the wall
+            wallJumpTimer = wallJumpTime;
+
+            CancelInvoke(nameof(CancelWallJump));
+        }
+        else if (wallJumpTimer > 0f)
+        {
+            wallJumpTimer -= Time.deltaTime;
+        }
+    }
+
+    private void CancelWallJump()
+    {
+        isWallJumping = false;
+    }
+
+    private void Flip()
+    {
+        if (isFacingRight && horizontalMovement < 0 || !isFacingRight && horizontalMovement > 0)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 ls = transform.localScale;
+            ls.x *= -1f;
+            transform.localScale = ls;
+        }
+    }
+
+    private void ResetJumps()
+    {
+        jumpsRemaining = canDoubleJump ? maxJumps :1;
+    }
+
+    //gizmos
+    public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(wallCheckPos.position, wallCheckSize);
+    }
+
+    //toggles for later
+
+    public void SetDoubleJumpUnlocked(bool unlocked)
+    {
+        canDoubleJump = unlocked;
+        ResetJumps();
+    }
+
+    public void SetWallSlideUnlocked(bool unlocked)
+    {
+        canWallSlide = unlocked;
+        if (!unlocked) isWallSliding = false;
+    }
+
+    public void SetWallJumpUnlocked(bool unlocked)
+    {
+        canWallJump = unlocked;
+        if (!unlocked) wallJumpTimer = 0f;
     }
 
 }
