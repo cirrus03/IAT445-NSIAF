@@ -800,7 +800,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 15.970134
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1096,7 +1096,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 34
-    OrthographicSize: 15.970134
+    OrthographicSize: 6
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -27433,7 +27433,7 @@ PrefabInstance:
       objectReference: {fileID: 1907187190}
     - target: {fileID: 4063543426544187080, guid: b285131241618034f948e789d920df3a, type: 3}
       propertyPath: jumpPower
-      value: 15
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4063543426544187080, guid: b285131241618034f948e789d920df3a, type: 3}
       propertyPath: moveSpeed
@@ -27453,7 +27453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4063543426544187080, guid: b285131241618034f948e789d920df3a, type: 3}
       propertyPath: maxFallSpeed
-      value: 20
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 4063543426544187080, guid: b285131241618034f948e789d920df3a, type: 3}
       propertyPath: wallCheckPos
@@ -27468,6 +27468,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4063543426544187080, guid: b285131241618034f948e789d920df3a, type: 3}
+      propertyPath: wallSlideSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4063543426544187080, guid: b285131241618034f948e789d920df3a, type: 3}
       propertyPath: wallCheckSize.x
       value: 0.09
       objectReference: {fileID: 0}
@@ -27477,11 +27481,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4063543426544187080, guid: b285131241618034f948e789d920df3a, type: 3}
       propertyPath: wallJumpPower.x
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4063543426544187080, guid: b285131241618034f948e789d920df3a, type: 3}
       propertyPath: wallJumpPower.y
-      value: 15
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4063543426544187080, guid: b285131241618034f948e789d920df3a, type: 3}
       propertyPath: wallLayer.m_Bits
@@ -27494,6 +27498,10 @@ PrefabInstance:
     - target: {fileID: 4063543426544187080, guid: b285131241618034f948e789d920df3a, type: 3}
       propertyPath: groundCheckSize.y
       value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 4063543426544187080, guid: b285131241618034f948e789d920df3a, type: 3}
+      propertyPath: fallSpeedMultiplier
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5188092536422014926, guid: b285131241618034f948e789d920df3a, type: 3}
       propertyPath: m_LocalPosition.x
