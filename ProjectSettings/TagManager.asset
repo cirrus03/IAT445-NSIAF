@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - NPC
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Walls
   - Water
   - UI
   - Ground
@@ -41,6 +42,15 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1411179053
+    locked: 0
+  - name: Player
+    uniqueID: 717467037
+    locked: 0
+  - name: Foreground
+    uniqueID: 3239680005
     locked: 0
   m_RenderingLayers:
   - Default
