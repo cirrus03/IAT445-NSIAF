@@ -14,12 +14,12 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (npcInRange)
+        if (npcInRange && !DialogueManager.GetInstance().dialogueIsPlaying)
         {
             visualCue.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.I))
+            if (InputManager.GetInstance().GetInteractPressed())
             {
-                Debug.Log(inkJSON.text);
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
             }
         } else
         {

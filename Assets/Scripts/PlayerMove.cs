@@ -8,9 +8,12 @@ public class PlayerMove : MonoBehaviour
     private Vector2 movement;
     void Update()
     {
-       float input = Input.GetAxis("Horizontal");
-       movement.x = input * speed * Time.deltaTime;
-       transform.Translate(movement); 
+        if (DialogueManager.GetInstance().dialogueIsPlaying)
+            return;
+        Vector2 dir = InputManager.GetInstance().GetMoveDirection();
+        float input = dir.x;
+        movement.x = input * speed * Time.deltaTime;
+        transform.Translate(movement);
     }
 
 }
