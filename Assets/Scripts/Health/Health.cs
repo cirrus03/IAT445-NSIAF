@@ -20,6 +20,9 @@ public class Health : MonoBehaviour
     private Sprite originalSprite;
     private Coroutine flashRoutine;
 
+    bool isDying = false;
+
+
     private void Awake()
     {
         currentHealth = startingHealth;
@@ -46,35 +49,70 @@ public class Health : MonoBehaviour
         if (currentHealth <= 0)
         {
             Debug.Log($"{name} died");
-            Destroy(gameObject);
+
+            if (!CompareTag("Player"))
+            {
+                isDying = true;
+                StartCoroutine(DieRoutine());
+            }
         }
     }
 
+    IEnumerator DieRoutine()
+    {
+        // stop all movement
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Kinematic; // freezes physics movement
+        }
+
+        // disable enemy AI scripts (if theyre there)
+        var flying = GetComponent<EnemyFlying>();
+        if (flying != null) flying.enabled = false;
+
+        var jumper = GetComponent<EnemyJumper>();
+        if (jumper != null) jumper.enabled = false;
+
+        // disable damage hitbox script so it can't hurt player while dying
+        var dmg = GetComponentInChildren<EnemyDamage>();
+        if (dmg != null) dmg.enabled = false;
+
+        // show death flash
+        if (sr != null)
+        {
+            if (hurtSprite != null) sr.sprite = hurtSprite;
+            else sr.color = Color.red;
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
+    }
+
+
+
     IEnumerator FlashDamage()
     {
-        // if provided a red PNG sprite, swap to it.
-        // otherwise just red
+        if (sr == null) yield break;
+
         if (hurtSprite != null)
-        {
             sr.sprite = hurtSprite;
-        }
         else
-        {
             sr.color = Color.red;
-        }
 
         yield return new WaitForSeconds(flashDuration);
 
-        // Restore
-        if (hurtSprite != null)
+        // restores only when not dead
+        if (!isDying)
         {
-            sr.sprite = originalSprite;
-        }
-        else
-        {
-            sr.color = originalColor;
+            if (hurtSprite != null)
+                sr.sprite = originalSprite;
+            else
+                sr.color = originalColor;
         }
 
         flashRoutine = null;
     }
+
 }

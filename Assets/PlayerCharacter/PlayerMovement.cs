@@ -142,6 +142,11 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        if (isWallSliding) 
+        {
+            return;
+        }
+
         if (Time.time < lastAttackTime + attackCooldown) 
         {
             return;
@@ -153,12 +158,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetTrigger("Attack");
         }
-            
 
-        // flip hitbox
-        Vector3 scale = attackHitbox.transform.localScale;
-        scale.x = isFacingRight ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
-        attackHitbox.transform.localScale = scale;
 
         StartCoroutine(AttackRoutine());
     }
@@ -169,8 +169,6 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.1f); // active frames
         attackHitbox.SetActive(false);
     }
-
-
 
     private void GroundCheck()
     {
