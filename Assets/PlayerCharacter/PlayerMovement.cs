@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -43,6 +44,18 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpTimer;
     public float wallJumpTime = 0.05f; // how long the wall jump window stays open
     public Vector2 wallJumpPower = new Vector2(5f, 10f); // x pushes away from wall
+
+    [Header("Attack")]
+    public float attackDamage = 1f;
+    public float attackRange = 0.8f; // how far in front of player
+    public Vector2 attackBoxSize = new Vector2(0.9f, 0.6f);
+    public LayerMask enemyLayer;
+
+    public float attackCooldown = 0.2f;
+    private float lastAttackTime;
+    public GameObject attackHitbox;
+
+
 
     [Header("Ability Toggles (so we can use these as unlocks as abilities)")]
     public bool canDoubleJump = false;
@@ -121,6 +134,43 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
     }
+
+    public void Attack(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+
+        if (Time.time < lastAttackTime + attackCooldown) 
+        {
+            return;
+        }
+
+        lastAttackTime = Time.time;
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
+        }
+            
+
+        // flip hitbox
+        Vector3 scale = attackHitbox.transform.localScale;
+        scale.x = isFacingRight ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
+        attackHitbox.transform.localScale = scale;
+
+        StartCoroutine(AttackRoutine());
+    }
+
+    IEnumerator AttackRoutine()
+    {
+        attackHitbox.SetActive(true);
+        yield return new WaitForSeconds(0.1f); // active frames
+        attackHitbox.SetActive(false);
+    }
+
+
 
     private void GroundCheck()
     {
