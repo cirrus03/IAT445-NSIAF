@@ -1,0 +1,949 @@
+fileFormatVersion: 2
+guid: b09ed4923ff1fe94299a1a7272f5cdaf
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6512599272312046103
+    second: combee gif_0
+  - first:
+      213: 8491883360920544620
+    second: combee gif_1
+  - first:
+      213: -8587508920866118404
+    second: combee gif_2
+  - first:
+      213: 2058398657892102324
+    second: combee gif_3
+  - first:
+      213: -7202081611304216200
+    second: combee gif_4
+  - first:
+      213: -5230861641240271259
+    second: combee gif_5
+  - first:
+      213: 1345389073678460091
+    second: combee gif_6
+  - first:
+      213: -9066443179467608627
+    second: combee gif_7
+  - first:
+      213: 6801362320390908472
+    second: combee gif_8
+  - first:
+      213: 1484776951530929651
+    second: combee gif_9
+  - first:
+      213: 720069967033093238
+    second: combee gif_10
+  - first:
+      213: -6514202458193516710
+    second: combee gif_11
+  - first:
+      213: -4596434397005926935
+    second: combee gif_12
+  - first:
+      213: 2348446391339057003
+    second: combee gif_13
+  - first:
+      213: 4740223737526474882
+    second: combee gif_14
+  - first:
+      213: 5463902275473918346
+    second: combee gif_15
+  - first:
+      213: 5260519137824107079
+    second: combee gif_16
+  - first:
+      213: -4909108247967319613
+    second: combee gif_17
+  - first:
+      213: -5003983440112945356
+    second: combee gif_18
+  - first:
+      213: -9200997751752446222
+    second: combee gif_19
+  - first:
+      213: 1326534512739861294
+    second: combee gif_20
+  - first:
+      213: -8307502080278661976
+    second: combee gif_21
+  - first:
+      213: 5736326280746582866
+    second: combee gif_22
+  - first:
+      213: 4805442625252792255
+    second: combee gif_23
+  - first:
+      213: 4322568210602612213
+    second: combee gif_24
+  - first:
+      213: -2521460740632162183
+    second: combee gif_25
+  - first:
+      213: 725182883048502839
+    second: combee gif_26
+  - first:
+      213: -2163245933909578527
+    second: combee gif_27
+  - first:
+      213: 708048040407254883
+    second: combee gif_28
+  - first:
+      213: 9093952557478212973
+    second: combee gif_29
+  - first:
+      213: -936544094447453523
+    second: combee gif_30
+  - first:
+      213: -600580461004147804
+    second: combee gif_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: combee gif_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 792
+        width: 126
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71280ae6886616a50800000000000000
+      internalID: 6512599272312046103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_1
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 792
+        width: 124
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6528b1ccea39d570800000000000000
+      internalID: 8491883360920544620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_2
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 792
+        width: 126
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf4e642922a03d880800000000000000
+      internalID: -8587508920866118404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_3
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 792
+        width: 123
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b0bcc96ca6e09c10800000000000000
+      internalID: 2058398657892102324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_4
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 793
+        width: 124
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 879d6dacee01d0c90800000000000000
+      internalID: -7202081611304216200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_5
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 665
+        width: 127
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56628a43d0f3867b0800000000000000
+      internalID: -5230861641240271259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_6
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 669
+        width: 117
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb4eb4dfb38cba210800000000000000
+      internalID: 1345389073678460091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_7
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 669
+        width: 121
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcde19fd6f58d2280800000000000000
+      internalID: -9066443179467608627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_8
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 673
+        width: 121
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83a60a7cefa436e50800000000000000
+      internalID: 6801362320390908472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_9
+      rect:
+        serializedVersion: 2
+        x: 522
+        y: 673
+        width: 118
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fd30be45ccfa9410800000000000000
+      internalID: 1484776951530929651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_10
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 541
+        width: 123
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67c4f66e1d33ef900800000000000000
+      internalID: 720069967033093238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_11
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 541
+        width: 119
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a572664c067e895a0800000000000000
+      internalID: -6514202458193516710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_12
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 537
+        width: 125
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ed2315d44f2630c0800000000000000
+      internalID: -4596434397005926935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_13
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 537
+        width: 127
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6fffc1ec8b579020800000000000000
+      internalID: 2348446391339057003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_14
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 536
+        width: 118
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 288d32fdf58a8c140800000000000000
+      internalID: 4740223737526474882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_15
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 408
+        width: 124
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a894219ab2ea3db40800000000000000
+      internalID: 5463902275473918346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_16
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 408
+        width: 126
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74a6620d84e110940800000000000000
+      internalID: 5260519137824107079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_17
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 408
+        width: 124
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c9b7fbde085fdbb0800000000000000
+      internalID: -4909108247967319613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_18
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 408
+        width: 126
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 437712ec2974e8ab0800000000000000
+      internalID: -5003983440112945356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_19
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 408
+        width: 124
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fea0a33b4d7f4080800000000000000
+      internalID: -9200997751752446222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 281
+        width: 124
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e23c72e6c1cc86210800000000000000
+      internalID: 1326534512739861294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_21
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 281
+        width: 127
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a4fb2e7fd2d5bc80800000000000000
+      internalID: -8307502080278661976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_22
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 285
+        width: 118
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25343a72c568b9f40800000000000000
+      internalID: 5736326280746582866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_23
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 285
+        width: 123
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb796ba7b9c50b240800000000000000
+      internalID: 4805442625252792255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_24
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 289
+        width: 121
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f55d56b2e8dcfb30800000000000000
+      internalID: 4322568210602612213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 161
+        width: 120
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 970d68fc0d8f10dd0800000000000000
+      internalID: -2521460740632162183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_26
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 157
+        width: 125
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 736bc4d6dfd501a00800000000000000
+      internalID: 725182883048502839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_27
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 157
+        width: 122
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ece283d84b9af1e0800000000000000
+      internalID: -2163245933909578527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_28
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 153
+        width: 125
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 367c26cf0fd73d900800000000000000
+      internalID: 708048040407254883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_29
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 153
+        width: 127
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d657eb05ba5343e70800000000000000
+      internalID: 9093952557478212973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_30
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 24
+        width: 118
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: daa38fdab1ab003f0800000000000000
+      internalID: -936544094447453523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combee gif_31
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 24
+        width: 124
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a3bec2b04f4aa7f0800000000000000
+      internalID: -600580461004147804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      combee gif_0: 6512599272312046103
+      combee gif_1: 8491883360920544620
+      combee gif_10: 720069967033093238
+      combee gif_11: -6514202458193516710
+      combee gif_12: -4596434397005926935
+      combee gif_13: 2348446391339057003
+      combee gif_14: 4740223737526474882
+      combee gif_15: 5463902275473918346
+      combee gif_16: 5260519137824107079
+      combee gif_17: -4909108247967319613
+      combee gif_18: -5003983440112945356
+      combee gif_19: -9200997751752446222
+      combee gif_2: -8587508920866118404
+      combee gif_20: 1326534512739861294
+      combee gif_21: -8307502080278661976
+      combee gif_22: 5736326280746582866
+      combee gif_23: 4805442625252792255
+      combee gif_24: 4322568210602612213
+      combee gif_25: -2521460740632162183
+      combee gif_26: 725182883048502839
+      combee gif_27: -2163245933909578527
+      combee gif_28: 708048040407254883
+      combee gif_29: 9093952557478212973
+      combee gif_3: 2058398657892102324
+      combee gif_30: -936544094447453523
+      combee gif_31: -600580461004147804
+      combee gif_4: -7202081611304216200
+      combee gif_5: -5230861641240271259
+      combee gif_6: 1345389073678460091
+      combee gif_7: -9066443179467608627
+      combee gif_8: 6801362320390908472
+      combee gif_9: 1484776951530929651
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
