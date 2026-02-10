@@ -37,7 +37,7 @@ public class HotzoneCheck : MonoBehaviour
             gameObject.SetActive(false);
             enemyParent.triggerArea.SetActive(true);
             enemyParent.inRange = false;
-            // enemyParent.selectTarget();
+            enemyParent.SelectTarget();
         }
     }
 }
