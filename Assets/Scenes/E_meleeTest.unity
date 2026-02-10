@@ -929,7 +929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e77c12fcd482104d9e3c63154e5827e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeAtk
-  atkCooldown: 3
+  atkCooldown: 1
   range: 1.11
   damage: 2
   boxCollider: {fileID: 447192214}
