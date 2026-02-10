@@ -739,7 +739,7 @@ MonoBehaviour:
   fadeOutTime: 1
   gapBetween: 0.3
   autoLoadNextScene: 1
-  nextSceneName: Combat Clone 1
+  nextSceneName: 1_DialogueCrow
 --- !u!4 &1176997741
 Transform:
   m_ObjectHideFlags: 0
