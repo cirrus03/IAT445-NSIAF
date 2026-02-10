@@ -929,7 +929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e77c12fcd482104d9e3c63154e5827e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeAtk
-  atkCooldown: 1
+  atkCooldown: 3
   range: 1.11
   damage: 2
   boxCollider: {fileID: 447192214}
@@ -2187,7 +2187,7 @@ Transform:
   m_GameObject: {fileID: 898335680}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.56, y: -2.065, z: 0}
+  m_LocalPosition: {x: -5.25, y: -2.065, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7885,7 +7885,7 @@ Transform:
   m_GameObject: {fileID: 1840763423}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.65, y: -2.065, z: 0}
+  m_LocalPosition: {x: 5.07, y: -2.065, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
