@@ -293,6 +293,8 @@ MonoBehaviour:
     m_Unicode: 47
     m_GlyphIndex: 18
     m_Scale: 1
+  m_GlyphTable: []
+  m_CharacterTable: []
   m_AtlasTextures:
   - {fileID: 28268798066460806}
   m_AtlasTextureIndex: 0
@@ -324,6 +326,11 @@ MonoBehaviour:
   - m_X: 214
     m_Y: 0
     m_Width: 297
+  m_UsedGlyphRects: []
+  m_FreeGlyphRects:
+  - m_X: 0
+    m_Y: 0
+    m_Width: 511
     m_Height: 511
   - m_X: 0
     m_Y: 107
@@ -526,9 +533,9 @@ Texture2D:
     Hash: 00000000000000000000000000000000
   m_IsAlphaChannelOptional: 0
   serializedVersion: 4
-  m_Width: 512
-  m_Height: 512
-  m_CompleteImageSize: 262144
+  m_Width: 1
+  m_Height: 1
+  m_CompleteImageSize: 1
   m_MipsStripped: 0
   m_TextureFormat: 1
   m_MipCount: 1
