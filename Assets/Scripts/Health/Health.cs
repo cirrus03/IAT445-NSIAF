@@ -34,6 +34,7 @@ public class Health : MonoBehaviour
             originalColor = sr.color;
             originalSprite = sr.sprite;
         }
+        healthBar.SetMaxHealth(startingHealth);
     }
 
     public void TakeDamage(float damageAmount)
@@ -56,6 +57,18 @@ public class Health : MonoBehaviour
                 StartCoroutine(DieRoutine());
             }
         }
+        Debug.Log($"Took {damageAmount} damage. Current health: {currentHealth}");
+        if (healthBar != null) 
+            healthBar.SetHealth(currentHealth); 
+            if (currentHealth > 0) 
+            { 
+                Debug.Log("Still Alive"); 
+            } 
+            else 
+            { 
+                Debug.Log("You Died");
+                PlayerDeath?.Invoke();
+            }
     }
 
     IEnumerator DieRoutine()

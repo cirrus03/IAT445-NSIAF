@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 63bf4cc0ab537d34795e24552848cd97
+guid: 735b98713d358bb44b0fe9892fa19598
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1598845175461117810
-    second: avatar_hpUI_0
+      213: -961990212438608285
+    second: MenuBackground_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: avatar_hpUI_0
+      name: MenuBackground_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 180
-        height: 180
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 27ff43e473d303610800000000000000
-      internalID: 1598845175461117810
+      spriteID: 366b136aff256a2f0800000000000000
+      internalID: -961990212438608285
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      avatar_hpUI_0: 1598845175461117810
+      MenuBackground_0: -961990212438608285
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

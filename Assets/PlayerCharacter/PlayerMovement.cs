@@ -62,9 +62,18 @@ public class PlayerMovement : MonoBehaviour
     public bool canWallSlide = false;
     public bool canWallJump = false;
 
+    private void OnEnable()
+    {
+        Health.PlayerDeath += DisablePlayerMovement;
+    }
+        private void OnDisable()
+    {
+        Health.PlayerDeath -= DisablePlayerMovement;
+    }
     void Start()
     {
         ResetJumps();
+        EnablePlayerMovement();
     }
 
     void Update()
@@ -291,6 +300,18 @@ public class PlayerMovement : MonoBehaviour
     {
         canWallJump = unlocked;
         if (!unlocked) wallJumpTimer = 0f;
+    }
+
+    private void DisablePlayerMovement()
+    {
+        animator.enabled = false;
+        rb.bodyType =RigidbodyType2D.Static;
+    }
+
+        private void EnablePlayerMovement()
+    {
+        animator.enabled = true;
+        rb.bodyType =RigidbodyType2D.Dynamic;
     }
 
 }
