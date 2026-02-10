@@ -87,3 +87,12 @@
   <Project Path="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj" />
   <Project Path="Unity.RenderPipelines.Core.ShaderLibrary.csproj" />
 </Solution>
+﻿<Solution>
+  <Project Path="Ink-Libraries.csproj" />
+  <Project Path="InkEditor.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
+</Solution>
+﻿<Solution>
+  <Project Path="Assembly-CSharp.csproj" />
+</Solution>
