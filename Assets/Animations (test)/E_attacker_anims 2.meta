@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Animations (test)/E_attacker_anims 2.meta
 guid: 24efeebeb1101a647b2963f3fb088da7
+========
+guid: 2fb108354b0ce48b79d71e7cc6fee320
+>>>>>>>> abcc75a3d3ae8f68b48e0eb68659cd82ddfeddba:Assets/Scripts/SceneChangeScripts.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

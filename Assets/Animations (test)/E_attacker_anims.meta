@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Animations (test)/E_attacker_anims.meta
 guid: 24efeebeb1101a647b2963f3fb088da7
 folderAsset: yes
 DefaultImporter:
+========
+guid: 0cbb20d35638448089d6e13a29e97898
+TextScriptImporter:
+>>>>>>>> abcc75a3d3ae8f68b48e0eb68659cd82ddfeddba:Assets/Dialogue/crowdialogue.json.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
