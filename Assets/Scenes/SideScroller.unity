@@ -2612,6 +2612,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   dialoguePanel: {fileID: 1729156267}
   dialogueText: {fileID: 2129156423}
+  questPanel: {fileID: 0}
+  questText: {fileID: 0}
   choices:
   - {fileID: 614796971}
   - {fileID: 1618225053}

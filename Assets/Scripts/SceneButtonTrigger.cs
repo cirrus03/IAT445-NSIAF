@@ -4,14 +4,27 @@ public class SceneButtonTrigger : MonoBehaviour
 {
     private void Update()
     {
-        if (DialogueManager.GetInstance().dialogueIsPlaying)
+        var dm = DialogueManager.GetInstance();
+        var im = InputManager.GetInstance();
+
+        if (dm == null || im == null)
             return;
 
-        if (DialogueManager.GetInstance().QuestIsActive &&
-            InputManager.GetInstance().GetSubmitPressed())
-        {
-            SceneControl.instance.NextLevel();
-        }
+        // Block scene change if dialogue is playing
+        if (dm.dialogueIsPlaying)
+            return;
 
+        // Allow scene change if quest is active OR nothing is active
+        if (im.GetSubmitPressed())
+        {
+            if (SceneControl.instance != null)
+            {
+                SceneControl.instance.NextLevel();
+            }
+            else
+            {
+                Debug.LogError("SceneControl.instance is null!");
+            }
+        }
     }
 }
