@@ -12,6 +12,13 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
 
+    [Header("Quest UI")]
+    [SerializeField] private GameObject questPanel;
+    [SerializeField] private TextMeshProUGUI questText;
+    private bool questIsActive;
+    public bool QuestIsActive => questIsActive;
+    private string waitingQuestDescription;
+
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
@@ -36,8 +43,15 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
+        questIsActive = false;
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
+        if (questPanel != null)
+        {
+            questPanel.SetActive(false);
+        }
+
+
 
         // choices
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -64,6 +78,15 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
+
+        // RESET QUEST STATE FORJHTE LOVE OF GOD
+        questIsActive = false;
+        waitingQuestDescription = null;
+        if (questPanel != null)
+        {
+            questPanel.SetActive(false);
+        }
+
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
@@ -71,11 +94,28 @@ public class DialogueManager : MonoBehaviour
         ContinueStory();
     }
 
+    private void EnterQuestMode(string questDescription)
+    {
+        if (questPanel == null || string.IsNullOrEmpty(questDescription))
+            return;
+
+        questIsActive = true;
+        questPanel.SetActive(true);
+        questText.text = questDescription;
+    }
+
+
     private void ExitDialogueMode()
     {
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+
+        if (!string.IsNullOrEmpty(waitingQuestDescription))
+        {
+            EnterQuestMode(waitingQuestDescription);
+            waitingQuestDescription = null;
+        }
     }
 
     private void ContinueStory()
@@ -84,6 +124,7 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text = currentStory.Continue();
             // if there are
+            HandleTags(currentStory.currentTags);
             DisplayChoices();
         }
         else
@@ -92,13 +133,28 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    private void HandleTags(List<string> tags)
+    {
+        foreach (string tag in tags)
+        {
+            if (tag.StartsWith("QUEST:"))
+            {
+                waitingQuestDescription = tag.Substring(6).Trim();
+            }
+        }
+    }
+
     private void DisplayChoices()
     {
         List<Choice> currentChoices = currentStory.currentChoices;
 
-        if (currentChoices.Count > choices.Length)
+        if (currentChoices.Count == 0)
         {
-            Debug.LogError("Too many choices");
+            for (int i = 0; i < choices.Length; i++)
+            {
+                choices[i].gameObject.SetActive(false);
+            }
+            return;
         }
 
         int index = 0;

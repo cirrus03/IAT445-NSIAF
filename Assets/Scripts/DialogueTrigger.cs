@@ -4,24 +4,29 @@ using System.Collections.Generic;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    [Header ("Visual Cue")]
+    [Header("Visual Cue")]
     [SerializeField] private GameObject visualCue;
 
-    [Header ("Ink JSON")]
+    [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
 
     private bool npcInRange;
 
     private void Update()
     {
-        if (npcInRange && !DialogueManager.GetInstance().dialogueIsPlaying)
+        if (
+            npcInRange &&
+            !DialogueManager.GetInstance().dialogueIsPlaying &&
+            !DialogueManager.GetInstance().QuestIsActive
+        )
         {
             visualCue.SetActive(true);
             if (InputManager.GetInstance().GetInteractPressed())
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
             }
-        } else
+        }
+        else
         {
             visualCue.SetActive(false);
         }
