@@ -55,12 +55,22 @@ public class PlayerMovement : MonoBehaviour
     private float lastAttackTime;
     public GameObject attackHitbox;
 
+    [Header("Dash")]
+    public float dashSpeed = 18f;
+    public float dashDuration = 0.12f;
+    public float dashCooldown = 0.5f;
+    public bool dashGravityNono = true;
+    private bool isDashing;
+    private bool dashOnCD;
+    private float dashGravitySaved;
 
+    private bool okayButCanIDash = true;
 
     [Header("Ability Toggles (so we can use these as unlocks as abilities)")]
     public bool canDoubleJump = false;
     public bool canWallSlide = false;
     public bool canWallJump = false;
+    public bool canDash = false;
 
     void Start()
     {
@@ -74,21 +84,51 @@ public class PlayerMovement : MonoBehaviour
         ProcessGravity();
         ProcessWallSlide();
         ProcessWallJump();
-        
 
-        if (!isWallJumping)
+        // if (!isWallJumping)
+        // {
+        //     rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
+        //     Flip();
+        // }
+        animator.SetFloat("yVelocity", rb.linearVelocity.y);
+        animator.SetFloat("magnitude", rb.linearVelocity.magnitude);
+        // animator.SetBool("isWallSliding", isWallSliding);
+        if (!isWallJumping && !isDashing)
         {
             rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
             Flip();
         }
-        animator.SetFloat("yVelocity", rb.linearVelocity.y);
-        animator.SetFloat("magnitude", rb.linearVelocity.magnitude);
-        // animator.SetBool("isWallSliding", isWallSliding);
+
     }
 
     public void Move(InputAction.CallbackContext context)
     {
         horizontalMovement = context.ReadValue<Vector2>().x;
+    }
+
+    public void Dash(InputAction.CallbackContext context)
+    {
+
+        if (!context.performed)
+        {
+            return;
+        } 
+        if (!canDash) 
+        {
+            return;
+        }
+        if (!okayButCanIDash)
+        {
+            return;
+        }
+        if (isDashing || dashOnCD) 
+        {
+            return;
+        }
+
+        okayButCanIDash = false;
+
+        StartCoroutine(DashRoutine());
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -108,7 +148,6 @@ public class PlayerMovement : MonoBehaviour
                 // light tap of jump for short jump (half height)
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
                 jumpsRemaining--;
-                animator.SetTrigger("Jump");
             }
         }
         // wall jump
@@ -163,19 +202,15 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(AttackRoutine());
     }
 
-    IEnumerator AttackRoutine()
-    {
-        attackHitbox.SetActive(true);
-        yield return new WaitForSeconds(0.1f); // active frames
-        attackHitbox.SetActive(false);
-    }
-
     private void GroundCheck()
     {
         if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
         {
-            isGrounded = true;
+            // Debug.Log("ground touched- reset jumps: " + Time.time);
+            isGrounded = true;//reset upon landing
             ResetJumps();
+
+            okayButCanIDash = true;//same
         }
         else
         {
@@ -190,6 +225,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void ProcessGravity()
     {
+        if (isDashing) return;
+
         if (rb.linearVelocity.y < 0)
         {
             rb.gravityScale = baseGravity * fallSpeedMultiplier;
@@ -263,6 +300,47 @@ public class PlayerMovement : MonoBehaviour
     {
         jumpsRemaining = canDoubleJump ? maxJumps :1;
     }
+
+    private IEnumerator DashRoutine()
+    {
+        isDashing = true;
+        dashOnCD = true;
+
+        // can disable gravity during dash
+        if (dashGravityNono)
+        {
+            dashGravitySaved = rb.gravityScale;
+            rb.gravityScale = 0f;
+        }
+
+        // dash direction = facing direciton
+        float dir = isFacingRight ? 1f : -1f;
+
+        // vert
+        rb.linearVelocity = new Vector2(dir * dashSpeed, 0f);
+
+        // animation can add
+        if (animator != null) animator.SetTrigger("Dash");
+
+        yield return new WaitForSeconds(dashDuration);
+
+        // end dash
+        if (dashGravityNono)
+            rb.gravityScale = dashGravitySaved;
+
+        isDashing = false;
+
+        yield return new WaitForSeconds(dashCooldown);
+        dashOnCD = false;
+    }
+
+    IEnumerator AttackRoutine()
+    {
+        attackHitbox.SetActive(true);
+        yield return new WaitForSeconds(0.1f); // active frames
+        attackHitbox.SetActive(false);
+    }
+
 
     //gizmos
     public void OnDrawGizmosSelected()

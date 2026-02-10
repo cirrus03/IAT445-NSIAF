@@ -9,16 +9,22 @@ EditorBuildSettings:
     path: Assets/Scenes/01_Title.unity
     guid: c015515bf8e3ee640b24babcad60a41c
   - enabled: 1
+<<<<<<< HEAD
+    path: Assets/Scenes/1_DialogueCrow.unity
+    guid: 922bbe4f60fe94570af58e306566de9c
+=======
     path: Assets/Scenes/Combat Clone 1.unity
     guid: 9dbd702d8ba4bbc45a7467650caf8ba0
-    path: Assets/Scenes/SideScroller.unity
-    guid: 15db52fc8928cd94c8940ec1438175aa
+>>>>>>> parent of a4365cd (Revert "updating with melee attacking patrol enemy ")
   - enabled: 1
     path: Assets/Scenes/LabArea.unity
     guid: 03a838e64d59b944ca304c3c498b0467
   - enabled: 1
-    path: Assets/Scenes/Combat Clone.unity
-    guid: 17dfbd9fb7b97424a88385fa96fbc4c5
+    path: Assets/Scenes/Combat Clone 1.unity
+    guid: 9dbd702d8ba4bbc45a7467650caf8ba0
+  - enabled: 1
+    path: Assets/Scenes/SideScroller.unity
+    guid: 15db52fc8928cd94c8940ec1438175aa
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
