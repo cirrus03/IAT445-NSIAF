@@ -4,9 +4,13 @@ using System.Collections.Generic;
 using TMPro;
 using Ink.Runtime;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
+
+    [Header("Next Scene")]
+    [SerializeField] private string nextSceneName;
 
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
@@ -76,6 +80,11 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+
+        if (!string.IsNullOrEmpty(nextSceneName))
+        {
+            SceneManager.LoadScene(nextSceneName);
+        }
     }
 
     private void ContinueStory()
