@@ -33,18 +33,18 @@ public class E_AttackerBehaviour : MonoBehaviour
         intTimer= timer;
         animator = GetComponent<Animator>();
     }
-    void Update()
-    {
-        if(!attackMode)
-        {
-            EnemyMove();
-        }
+    // void Update()
+    // {
+    //     if(!attackMode)
+    //     {
+    //         EnemyMove();
+    //     }
 
-        if(inRange)
-        {
-            EnemyLogic();
-        }
-    }
+    //     if(inRange)
+    //     {
+    //         EnemyLogic();
+    //     }
+    // }
 
     void EnemyLogic()
     {
