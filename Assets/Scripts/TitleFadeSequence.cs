@@ -43,7 +43,7 @@ public class TitleFadeSequence : MonoBehaviour
 
         if (autoLoadNextScene)
         {
-            SceneManager.LoadScene(nextSceneName);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 
