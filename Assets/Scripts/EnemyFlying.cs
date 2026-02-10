@@ -8,7 +8,16 @@ public class EnemyFlying : MonoBehaviour
     [Header("Aggro")]
     public float aggroRange = 6f;      // start chasing
     public float deaggroRange = 8f;    // stop chasing 
+    public float loseSightDelay = 2.5f;   // how long it remembers you after losing sight
+    private float loseSightTimer = 0f;
     private bool isAggro;
+
+    [Header("Search")]
+    public float searchSpeed = 2.5f;
+    public float reachLastSeenDistance = 0.4f;
+
+    private Vector2 lastSeenPos;
+    private bool hasLastSeen;
 
     [Header("Movement")]
     public float flySpeed = 3f;
@@ -54,16 +63,59 @@ public class EnemyFlying : MonoBehaviour
 
         // checking for aggro
         float distToPlayer = Vector2.Distance(rb.position, player.position);
+        bool canSeePlayer = HasLineOfSightToPlayer();
+        
+        if (!isAggro)
+        {
+            if (distToPlayer <= aggroRange && canSeePlayer)
+            {
+                isAggro = true;
+                loseSightTimer = 0f;
+            }
+        }
+        else
+        {
+            if (canSeePlayer)
+            {
+                loseSightTimer = 0f; // reset memory when it sees you again
+                lastSeenPos = player.position;
+                hasLastSeen = true;
+            }
+            else
+            {
+                loseSightTimer += Time.fixedDeltaTime;
+            }
 
-        if (!isAggro && distToPlayer <= aggroRange) isAggro = true;
-        else if (isAggro && distToPlayer >= deaggroRange) isAggro = false;
+            if (distToPlayer >= deaggroRange || loseSightTimer >= loseSightDelay)
+            {
+                isAggro = false;
+                loseSightTimer = 0f;
+            }
+        }
 
         // velocoty
-        Vector2 desiredVel = Vector2.zero;
+        Vector2 desiredVel;
 
         if (isAggro)
         {
-            desiredVel = ChasePlayer(distToPlayer);
+            if (canSeePlayer)
+            {
+                desiredVel = ChasePlayer(distToPlayer);
+            }
+            else if (hasLastSeen)
+            {
+                Vector2 toLast = lastSeenPos - rb.position;
+
+                // if reach the last seen point, let deaggro timer handle giving up (idk what other way to handle this)
+                if (toLast.magnitude <= reachLastSeenDistance)
+                    desiredVel = Vector2.zero;
+                else
+                    desiredVel = toLast.normalized * searchSpeed;
+            }
+            else
+            {
+                desiredVel = Vector2.zero;
+            }
         }
         else
         {
@@ -105,6 +157,21 @@ public class EnemyFlying : MonoBehaviour
         return toPlayer.normalized * flySpeed;
     }
 
+    bool HasLineOfSightToPlayer()
+    {
+        if (!player) return false;
+
+        Vector2 origin = rb.position;
+        Vector2 toPlayer = (Vector2)player.position - origin;
+        float dist = toPlayer.magnitude;
+
+        // raycast obstacles, If it hits something; line of sight blocked
+        RaycastHit2D hit = Physics2D.Raycast(origin, toPlayer.normalized, dist, obstacleMask);
+
+        return hit.collider == null;
+    }
+
+
     void Patrol()
     {
         Vector2 desiredVel = PatrolVelocity();
@@ -129,8 +196,11 @@ public class EnemyFlying : MonoBehaviour
 
     Vector2 AvoidObstacles(Vector2 desiredVel)
 {
-    if (player && Vector2.Distance(rb.position, player.position) < 1f){
-        return desiredVel;
+    if (player)
+    {
+        float d = Vector2.Distance(rb.position, player.position);
+        if (d < 1f && HasLineOfSightToPlayer())
+            return desiredVel;
     }
 
     if (desiredVel == Vector2.zero) {
