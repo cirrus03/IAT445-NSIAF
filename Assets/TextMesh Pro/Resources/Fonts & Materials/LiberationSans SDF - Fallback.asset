@@ -251,6 +251,11 @@ MonoBehaviour:
       m_Width: 38
       m_Height: 59
       m_HorizontalBearingX: 6
+  - m_Index: 24
+    m_Metrics:
+      m_Width: 42
+      m_Height: 60
+      m_HorizontalBearingX: 3
       m_HorizontalBearingY: 59
       m_HorizontalAdvance: 48
     m_GlyphRect:
@@ -392,7 +397,24 @@ MonoBehaviour:
   m_FreeGlyphRects:
   - m_X: 0
     m_Y: 0
-    m_Width: 511
+    m_Width: 83
+    m_Height: 28
+  - m_X: 83
+    m_Y: 0
+    m_Width: 70
+    m_Height: 25
+  - m_X: 153
+    m_Y: 0
+    m_Width: 61
+    m_Height: 79
+  - m_X: 83
+    m_Y: 25
+    m_Width: 43
+    m_Height: 82
+  m_FreeGlyphRects:
+  - m_X: 214
+    m_Y: 0
+    m_Width: 297
     m_Height: 511
   - m_X: 144
     m_Y: 80
@@ -402,6 +424,22 @@ MonoBehaviour:
     m_Y: 78
     m_Width: 66
     m_Height: 433
+  - m_X: 0
+    m_Y: 107
+    m_Width: 511
+    m_Height: 404
+  - m_X: 126
+    m_Y: 79
+    m_Width: 385
+    m_Height: 432
+  - m_X: 0
+    m_Y: 28
+    m_Width: 83
+    m_Height: 483
+  - m_X: 126
+    m_Y: 25
+    m_Width: 27
+    m_Height: 486
   m_FontFeatureTable:
     m_MultipleSubstitutionRecords: []
     m_LigatureSubstitutionRecords: []
@@ -587,9 +625,9 @@ Texture2D:
     Hash: 00000000000000000000000000000000
   m_IsAlphaChannelOptional: 0
   serializedVersion: 4
-  m_Width: 1
-  m_Height: 1
-  m_CompleteImageSize: 1
+  m_Width: 512
+  m_Height: 512
+  m_CompleteImageSize: 262144
   m_MipsStripped: 0
   m_TextureFormat: 1
   m_MipCount: 1

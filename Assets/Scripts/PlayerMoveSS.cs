@@ -10,6 +10,8 @@ public class PlayerMoveSS : MonoBehaviour
     {
         if (DialogueManager.GetInstance().dialogueIsPlaying)
             return;
+        if (DialogueManager.GetInstance().QuestIsActive)
+            return;
         Vector2 dir = InputManager.GetInstance().GetMoveDirection();
         float input = dir.x;
         movement.x = input * speed * Time.deltaTime;
