@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class DialogueTrigger : MonoBehaviour
 {
@@ -10,6 +8,9 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
 
+    [Header("Quest Reference")]
+    [SerializeField] private QuestControl questControl;
+
     private bool npcInRange;
 
     private void Update()
@@ -17,10 +18,11 @@ public class DialogueTrigger : MonoBehaviour
         if (
             npcInRange &&
             !DialogueManager.GetInstance().dialogueIsPlaying &&
-            !DialogueManager.GetInstance().QuestIsActive
+            !questControl.QuestShown
         )
         {
             visualCue.SetActive(true);
+
             if (InputManager.GetInstance().GetInteractPressed())
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
@@ -31,15 +33,10 @@ public class DialogueTrigger : MonoBehaviour
             visualCue.SetActive(false);
         }
     }
-    private void Detect()
-    {
-        npcInRange = false;
-        visualCue.SetActive(false);
-    }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.tag == "NPC")
+        if (collider.CompareTag("NPC"))
         {
             npcInRange = true;
         }
@@ -47,9 +44,10 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collider)
     {
-        if (collider.gameObject.tag == "NPC")
+        if (collider.CompareTag("NPC"))
         {
             npcInRange = false;
+            visualCue.SetActive(false);
         }
     }
 }

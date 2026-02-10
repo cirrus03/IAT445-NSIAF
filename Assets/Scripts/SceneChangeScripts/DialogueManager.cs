@@ -12,19 +12,13 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
 
-    [Header("Quest UI")]
-    [SerializeField] private GameObject questPanel;
-    [SerializeField] private TextMeshProUGUI questText;
-    private bool questIsActive;
-    public bool QuestIsActive => questIsActive;
-    private string waitingQuestDescription;
-
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
 
     private Story currentStory;
     public bool dialogueIsPlaying { get; private set; }
+    public bool dialogueFinished { get; private set; }
     private static DialogueManager instance;
 
     private void Awake()
@@ -43,16 +37,9 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        questIsActive = false;
+
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
-        if (questPanel != null)
-        {
-            questPanel.SetActive(false);
-        }
-
-
-
         // choices
         choicesText = new TextMeshProUGUI[choices.Length];
         int index = 0;
@@ -78,44 +65,20 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
-
-        // RESET QUEST STATE FORJHTE LOVE OF GOD
-        questIsActive = false;
-        waitingQuestDescription = null;
-        if (questPanel != null)
-        {
-            questPanel.SetActive(false);
-        }
-
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
+        dialogueFinished = false;
+        
         dialoguePanel.SetActive(true);
-
         ContinueStory();
     }
-
-    private void EnterQuestMode(string questDescription)
-    {
-        if (questPanel == null || string.IsNullOrEmpty(questDescription))
-            return;
-
-        questIsActive = true;
-        questPanel.SetActive(true);
-        questText.text = questDescription;
-    }
-
 
     private void ExitDialogueMode()
     {
         dialogueIsPlaying = false;
+        dialogueFinished = true;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
-
-        if (!string.IsNullOrEmpty(waitingQuestDescription))
-        {
-            EnterQuestMode(waitingQuestDescription);
-            waitingQuestDescription = null;
-        }
     }
 
     private void ContinueStory()
@@ -124,23 +87,11 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text = currentStory.Continue();
             // if there are
-            HandleTags(currentStory.currentTags);
             DisplayChoices();
         }
         else
         {
             ExitDialogueMode();
-        }
-    }
-
-    private void HandleTags(List<string> tags)
-    {
-        foreach (string tag in tags)
-        {
-            if (tag.StartsWith("QUEST:"))
-            {
-                waitingQuestDescription = tag.Substring(6).Trim();
-            }
         }
     }
 
@@ -152,34 +103,37 @@ public class DialogueManager : MonoBehaviour
         {
             for (int i = 0; i < choices.Length; i++)
             {
-                choices[i].gameObject.SetActive(false);
+                choices[i].SetActive(false);
             }
             return;
         }
 
         int index = 0;
-        // ink configuring stuff and stuff
         foreach (Choice choice in currentChoices)
         {
-            choices[index].gameObject.SetActive(true);
+            choices[index].SetActive(true);
             choicesText[index].text = choice.text;
             index++;
         }
 
         for (int i = index; i < choices.Length; i++)
         {
-            choices[i].gameObject.SetActive(false);
+            choices[i].SetActive(false);
         }
 
         StartCoroutine(SelectFirstChoice());
     }
 
+
     private IEnumerator SelectFirstChoice()
     {
+        if (choices.Length == 0) yield break;
+
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForEndOfFrame();
-        EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
+        EventSystem.current.SetSelectedGameObject(choices[0]);
     }
+
 
     public void MakeChoice(int ChoiceIndex)
     {
