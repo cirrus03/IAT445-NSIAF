@@ -11,6 +11,12 @@ public class Health : MonoBehaviour
     [SerializeField] private bool flashOnDamage = true;
     [SerializeField] private float flashDuration = 0.1f;
 
+    [Header("Invincibility (Player)")]
+    [SerializeField] private float invincibilityTime = 0.6f;
+    public bool IsInvincible { get; private set; }
+    private Coroutine invincibleRoutine;
+
+
     // If you assign this, it will temporarily swap to that sprite instead
     // If you leave it empty, it will just tint red instead.
     [SerializeField] private Sprite hurtSprite;
@@ -38,6 +44,7 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
+        if (IsInvincible) return;
         currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, startingHealth);
 
         if (flashOnDamage && sr != null)
@@ -55,6 +62,7 @@ public class Health : MonoBehaviour
                 isDying = true;
                 StartCoroutine(DieRoutine());
             }
+            //respawn / player death, game over screen, etc
         }
     }
 
@@ -75,6 +83,7 @@ public class Health : MonoBehaviour
         var jumper = GetComponent<EnemyJumper>();
         if (jumper != null) jumper.enabled = false;
 
+
         // disable damage hitbox script so it can't hurt player while dying
         var dmg = GetComponentInChildren<EnemyDamage>();
         if (dmg != null) dmg.enabled = false;
@@ -88,6 +97,22 @@ public class Health : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
+    }
+    
+public void StartInvincibility(float seconds = -1f)
+    {
+        if (seconds <= 0f) seconds = invincibilityTime;
+
+        if (invincibleRoutine != null) StopCoroutine(invincibleRoutine);
+        invincibleRoutine = StartCoroutine(InvincibleRoutine(seconds));
+    }
+
+    IEnumerator InvincibleRoutine(float seconds)
+    {
+        IsInvincible = true;
+        yield return new WaitForSeconds(seconds);
+        IsInvincible = false;
+        invincibleRoutine = null;
     }
 
 
