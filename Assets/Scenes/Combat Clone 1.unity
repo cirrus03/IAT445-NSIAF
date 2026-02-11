@@ -8309,12 +8309,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1647522192}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abbc2c2caa184044a9243cb34b7bc2f1, type: 3}
+  m_Script: {fileID: 11500000, guid: dadb02d96f2d5e54fb460f46833a3af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthBarScript
-  healthBarSlider: {fileID: 1767922104}
-  healthBarValueText: {fileID: 188097332}
-  playerHealth: {fileID: 1907187176}
 --- !u!1 &1743611101
 GameObject:
   m_ObjectHideFlags: 0
@@ -8603,17 +8600,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3663265bcb5ade34fa7f8326f7fdee44, type: 3}
---- !u!114 &1907187176 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6391268074508196315, guid: b285131241618034f948e789d920df3a, type: 3}
-  m_PrefabInstance: {fileID: 2569718189860183927}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862913520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfb9daaae3746a448b6fc9856cdc7cd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
 --- !u!50 &1907187180 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 8883169666601754635, guid: b285131241618034f948e789d920df3a, type: 3}

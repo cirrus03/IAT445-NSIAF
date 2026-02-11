@@ -12,13 +12,12 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField] private QuestControl questControl;
 
     private bool npcInRange;
-
     private void Update()
     {
-        if (
+   if (
             npcInRange &&
             !DialogueManager.GetInstance().dialogueIsPlaying &&
-            !questControl.QuestShown
+            (questControl == null || !questControl.QuestShown)
         )
         {
             visualCue.SetActive(true);

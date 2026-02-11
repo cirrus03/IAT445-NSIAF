@@ -20,8 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SideScroller.unity
     guid: 15db52fc8928cd94c8940ec1438175aa
-    path: Assets/Scenes/Combat Clone.unity
-    guid: 17dfbd9fb7b97424a88385fa96fbc4c5
   - enabled: 1
     path: Assets/Scenes/1_DialogueCrow.unity
     guid: 922bbe4f60fe94570af58e306566de9c

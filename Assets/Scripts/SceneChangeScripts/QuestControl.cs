@@ -14,7 +14,6 @@ public class QuestControl : MonoBehaviour
     [Header("Quest Data")]
     [TextArea]
     [SerializeField] private string questDescription;
-
     private bool questShown = false;
     public bool QuestShown => questShown;
 

@@ -28871,7 +28871,7 @@ PrefabInstance:
     - target: {fileID: 6391268074508196315, guid: b285131241618034f948e789d920df3a, type: 3}
       propertyPath: healthBar
       value: 
-      objectReference: {fileID: 724654186}
+      objectReference: {fileID: 0}
     - target: {fileID: 6391268074508196315, guid: b285131241618034f948e789d920df3a, type: 3}
       propertyPath: startingHealth
       value: 10

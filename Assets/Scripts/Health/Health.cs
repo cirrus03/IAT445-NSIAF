@@ -7,6 +7,9 @@ public class Health : MonoBehaviour
     public float currentHealth {get; private set; }
     public HealthBar healthBar;
     public static event Action PlayerDeath;
+    private SpriteRenderer sr;
+    private Color originalColor;
+    private Sprite originalSprite;
 
     private void Awake()
     {
