@@ -53,7 +53,21 @@ public class PlayerMovement : MonoBehaviour
 
     public float attackCooldown = 0.2f;
     private float lastAttackTime;
-    public GameObject attackHitbox;
+
+    private enum AttackDirection //enums are like an array, super useful
+    {
+        Side,
+        Up,
+        Down
+    }
+    [SerializeField] private float upDownThreshold = 0.5f;
+    private AttackDirection currentAttackDirection = AttackDirection.Side;
+    private GameObject activeHitbox;
+
+    [Header("Attack Hitboxes")]
+    public GameObject attackHitboxSide;
+    public GameObject attackHitboxUp;
+    public GameObject attackHitboxDown;
 
     [Header("Dash")]
     public float dashSpeed = 18f;
@@ -73,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
     public bool canDash = false;
 
     private bool controlsLocked = false; //setting so we can prevent movement (im assuming for pause menu or something)
+    private Vector2 moveInput;
 
     private void OnEnable()
     {
@@ -115,7 +130,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        horizontalMovement = context.ReadValue<Vector2>().x;
+        moveInput = context.ReadValue<Vector2>(); //vert movement detection time baby
+        horizontalMovement = moveInput.x;
     }
 
     public void Dash(InputAction.CallbackContext context)
@@ -205,13 +221,41 @@ public class PlayerMovement : MonoBehaviour
 
         lastAttackTime = Time.time;
 
-        if (animator != null)
+        // choose direction based on W/S
+        if (moveInput.y > upDownThreshold)
         {
-            animator.SetTrigger("Attack");
+            currentAttackDirection = AttackDirection.Up;
+            activeHitbox = attackHitboxUp;
+        } 
+        else if (moveInput.y < -upDownThreshold)
+        {
+            currentAttackDirection = AttackDirection.Down;
+            activeHitbox = attackHitboxDown;
         }
+        else
+        {
+            currentAttackDirection = AttackDirection.Side;
+            activeHitbox = attackHitboxSide;
+        }
+        if (animator != null)//guys i swear switches are good 
+        {
+            switch (currentAttackDirection)
+            {
+                case AttackDirection.Up:
+                animator.SetTrigger("AttackUp");
+                break;
 
+                case AttackDirection.Down:
+                animator.SetTrigger("AttackDown");
+                break;
 
-        StartCoroutine(AttackRoutine());
+                default:
+                animator.SetTrigger("Attack");
+                break;
+            }
+            
+        }
+        StartCoroutine(AttackRoutine(activeHitbox));
     }
 
     private void GroundCheck()
@@ -346,11 +390,12 @@ public class PlayerMovement : MonoBehaviour
         dashOnCD = false;
     }
 
-    IEnumerator AttackRoutine()
+    private IEnumerator AttackRoutine(GameObject hitbox)
     {
-        attackHitbox.SetActive(true);
+        if (hitbox == null) yield break;
+        hitbox.SetActive(true);
         yield return new WaitForSeconds(0.1f); // active frames
-        attackHitbox.SetActive(false);
+        hitbox.SetActive(false);
     }
 
 
