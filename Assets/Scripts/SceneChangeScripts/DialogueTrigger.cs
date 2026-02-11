@@ -20,6 +20,7 @@ public class DialogueTrigger : MonoBehaviour
             (questControl == null || !questControl.QuestShown)
         )
         {
+            if(visualCue !=null)// sorry i put these here because it was bugging out (apprently whatever its connecting to isnt connected)
             visualCue.SetActive(true);
 
             if (InputManager.GetInstance().GetInteractPressed())
@@ -29,6 +30,7 @@ public class DialogueTrigger : MonoBehaviour
         }
         else
         {
+            if(visualCue !=null)//here too
             visualCue.SetActive(false);
         }
     }
@@ -46,6 +48,7 @@ public class DialogueTrigger : MonoBehaviour
         if (collider.CompareTag("NPC"))
         {
             npcInRange = false;
+            if(visualCue !=null)//here as well
             visualCue.SetActive(false);
         }
     }
