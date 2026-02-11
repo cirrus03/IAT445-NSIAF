@@ -27,7 +27,6 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
-        if (IsInvincible) return;
         currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, startingHealth);
         Debug.Log($"Took {damageAmount} damage. Current health: {currentHealth}");
         if (healthBar != null) 
@@ -41,7 +40,6 @@ public class Health : MonoBehaviour
                 Debug.Log("You Died");
                 PlayerDeath?.Invoke();
             }
-            //respawn / player death, game over screen, etc
         }
     }
 
