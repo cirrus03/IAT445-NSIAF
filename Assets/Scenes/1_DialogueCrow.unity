@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 458598090}
   - component: {fileID: 458598089}
   - component: {fileID: 458598088}
+  - component: {fileID: 458598091}
   m_Layer: 5
   m_Name: Proceed
   m_TagString: Untagged
@@ -292,7 +293,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 458598089}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 458598091}
+        m_TargetAssemblyTypeName: SceneControl, Assembly-CSharp
+        m_MethodName: NextLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &458598089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +344,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458598086}
   m_CullTransparentMesh: 1
+--- !u!114 &458598091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458598086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74333d79611c745968fd80a95d744c5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneControl
 --- !u!1 &653463651
 GameObject:
   m_ObjectHideFlags: 0
@@ -1221,7 +1246,6 @@ Transform:
   m_Children:
   - {fileID: 1172736991}
   - {fileID: 1244167564}
-  - {fileID: 1638947942}
   - {fileID: 956562371}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1375,50 +1399,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1577562189}
   m_CullTransparentMesh: 1
---- !u!1 &1638947941
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1638947942}
-  - component: {fileID: 1638947943}
-  m_Layer: 0
-  m_Name: SceneControl
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1638947942
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1638947941}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1318259467}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1638947943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1638947941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74333d79611c745968fd80a95d744c5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneControl
 --- !u!1 &1781521951
 GameObject:
   m_ObjectHideFlags: 0
