@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6455025440294894230}
   - component: {fileID: 7770923908914953666}
   - component: {fileID: 20026534978280147}
+  - component: {fileID: 8327531498878512674}
   - component: {fileID: 5945977481123853755}
   m_Layer: 0
   m_Name: Player
@@ -188,7 +189,7 @@ MonoBehaviour:
   rb: {fileID: 115474724289842513}
   animator: {fileID: 5945977481123853755}
   moveSpeed: 5
-  jumpPower: 11
+  jumpPower: 16
   maxJumps: 2
   groundCheckPos: {fileID: 7506601133814684518}
   groundCheckSize: {x: 0.45, y: 0.09}
@@ -201,7 +202,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   baseGravity: 3
-  maxFallSpeed: 17
+  maxFallSpeed: 25
   fallSpeedMultiplier: 2.5
   wallSlideSpeed: 4
   wallJumpTime: 0.1
@@ -395,7 +396,26 @@ MonoBehaviour:
   startingHealth: 3
   flashOnDamage: 1
   flashDuration: 0.1
+  invincibilityTime: 0.6
   hurtSprite: {fileID: 0}
+--- !u!114 &8327531498878512674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113587691196613939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d493a382d407bd4c9518eff098cfafb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LastSafeGround
+  groundCheckPos: {fileID: 7506601133814684518}
+  groundCheckSize: {x: 0.5, y: 0.05}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  respawnOffset: {x: 0, y: 0.8}
 --- !u!95 &5945977481123853755
 Animator:
   serializedVersion: 7
