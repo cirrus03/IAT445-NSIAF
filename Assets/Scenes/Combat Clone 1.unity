@@ -1054,7 +1054,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.97, y: -0.87, z: -10}
+  m_LocalPosition: {x: 14.2, y: -0.87, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1352,7 +1352,7 @@ Transform:
   m_GameObject: {fileID: 705943971}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.97, y: -0.87, z: -10}
+  m_LocalPosition: {x: 14.2, y: -0.87, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7950,7 +7950,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1647522192}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abbc2c2caa184044a9243cb34b7bc2f1, type: 3}
+  m_Script: {fileID: 11500000, guid: dadb02d96f2d5e54fb460f46833a3af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthBarScript
   healthBarSlider: {fileID: 1767922104}
@@ -8239,6 +8239,49 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3663265bcb5ade34fa7f8326f7fdee44, type: 3}
+--- !u!50 &1907187180 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 8883169666601754635, guid: b285131241618034f948e789d920df3a, type: 3}
+  m_PrefabInstance: {fileID: 2569718189860183927}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1907187185 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6734893350356044655, guid: b285131241618034f948e789d920df3a, type: 3}
+  m_PrefabInstance: {fileID: 2569718189860183927}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1907187190
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862913520}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f4fc6c33ad586f9459e5a030a8599a63, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1907187192 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4063543426544187080, guid: b285131241618034f948e789d920df3a, type: 3}
+  m_PrefabInstance: {fileID: 2569718189860183927}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862913520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b849d522e35af6c48a4e9073d1902fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &1939806485
 GameObject:
   m_ObjectHideFlags: 0
@@ -28610,7 +28653,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1575268592773849466, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.97
+      value: 14.2
       objectReference: {fileID: 0}
     - target: {fileID: 1575268592773849466, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
       propertyPath: m_LocalPosition.y
