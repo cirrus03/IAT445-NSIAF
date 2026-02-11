@@ -43,6 +43,12 @@ public class EnemyFlying : MonoBehaviour
 
     void Awake()
     {
+        if (player == null)
+        {
+            GameObject p = GameObject.FindGameObjectWithTag("Player");
+            if (p) player = p.transform;
+        }
+        
         sr = GetComponent<SpriteRenderer>();
 
         rb = GetComponent<Rigidbody2D>();
