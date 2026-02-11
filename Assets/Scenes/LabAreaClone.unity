@@ -5840,7 +5840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dadb02d96f2d5e54fb460f46833a3af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthBarScript
-  slider: {fileID: 469848304}
+  slider: {fileID: 0}
 --- !u!1 &732969751
 GameObject:
   m_ObjectHideFlags: 0
@@ -7245,11 +7245,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &1207652181 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 113587691196613939, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
-  m_PrefabInstance: {fileID: 6126728089937141802}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1322418779
 GameObject:
   m_ObjectHideFlags: 0
@@ -7852,11 +7847,6 @@ Transform:
   - {fileID: 1618596811}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1523613658 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7506601133814684518, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
-  m_PrefabInstance: {fileID: 6126728089937141802}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1583427468
 GameObject:
   m_ObjectHideFlags: 0
@@ -102204,37 +102194,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2437569971568629209, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
   m_PrefabInstance: {fileID: 6126728089937141802}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3830596569321112787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207652181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d493a382d407bd4c9518eff098cfafb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LastSafeGround
-  groundCheckPos: {fileID: 1523613658}
-  groundCheckSize: {x: 0.5, y: 0.05}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  respawnOffset: {x: 0, y: 0.8}
---- !u!114 &3830596569321112794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1207652181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dadb02d96f2d5e54fb460f46833a3af8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HealthBar
-  slider: {fileID: 469848304}
 --- !u!1001 &6126728089937141802
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -102243,21 +102202,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 20026534978280147, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 3830596569321112794}
-    - target: {fileID: 20026534978280147, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 113587691196613939, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 115474724289842513, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
-      propertyPath: m_BodyType
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2437569971568629209, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
       propertyPath: m_LocalPosition.x
@@ -102299,36 +102246,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3983857169654330109, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
-      propertyPath: m_SpriteTilingProperty.pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3983857169654330109, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
-      propertyPath: m_SpriteTilingProperty.pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3983857169654330109, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.27
-      objectReference: {fileID: 0}
-    - target: {fileID: 3983857169654330109, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 1.28
-      objectReference: {fileID: 0}
-    - target: {fileID: 6455025440294894230, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
-      propertyPath: dashDuration
-      value: 0.25
-      objectReference: {fileID: 0}
+    - target: {fileID: 9005958515140060887, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
+      propertyPath: slider
+      value: 
+      objectReference: {fileID: 469848304}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 113587691196613939, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3830596569321112787}
-    - targetCorrespondingSourceObject: {fileID: 113587691196613939, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3830596569321112794}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 050ffb2920d32f844aa80a9c57d74361, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
