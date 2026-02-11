@@ -544,7 +544,7 @@ MonoBehaviour:
   knockbackX: 20
   knockbackY: 10
   pogoOnHit: 1
-  pogoBounceY: 14
+  pogoBounceY: 5
   pogoOnlyWhenFalling: 1
   hazardTag: Hazard
 --- !u!1 &2482817633748507782
@@ -783,7 +783,7 @@ MonoBehaviour:
   damage: 1
   knockbackX: 20
   knockbackY: 10
-  pogoOnHit: 1
+  pogoOnHit: 0
   pogoBounceY: 14
   pogoOnlyWhenFalling: 1
   hazardTag: Hazard
