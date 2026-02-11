@@ -1,5 +1,6 @@
-using System;
+using System.Collections;
 using UnityEngine;
+using System;
 
 public class Health : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class Health : MonoBehaviour
     [SerializeField] private float invincibilityTime = 0.6f;
     public bool IsInvincible { get; private set; }
     private Coroutine invincibleRoutine;
+    [Header("UI Stuff")]
+    public HealthBar healthBar;
+    public static event Action PlayerDeath; 
 
 
     // If you assign this, it will temporarily swap to that sprite instead
@@ -24,40 +28,74 @@ public class Health : MonoBehaviour
     private SpriteRenderer sr;
     private Color originalColor;
     private Sprite originalSprite;
+    private Coroutine flashRoutine;
+    bool isDying = false;
 
     private void Awake()
     {
         currentHealth = startingHealth;
-
-        // works even if the SpriteRenderer is on a child
-        sr = GetComponentInChildren<SpriteRenderer>();
+        sr = GetComponent<SpriteRenderer>();
         if (sr != null)
         {
             originalColor = sr.color;
             originalSprite = sr.sprite;
         }
-        healthBar.SetMaxHealth(startingHealth);
+         if (CompareTag("Player") && healthBar != null)
+        {
+            healthBar.SetMaxHealth(startingHealth);
+            healthBar.SetHealth(currentHealth);
+        }
     }
+    
 
     public void TakeDamage(float damageAmount)
     {
+        if (isDying) return; //shouldnt be taking extra damage if youre dead (plan B)
         if (IsInvincible) return;
         currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, startingHealth);
-        Debug.Log($"Took {damageAmount} damage. Current health: {currentHealth}");
-        if (healthBar != null) 
-            healthBar.SetHealth(currentHealth); 
-            if (currentHealth > 0) 
-            { 
-                Debug.Log("Still Alive"); 
-            } 
-            else 
-            { 
-                Debug.Log("You Died");
-                PlayerDeath?.Invoke();
+
+        if(healthBar!=null)
+        {
+            healthBar.SetHealth(currentHealth);
+        }
+
+        if (flashOnDamage && sr != null)
+        {
+            if (flashRoutine != null) StopCoroutine(flashRoutine);
+            flashRoutine = StartCoroutine(FlashDamage());
+        }
+
+        if (currentHealth <= 0)
+        {
+            Debug.Log($"{name} died");
+
+            if (CompareTag("Player"))
+            {
+                Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;          // IMPORTANT: not linearVelocity
+            rb.angularVelocity = 0f;
+            rb.simulated = false;               // freezes player physics
+        }
+
+        // Disable ALL gameplay scripts on player
+        foreach (var script in GetComponents<MonoBehaviour>())
+        {
+            if (script != this)
+                script.enabled = false;
+        }
+
+        PlayerDeath?.Invoke();   // UI / death screen later
+            }
+            else
+            {
+                isDying = true;
+                StartCoroutine(DieRoutine());
             }
             //respawn / player death, game over screen, etc
         }
-    
+    }
 
     IEnumerator DieRoutine()
     {
@@ -91,8 +129,8 @@ public class Health : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
-    
-public void StartInvincibility(float seconds = -1f)
+
+    public void StartInvincibility(float seconds = -1f)
     {
         if (seconds <= 0f) seconds = invincibilityTime;
 

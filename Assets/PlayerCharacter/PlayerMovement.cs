@@ -72,6 +72,8 @@ public class PlayerMovement : MonoBehaviour
     public bool canWallJump = false;
     public bool canDash = false;
 
+    private bool controlsLocked = false; //setting so we can prevent movement (im assuming for pause menu or something)
+
     private void OnEnable()
     {
         Health.PlayerDeath += DisablePlayerMovement;
@@ -88,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (controlsLocked) return;
         
         GroundCheck();
         ProcessGravity();
@@ -382,12 +385,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void DisablePlayerMovement()
     {
+        controlsLocked = true;
+        rb.linearVelocity = Vector2.zero;//we stop movement with rb(rigidbody).linearVelocity to zero
+        rb.bodyType = RigidbodyType2D.Kinematic;
         animator.enabled = false;
-        rb.bodyType =RigidbodyType2D.Static;
+        // rb.bodyType =RigidbodyType2D.Static; //rigidbodies got error when you set them to static 
     }
 
         private void EnablePlayerMovement()
     {
+        controlsLocked = false;
         animator.enabled = true;
         rb.bodyType =RigidbodyType2D.Dynamic;
     }
