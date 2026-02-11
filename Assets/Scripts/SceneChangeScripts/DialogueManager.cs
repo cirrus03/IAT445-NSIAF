@@ -59,13 +59,15 @@ public class DialogueManager : MonoBehaviour
 
         if (InputManager.GetInstance().GetSubmitPressed())
         {
-            Debug.LogWarning("this is firing");
             ContinueStory();
+            InputManager.GetInstance().RegisterSubmitPressed();
         }
     }
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
+        InputManager.GetInstance().RegisterSubmitPressed();
+        
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialogueFinished = false;
