@@ -59,6 +59,7 @@ public class DialogueManager : MonoBehaviour
 
         if (InputManager.GetInstance().GetSubmitPressed())
         {
+            Debug.LogWarning("this is firing");
             ContinueStory();
         }
     }
