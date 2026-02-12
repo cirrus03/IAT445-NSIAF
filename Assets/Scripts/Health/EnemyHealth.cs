@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using System;
 
-public class Health : MonoBehaviour
+public class EnemyHealth : MonoBehaviour, IDamageable
 {
     [Header("Health")]
     [SerializeField] private float startingHealth = 3f;
@@ -12,15 +11,6 @@ public class Health : MonoBehaviour
     [SerializeField] private bool flashOnDamage = true;
     [SerializeField] private float flashDuration = 0.1f;
 
-    [Header("Invincibility (Player)")]
-    [SerializeField] private float invincibilityTime = 0.6f;
-    public bool IsInvincible { get; private set; }
-    private Coroutine invincibleRoutine;
-    [Header("UI Stuff")]
-    public HealthBar healthBar;
-    public static event Action PlayerDeath; 
-
-
     // If you assign this, it will temporarily swap to that sprite instead
     // If you leave it empty, it will just tint red instead.
     [SerializeField] private Sprite hurtSprite;
@@ -29,35 +19,26 @@ public class Health : MonoBehaviour
     private Color originalColor;
     private Sprite originalSprite;
     private Coroutine flashRoutine;
+
     bool isDying = false;
 
     private void Awake()
     {
         currentHealth = startingHealth;
+
         sr = GetComponent<SpriteRenderer>();
         if (sr != null)
         {
             originalColor = sr.color;
             originalSprite = sr.sprite;
         }
-         if (CompareTag("Player") && healthBar != null)
-        {
-            healthBar.SetMaxHealth(startingHealth);
-            healthBar.SetHealth(currentHealth);
-        }
     }
-    
 
     public void TakeDamage(float damageAmount)
     {
         if (isDying) return; //shouldnt be taking extra damage if youre dead (plan B)
-        if (IsInvincible) return;
-        currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, startingHealth);
 
-        if(healthBar!=null)
-        {
-            healthBar.SetHealth(currentHealth);
-        }
+        currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, startingHealth);
 
         if (flashOnDamage && sr != null)
         {
@@ -69,31 +50,8 @@ public class Health : MonoBehaviour
         {
             Debug.Log($"{name} died");
 
-            if (CompareTag("Player"))
-            {
-                Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;          // IMPORTANT: not linearVelocity
-            rb.angularVelocity = 0f;
-            rb.simulated = false;               // freezes player physics
-        }
-
-        // Disable ALL gameplay scripts on player
-        foreach (var script in GetComponents<MonoBehaviour>())
-        {
-            if (script != this)
-                script.enabled = false;
-        }
-
-        PlayerDeath?.Invoke();   // UI / death screen later
-            }
-            else
-            {
-                isDying = true;
-                StartCoroutine(DieRoutine());
-            }
-            //respawn / player death, game over screen, etc
+            isDying = true;
+            StartCoroutine(DieRoutine());
         }
     }
 
@@ -114,7 +72,6 @@ public class Health : MonoBehaviour
         var jumper = GetComponent<EnemyJumper>();
         if (jumper != null) jumper.enabled = false;
 
-
         // disable damage hitbox script so it can't hurt player while dying
         var dmg = GetComponentInChildren<EnemyDamage>();
         if (dmg != null) dmg.enabled = false;
@@ -130,45 +87,22 @@ public class Health : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void StartInvincibility(float seconds = -1f)
-    {
-        if (seconds <= 0f) seconds = invincibilityTime;
-
-        if (invincibleRoutine != null) StopCoroutine(invincibleRoutine);
-        invincibleRoutine = StartCoroutine(InvincibleRoutine(seconds));
-    }
-
-    IEnumerator InvincibleRoutine(float seconds)
-    {
-        IsInvincible = true;
-        yield return new WaitForSeconds(seconds);
-        IsInvincible = false;
-        invincibleRoutine = null;
-    }
-
-
-
     IEnumerator FlashDamage()
     {
         if (sr == null) yield break;
 
-        if (hurtSprite != null)
-            sr.sprite = hurtSprite;
-        else
-            sr.color = Color.red;
+        if (hurtSprite != null) sr.sprite = hurtSprite;
+        else sr.color = Color.red;
 
         yield return new WaitForSeconds(flashDuration);
 
         // restores only when not dead
         if (!isDying)
         {
-            if (hurtSprite != null)
-                sr.sprite = originalSprite;
-            else
-                sr.color = originalColor;
+            if (hurtSprite != null) sr.sprite = originalSprite;
+            else sr.color = originalColor;
         }
 
         flashRoutine = null;
     }
-
 }

@@ -10,18 +10,18 @@ public class Hazard : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        Health health = collision.GetComponent<Health>();
-        if (health == null) return;
+        var playerHealth = collision.GetComponent<PlayerHealth>();
+        if (playerHealth == null) return;
 
         // iframes
-        if (health.IsInvincible) return;
+        if (playerHealth.IsInvincible) return;
 
-        health.TakeDamage(damage);
+        playerHealth.TakeDamage(damage);
 
         if (respawnPlayerOnHit)
         {
             collision.GetComponent<LastSafeGround>()?.RespawnToLastSafe();
-            health.StartInvincibility(invincibilityAfterHit);
+            playerHealth.StartInvincibility(invincibilityAfterHit);
         }
     }
 }

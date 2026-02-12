@@ -7,13 +7,13 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Health.PlayerDeath += EnableGameOverMenu;
+        PlayerHealth.PlayerDeath += EnableGameOverMenu;
 
     }
 
     private void OnDisable()
     {
-        Health.PlayerDeath -= EnableGameOverMenu;
+        PlayerHealth.PlayerDeath -= EnableGameOverMenu;
     }
 
     public void EnableGameOverMenu()

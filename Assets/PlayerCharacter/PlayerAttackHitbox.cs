@@ -45,15 +45,15 @@ public class PlayerAttackHitbox : MonoBehaviour
 
         bool holyShootIJustHitAPogo = false;
 
-        Health hp = other.GetComponent<Health>();
+        EnemyHealth enemyHealth = other.GetComponentInParent<EnemyHealth>(); 
 
-        if (hp != null)
+        if (enemyHealth != null)
         {
             holyShootIJustHitAPogo = true;
 
             ApplyPooogo();
 
-            hp.TakeDamage(damage);
+            enemyHealth.TakeDamage(damage);
 
             Rigidbody2D enemyRb = other.attachedRigidbody;
             if (enemyRb != null)

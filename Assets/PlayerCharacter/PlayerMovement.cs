@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     float horizontalMovement;
 
     [Header("Jumping")]
-    public float jumpPower = 10f;
+    public float jumpPower = 15f;
     public int maxJumps = 2;
     int jumpsRemaining;
 
@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
     public LayerMask groundLayer;
     bool isGrounded;
+    private bool wasGrounded;
 
     [Header("WallCheck")]
     public Transform wallCheckPos;
@@ -91,11 +92,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        Health.PlayerDeath += DisablePlayerMovement;
+        PlayerHealth.PlayerDeath += DisablePlayerMovement;
     }
         private void OnDisable()
     {
-        Health.PlayerDeath -= DisablePlayerMovement;
+        PlayerHealth.PlayerDeath -= DisablePlayerMovement;
     }
     void Start()
     {
@@ -161,23 +162,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        
-        if (jumpsRemaining > 0)
-        {
-            if (context.performed)
-            {
-                // hold down jump for full height
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
-                jumpsRemaining--;
-                animator.SetTrigger("Jump"); //mine is uppercase so it upper case :')
-            }
-            else if (context.canceled && rb.linearVelocity.y > 0)
-            {
-                // light tap of jump for short jump (half height)
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
-                jumpsRemaining--;
-            }
-        }
         // wall jump
         if (context.performed && canWallJump && wallJumpTimer > 0f)
         {
@@ -186,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
             wallJumpTimer = 0;
             animator.SetTrigger("Jump");
 
-            ResetJumps();
+            jumpsRemaining = canDoubleJump ? 1 : 0;//oops accidentally gave three jumps
 
             // force flip
             if (transform.localScale.x != wallJumpDirection)
@@ -200,6 +184,21 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(CancelWallJump), wallJumpTime + 0.1f);
             return;
         }
+        
+            if (context.performed && jumpsRemaining > 0)
+            {
+                // hold down jump for full height
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
+                jumpsRemaining--;
+                animator.SetTrigger("Jump"); //mine is uppercase so it upper case :')
+            }
+            else if (context.canceled && rb.linearVelocity.y > 0)
+            {
+                // light tap of jump for short jump (half height)
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.3f);
+            }
+        
+
     }
 
     public void Attack(InputAction.CallbackContext context)
@@ -260,18 +259,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void GroundCheck()
     {
-        if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
+        bool groundedNow = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer);
+        
+        if (groundedNow && !wasGrounded)
         {
-            // Debug.Log("ground touched- reset jumps: " + Time.time);
-            isGrounded = true;//reset upon landing
-            ResetJumps();
+            
+            ResetJumps(); 
 
             okayButCanIDash = true;//same
         }
-        else
-        {
-            isGrounded = false;
-        }
+
+        // Debug.Log("ground touched- reset jumps: " + Time.time);
+        isGrounded = groundedNow;
+        wasGrounded = groundedNow;//reset upon landing
+        
     }
 
     private bool WallCheck()
@@ -305,6 +306,10 @@ public class PlayerMovement : MonoBehaviour
         // not grounded + on a wall + moving
         if (!isGrounded & WallCheck() & horizontalMovement != 0)
         {
+            if (!isWallSliding) 
+            {
+                okayButCanIDash = true; 
+            }
             isWallSliding = true;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -wallSlideSpeed));
         }
