@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 8402763953818974262}
   - component: {fileID: 3668261210292237287}
   - component: {fileID: 4518963875798195675}
-  - component: {fileID: 2999388113471518278}
+  - component: {fileID: 2182946741485246272}
   - component: {fileID: 931858266121522340}
-  - component: {fileID: 3736383124363051292}
+  - component: {fileID: 7348457478015331067}
   m_Layer: 7
   m_Name: FlyingEnemy
   m_TagString: Untagged
@@ -30,8 +30,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2045845354354654013}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.2, y: 0.8, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.4, y: 5.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -161,7 +161,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.08794594, y: -0.056375682}
   m_Size: {x: 0.58799934, y: 0.58799934}
   m_Direction: 0
---- !u!114 &2999388113471518278
+--- !u!114 &2182946741485246272
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -170,27 +170,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2045845354354654013}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b6bfd7b7559950479acedf059e6297d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9878320bbd6266d4aa9558c015bd551c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyFlying
-  player: {fileID: 0}
-  aggroRange: 6
-  deaggroRange: 10
-  loseSightDelay: 1
-  searchSpeed: 2.5
-  reachLastSeenDistance: 0.4
-  flySpeed: 4
-  accel: 15
-  stopDistance: 0.5
-  patrolSpeed: 1.5
-  patrolDistance: 3
-  patrolHeightBob: 0.5
-  bobSpeed: 2
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 72
-  avoidCheckDistance: 0.4
-  avoidRadius: 0.1
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  startingHealth: 3
+  flashOnDamage: 1
+  flashDuration: 0.1
+  hurtSprite: {fileID: 0}
 --- !u!95 &931858266121522340
 Animator:
   serializedVersion: 7
@@ -213,7 +199,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3736383124363051292
+--- !u!114 &7348457478015331067
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -222,13 +208,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 2045845354354654013}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfb9daaae3746a448b6fc9856cdc7cd4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b6bfd7b7559950479acedf059e6297d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  startingHealth: 3
-  flashOnDamage: 1
-  flashDuration: 0.1
-  hurtSprite: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyFlying
+  player: {fileID: 0}
+  aggroRange: 6
+  deaggroRange: 8
+  loseSightDelay: 2.5
+  searchSpeed: 2.5
+  reachLastSeenDistance: 0.4
+  flySpeed: 3
+  accel: 12
+  stopDistance: 0.5
+  patrolSpeed: 1.5
+  patrolDistance: 3
+  patrolHeightBob: 0.5
+  bobSpeed: 2
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 72
+  avoidCheckDistance: 0.6
+  avoidRadius: 0.25
 --- !u!1 &3601454383414370137
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class MeleeAtk : MonoBehaviour
     [SerializeField] private float colliderDistance;
     [SerializeField] private LayerMask playerLayer;
     private float coolDownTimer = Mathf.Infinity;
-    private Health playerHealth;
+    private PlayerHealth playerHealth;
 
     private Animator animator;
 
@@ -46,7 +46,7 @@ public class MeleeAtk : MonoBehaviour
 
         if(hit.collider != null)
         {
-            playerHealth = hit.transform.GetComponent<Health>();
+            playerHealth = hit.transform.GetComponent<PlayerHealth>();
         }
 
 

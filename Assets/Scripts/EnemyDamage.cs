@@ -22,7 +22,8 @@ public class EnemyDamage : MonoBehaviour
         return;
         }
 
-        Health playerHealth = other.GetComponent<Health>();
+        var playerHealth = other.GetComponent<PlayerHealth>();
+
         if (playerHealth == null) 
         {
         return;
