@@ -418,6 +418,28 @@ public class PlayerMovement : MonoBehaviour
         hitbox.SetActive(false);
     }
 
+    public IEnumerator DamageStunRoutine(float duration)
+    {
+        controlsLocked = true;
+        recoilLock = true; // also prevents your movement code from overwriting velocity
+
+        yield return new WaitForSeconds(duration);
+
+        recoilLock = false;
+        controlsLocked = false;
+    }
+
+    public IEnumerator HitStopRoutine(float duration)
+    {
+        // tiny freeze-frame (affects whole game). Keep it SHORT.
+        float prev = Time.timeScale;
+        Time.timeScale = 0f;
+
+        yield return new WaitForSecondsRealtime(duration);
+
+        Time.timeScale = prev;
+    }
+
 
     //gizmos
     public void OnDrawGizmosSelected()

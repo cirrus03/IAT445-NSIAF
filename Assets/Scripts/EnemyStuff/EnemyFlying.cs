@@ -36,6 +36,13 @@ public class EnemyFlying : MonoBehaviour
     public float avoidCheckDistance = 0.6f;
     public float avoidRadius = 0.25f;
 
+    [Header("Attack Behavior")]
+    public float attackCooldown = 0.7f;   // time between damage attempts
+    public float retreatTime = 0.25f;     // how long it backs off after a hit
+    public float retreatSpeed = 4f;       // how fast it backs off
+    private float attackTimer = 0f;
+    private float retreatTimer = 0f;
+
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     bool isFacingRight = false;
@@ -61,6 +68,9 @@ public class EnemyFlying : MonoBehaviour
 
     void FixedUpdate()
     {
+        attackTimer -= Time.fixedDeltaTime;
+        retreatTimer -= Time.fixedDeltaTime;
+
         if (player == null)
         {
             Patrol();
@@ -83,10 +93,11 @@ public class EnemyFlying : MonoBehaviour
         {
             if (canSeePlayer)
             {
-                loseSightTimer = 0f; // reset memory when it sees you again
+                loseSightTimer = 0f;
                 lastSeenPos = player.position;
                 hasLastSeen = true;
             }
+
             else
             {
                 loseSightTimer += Time.fixedDeltaTime;
@@ -96,7 +107,20 @@ public class EnemyFlying : MonoBehaviour
             {
                 isAggro = false;
                 loseSightTimer = 0f;
+                hasLastSeen = false;
             }
+        }
+
+        bool canAttackNow = attackTimer <= 0f;
+
+        // If retreating after a hit, move away from player
+        if (isAggro && retreatTimer > 0f && player != null)
+        {
+            Vector2 away = (rb.position - (Vector2)player.position).normalized;
+            Vector2 desiredVelRetreat = AvoidObstacles(away * retreatSpeed);
+            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, desiredVelRetreat, accel * Time.fixedDeltaTime);
+            UpdateFlip();
+        return;
         }
 
         // velocoty
@@ -111,12 +135,7 @@ public class EnemyFlying : MonoBehaviour
             else if (hasLastSeen)
             {
                 Vector2 toLast = lastSeenPos - rb.position;
-
-                // if reach the last seen point, let deaggro timer handle giving up (idk what other way to handle this)
-                if (toLast.magnitude <= reachLastSeenDistance)
-                    desiredVel = Vector2.zero;
-                else
-                    desiredVel = toLast.normalized * searchSpeed;
+                desiredVel = (toLast.magnitude <= reachLastSeenDistance) ? Vector2.zero : toLast.normalized * searchSpeed;
             }
             else
             {
@@ -124,24 +143,25 @@ public class EnemyFlying : MonoBehaviour
             }
         }
         else
-        {
-            desiredVel = PatrolVelocity();
-        }
+    {
+        desiredVel = PatrolVelocity();
+    }
 
-        // obstacle avoid
-        desiredVel = AvoidObstacles(desiredVel);
+    desiredVel = AvoidObstacles(desiredVel);
+    rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, desiredVel, accel * Time.fixedDeltaTime);
 
-        // steering
-        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, desiredVel, accel * Time.fixedDeltaTime);
-        // Flip based on movement direction (same as player)
+    UpdateFlip();
+}
+    void UpdateFlip()
+    {
         if (rb.linearVelocity.x > 0 && !isFacingRight)
         {
             Flip();
-        }
+        } 
         else if (rb.linearVelocity.x < 0 && isFacingRight)
         {
             Flip();
-        }
+        } 
     }
 
     void Flip()
@@ -183,6 +203,12 @@ public class EnemyFlying : MonoBehaviour
         Vector2 desiredVel = PatrolVelocity();
         desiredVel = AvoidObstacles(desiredVel);
         rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, desiredVel, accel * Time.fixedDeltaTime);
+    }
+
+    public void NotifyHitPlayer()
+    {
+        attackTimer = attackCooldown;
+        retreatTimer = retreatTime;
     }
 
     Vector2 PatrolVelocity()

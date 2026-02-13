@@ -4,10 +4,6 @@ public class PlayerAttackHitbox : MonoBehaviour
 {
     public float damage = 1f;
 
-    [Header("Enemy Knockback")]
-    public float knockbackX = 13f;
-    public float knockbackY = 3f;
-
     [Header("Pogo")]
     public bool pogoOnHit = true;
     public float pogoBounceY = 14f;
@@ -78,18 +74,12 @@ public class PlayerAttackHitbox : MonoBehaviour
             ApplyPooogo();
 
             enemyHealth.TakeDamage(damage);
-
-            //enemy knockback
-            Rigidbody2D enemyRb = other.attachedRigidbody;
-            if (enemyRb != null)
+            EnemyKnockback kb = enemyHealth.GetComponent<EnemyKnockback>();
+            if (kb != null)
             {
-
-            float dir = Mathf.Sign(other.transform.position.x - playerRoot.position.x);
-            if (dir == 0) dir = 1f;
-
-            enemyRb.linearVelocity = Vector2.zero; // reset current motion
-            enemyRb.AddForce(new Vector2(dir * knockbackX, knockbackY), ForceMode2D.Impulse);
+                kb.Apply(playerRoot.position);
             }
+
 
         }
 
