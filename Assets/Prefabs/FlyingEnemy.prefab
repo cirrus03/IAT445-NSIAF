@@ -155,7 +155,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -230,6 +230,9 @@ MonoBehaviour:
     m_Bits: 72
   avoidCheckDistance: 0.6
   avoidRadius: 0.25
+  attackCooldown: 0.7
+  retreatTime: 0.25
+  retreatSpeed: 4
 --- !u!114 &5487850976869862742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,5 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDamage
   damage: 1
-  knockback: 1
-  hitCooldown: 0.5
+  knockbackX: 12
+  knockbackY: 6
+  hitStopTime: 0.05
+  stunTime: 0.18
