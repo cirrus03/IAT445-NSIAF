@@ -87,6 +87,10 @@ public class PlayerMovement : MonoBehaviour
     public bool canWallJump = false;
     public bool canDash = false;
 
+    [Header("Recoil")]
+    public bool recoilLock = false;
+
+
     private bool controlsLocked = false; //setting so we can prevent movement (im assuming for pause menu or something)
     private Vector2 moveInput;
 
@@ -121,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("yVelocity", rb.linearVelocity.y);
         animator.SetFloat("magnitude", rb.linearVelocity.magnitude);
         // animator.SetBool("isWallSliding", isWallSliding);
-        if (!isWallJumping && !isDashing)
+        if (!isWallJumping && !isDashing && !recoilLock)
         {
             rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
             Flip();
@@ -195,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
             else if (context.canceled && rb.linearVelocity.y > 0)
             {
                 // light tap of jump for short jump (half height)
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.3f);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.1f);
             }
         
 
@@ -260,17 +264,19 @@ public class PlayerMovement : MonoBehaviour
     private void GroundCheck()
     {
         bool groundedNow = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer);
-        
-        if (groundedNow && !wasGrounded)
-        {
-            
-            ResetJumps(); 
+         // Debug.Log("ground touched- reset jumps: " + Time.time);
+        isGrounded = groundedNow;
 
+        if (groundedNow)
+        {
             okayButCanIDash = true;//same
+
+            if (!wasGrounded)
+            {
+                ResetJumps(); 
+            }
         }
 
-        // Debug.Log("ground touched- reset jumps: " + Time.time);
-        isGrounded = groundedNow;
         wasGrounded = groundedNow;//reset upon landing
         
     }
@@ -360,6 +366,13 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJumps()
     {
         jumpsRemaining = canDoubleJump ? maxJumps :1;
+    }
+
+    public IEnumerator RecoilLockRoutine(float t)
+    {
+        recoilLock = true;
+        yield return new WaitForSeconds(t);
+        recoilLock = false;
     }
 
     private IEnumerator DashRoutine()
