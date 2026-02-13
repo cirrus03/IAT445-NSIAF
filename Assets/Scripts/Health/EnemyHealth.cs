@@ -34,7 +34,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         }
     }
 
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(float damageAmount, Vector2 attackerPos)
     {
         if (isDying) return; //shouldnt be taking extra damage if youre dead (plan B)
 
@@ -53,6 +53,10 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             isDying = true;
             StartCoroutine(DieRoutine());
         }
+    }
+    public void TakeDamage(float damageAmount)
+    {
+        TakeDamage(damageAmount, transform.position); // no knockback direction
     }
 
     IEnumerator DieRoutine()

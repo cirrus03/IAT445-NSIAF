@@ -87,6 +87,10 @@ public class PlayerMovement : MonoBehaviour
     public bool canWallJump = false;
     public bool canDash = false;
 
+    [Header("Recoil")]
+    public bool recoilLock = false;
+
+
     private bool controlsLocked = false; //setting so we can prevent movement (im assuming for pause menu or something)
     private Vector2 moveInput;
 
@@ -121,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("yVelocity", rb.linearVelocity.y);
         animator.SetFloat("magnitude", rb.linearVelocity.magnitude);
         // animator.SetBool("isWallSliding", isWallSliding);
-        if (!isWallJumping && !isDashing)
+        if (!isWallJumping && !isDashing && !recoilLock)
         {
             rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
             Flip();
@@ -162,6 +166,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if (isDashing) return;//I'm sorry little one... you have been nerfed...(comment this line out if you want the weird dash jump thing back)
+
         // wall jump
         if (context.performed && canWallJump && wallJumpTimer > 0f)
         {
@@ -195,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
             else if (context.canceled && rb.linearVelocity.y > 0)
             {
                 // light tap of jump for short jump (half height)
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.3f);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.1f);
             }
         
 
@@ -260,17 +266,19 @@ public class PlayerMovement : MonoBehaviour
     private void GroundCheck()
     {
         bool groundedNow = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer);
-        
-        if (groundedNow && !wasGrounded)
-        {
-            
-            ResetJumps(); 
+         // Debug.Log("ground touched- reset jumps: " + Time.time);
+        isGrounded = groundedNow;
 
+        if (groundedNow)
+        {
             okayButCanIDash = true;//same
+
+            if (!wasGrounded)
+            {
+                ResetJumps(); 
+            }
         }
 
-        // Debug.Log("ground touched- reset jumps: " + Time.time);
-        isGrounded = groundedNow;
         wasGrounded = groundedNow;//reset upon landing
         
     }
@@ -362,6 +370,13 @@ public class PlayerMovement : MonoBehaviour
         jumpsRemaining = canDoubleJump ? maxJumps :1;
     }
 
+    public IEnumerator RecoilLockRoutine(float t)
+    {
+        recoilLock = true;
+        yield return new WaitForSeconds(t);
+        recoilLock = false;
+    }
+
     private IEnumerator DashRoutine()
     {
         isDashing = true;
@@ -401,6 +416,28 @@ public class PlayerMovement : MonoBehaviour
         hitbox.SetActive(true);
         yield return new WaitForSeconds(0.1f); // active frames
         hitbox.SetActive(false);
+    }
+
+    public IEnumerator DamageStunRoutine(float duration)
+    {
+        controlsLocked = true;
+        recoilLock = true; // also prevents your movement code from overwriting velocity
+
+        yield return new WaitForSeconds(duration);
+
+        recoilLock = false;
+        controlsLocked = false;
+    }
+
+    public IEnumerator HitStopRoutine(float duration)
+    {
+        // tiny freeze-frame (affects whole game). Keep it SHORT.
+        float prev = Time.timeScale;
+        Time.timeScale = 0f;
+
+        yield return new WaitForSecondsRealtime(duration);
+
+        Time.timeScale = prev;
     }
 
 

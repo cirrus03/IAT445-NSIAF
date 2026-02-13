@@ -57,6 +57,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (IsInvincible) return;
 
         currentHealth = Mathf.Clamp(currentHealth - damageAmount, 0, startingHealth);
+        StartInvincibility();
 
         if (healthBar != null)
         {
