@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2182946741485246272}
   - component: {fileID: 931858266121522340}
   - component: {fileID: 7348457478015331067}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: FlyingEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 717467037
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 6512599272312046103, guid: b09ed4923ff1fe94299a1a7272f5cdaf, type: 3}
@@ -154,7 +154,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 5724375634037771740}
   - component: {fileID: 385085918796438399}
   - component: {fileID: 1324414406471023519}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: DamageHitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}

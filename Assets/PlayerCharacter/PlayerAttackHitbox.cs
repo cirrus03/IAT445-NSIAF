@@ -144,6 +144,17 @@ public class PlayerAttackHitbox : MonoBehaviour
         }
 
         GameObject vfx = Instantiate(hitVfxPrefab, pos + hitVfxOffset, Quaternion.identity);
+
+        float facing = Mathf.Sign(playerRoot.localScale.x);
+
+        if (facing == 0)
+        {
+            facing = 1f;
+        } 
+
+        Vector3 s = vfx.transform.localScale;
+        s.x = Mathf.Abs(s.x) * (facing > 0 ? -1f : 1f);
+        vfx.transform.localScale = s;
     }
 
 

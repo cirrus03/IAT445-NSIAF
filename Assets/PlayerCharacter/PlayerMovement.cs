@@ -166,6 +166,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if (isDashing) return;//I'm sorry little one... you have been nerfed...(comment this line out if you want the weird dash jump thing back)
+
         // wall jump
         if (context.performed && canWallJump && wallJumpTimer > 0f)
         {

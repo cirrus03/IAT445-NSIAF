@@ -442,7 +442,7 @@ MonoBehaviour:
   fallSpeedMultiplier: 3
   wallSlideSpeed: 4
   wallJumpTime: 0.1
-  wallJumpPower: {x: 3, y: 13}
+  wallJumpPower: {x: 3, y: 16}
   attackDamage: 1
   attackRange: 0.8
   attackBoxSize: {x: 0.9, y: 0.6}
