@@ -124,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
         // }
         animator.SetFloat("yVelocity", rb.linearVelocity.y);
         animator.SetFloat("magnitude", rb.linearVelocity.magnitude);
-        // animator.SetBool("isWallSliding", isWallSliding);
+        animator.SetBool("isWallSliding", isWallSliding);
         if (!isWallJumping && !isDashing && !recoilLock)
         {
             rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
