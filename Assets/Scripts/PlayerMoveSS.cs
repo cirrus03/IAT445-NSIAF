@@ -6,6 +6,7 @@ public class PlayerMoveSS : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Animator animator;
     private Vector2 movement;
     void Update()
     {
@@ -18,13 +19,24 @@ public class PlayerMoveSS : MonoBehaviour
         movement.x = input * speed * Time.deltaTime;
         transform.Translate(movement);
 
-        if(input > 0)
+        if (input > 0)
         {
             spriteRenderer.flipX = false;
-        } else if (input < 0)
+        }
+        else if (input < 0)
         {
             spriteRenderer.flipX = true;
         }
+
+        if (input != 0)
+        {
+            animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
+        }
+
     }
 
 }
