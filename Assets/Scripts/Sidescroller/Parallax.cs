@@ -2,18 +2,20 @@ using UnityEngine;
 
 public class Parallax : MonoBehaviour
 {
-    Material mat;
-    float distance;
+    Transform cam;
+    Vector3 startPos;
 
-    [Range(0f,0.5f)]
-    public float speed=0.2f;
+    public float parallaxStrength = 0.3f;
+
     void Start()
     {
-        mat = GetComponent<Renderer>().material;
+        cam = Camera.main.transform;
+        startPos = transform.position;
     }
-    void Update()
+
+    void LateUpdate()
     {
-        distance += Time.deltaTime*speed;
-        mat.SetTextureOffset("_MainTex", Vector2.right*distance);
+        float distance = cam.position.x * parallaxStrength;
+        transform.position = new Vector3(startPos.x + distance, startPos.y, startPos.z);
     }
 }
