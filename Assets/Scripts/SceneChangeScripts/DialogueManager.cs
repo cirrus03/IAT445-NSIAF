@@ -11,6 +11,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Dialogue UI")]
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private SceneFader sceneFader;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
@@ -57,7 +58,7 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (InputManager.GetInstance().GetSubmitPressed())
+        if (InputManager.GetInstance().GetSubmitPressed() || Input.GetMouseButtonDown(0))
         {
             ContinueStory();
             InputManager.GetInstance().RegisterSubmitPressed();
@@ -67,11 +68,11 @@ public class DialogueManager : MonoBehaviour
     public void EnterDialogueMode(TextAsset inkJSON)
     {
         InputManager.GetInstance().RegisterSubmitPressed();
-        
+
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialogueFinished = false;
-        
+
         dialoguePanel.SetActive(true);
         ContinueStory();
     }
@@ -89,12 +90,25 @@ public class DialogueManager : MonoBehaviour
         if (currentStory.canContinue)
         {
             dialogueText.text = currentStory.Continue();
-            // if there are
+
+            HandleTags(currentStory.currentTags);
+
             DisplayChoices();
         }
         else
         {
             ExitDialogueMode();
+        }
+    }
+
+    private void HandleTags(List<string> tags)
+    {
+        foreach (string tag in tags)
+        {
+            if (tag == "fadein")
+            {
+                sceneFader.FadeIn(2f);
+            }
         }
     }
 
