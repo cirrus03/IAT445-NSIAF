@@ -8,13 +8,17 @@ public class CrowQuestGiver : MonoBehaviour
 
     [Header("Optional Ability Unlocker")]
     public AbilityUnlocker abilityUnlocker;
-    public LevelExitActivator exitActivator;
+    public GameObject levelExitPortal;
+
     private void Update()
     {
         if (interactPrompt != null)
             interactPrompt.SetActive(playerInRange);
 
         if (!playerInRange) return;
+
+        if (SimpleDialogueUI.Instance != null && SimpleDialogueUI.Instance.DialogueActive)
+            return;
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -24,47 +28,75 @@ public class CrowQuestGiver : MonoBehaviour
 
     void Interact()
     {
-        if (GameProgress.Instance == null || QuestManager.Instance == null)
+        if (GameProgress.Instance == null || QuestManager.Instance == null || SimpleDialogueUI.Instance == null)
         {
-            Debug.LogWarning("Missing GameProgress or QuestManager in scene.");
-            return;
-        }
-
-        // special death response first
-        if (GameProgress.Instance.playerJustDied)
-        {
-            Debug.Log("Crow: Oh... so you died. It's okay, you can try again.");
-            GameProgress.Instance.ClearDeathFlag();
+            Debug.LogWarning("Missing GameProgress, QuestManager, or SimpleDialogueUI in scene.");
             return;
         }
 
         int stage = GameProgress.Instance.currentQuestStage;
         QuestManager qm = QuestManager.Instance;
 
-        // stage 0- give first quest
+        // death response first
+        if (GameProgress.Instance.playerJustDied)
+        {
+            SimpleDialogueUI.Instance.StartDialogue(new string[]
+            {
+                "Crow: Oh... so you died.",
+                "Crow: It's okay.",
+                "Crow: You can try again."
+            });
+
+            GameProgress.Instance.ClearDeathFlag();
+            return;
+        }
+
+        // Stage 0 -> give first quest
         if (stage == 0)
         {
             if (!qm.questActive)
             {
-                Debug.Log("Crow: Defeat 1 enemy. Use left click to attack.");
+                SimpleDialogueUI.Instance.StartDialogue(new string[]
+                {
+                    "Crow: You made it.",
+                    "Crow: I know encountering enemies can be scary.",
+                    "Crow: But it's okay, dying here doesn't actually affect you... probably.",
+                    "Crow: Anyways... I've got a quest for you.",
+                    "Crow: Return to me once you finish.",
+                    "Crow: I'll give you a little somethin' somethin'",
+                    "Defeat 1 enemy.",
+                    "You can LEFT CLICK to attack.",
+                });
+
                 qm.StartKillQuest("kill_first_enemy", 1);
                 GameProgress.Instance.currentQuestStage = 1;
             }
             return;
         }
 
-        // First staage - first quest active / complete
+        // Stage 1 -> first quest active / complete
         if (stage == 1)
         {
             if (qm.questActive && !qm.questComplete)
             {
-                Debug.Log($"Crow: Come back after defeating 1 enemy. ({qm.currentAmount}/{qm.requiredAmount})");
+                SimpleDialogueUI.Instance.StartDialogue(new string[]
+                {
+                    $"Crow: You have defeated {qm.currentAmount} out of {qm.requiredAmount}.",
+                    "Crow: Come back after defeating an enemy."
+                });
                 return;
             }
 
             if (qm.questActive && qm.questComplete)
             {
-                Debug.Log("Crow: Well done. Take this — It's the dash ability");
+                SimpleDialogueUI.Instance.StartDialogue(new string[]
+                {
+                    "Crow: Well done.",
+                    "Crow: Take this power.",
+                    "You can dash now.",
+                    "Press [RMB] or [SHIFT] to dash."
+                });
+
                 GameProgress.Instance.UnlockDash();
 
                 if (abilityUnlocker != null)
@@ -76,21 +108,37 @@ public class CrowQuestGiver : MonoBehaviour
             }
         }
 
-        // stage 2 - second quest
+        // Stage 2 -> second quest
         if (stage == 2)
         {
             if (!qm.questActive)
             {
-                Debug.Log("Crow: Find [the item] in the upper-right part of the map."); // rememeber to update this when we get 
+                SimpleDialogueUI.Instance.StartDialogue(new string[]
+                {
+                    "Crow: I've got two more tasks for you before you can leave.",
+                    "Crow: There is an item in the upper-right part of the map.",
+                    "Crow: Bring it back to me."
+                });
+
                 qm.StartCollectQuest("collect_top_right_item", 1);
             }
             else if (!qm.questComplete)
             {
-                Debug.Log($"Crow: [The item] is still out there. ({qm.currentAmount}/{qm.requiredAmount})");
+                SimpleDialogueUI.Instance.StartDialogue(new string[]
+                {
+                    $"Crow: You have found {qm.currentAmount} out of {qm.requiredAmount}.",
+                    "Crow: The item is still out there."
+                });
             }
             else
             {
-                Debug.Log("Crow: Good. Take this. It allows you to perform a wall jump. ");
+                SimpleDialogueUI.Instance.StartDialogue(new string[]
+                {
+                    "Crow: Good.",
+                    "Crow: I'll give you this ability next.",
+                    "You've unlocked the wall jump ability."
+                });
+
                 GameProgress.Instance.UnlockWallJump();
 
                 if (abilityUnlocker != null)
@@ -103,21 +151,36 @@ public class CrowQuestGiver : MonoBehaviour
             return;
         }
 
-        // stage 3-  third quest
+        // Stage 3 -> third quest
         if (stage == 3)
         {
             if (!qm.questActive)
             {
-                Debug.Log("Crow: Bring me one more item, this one is on the left side of the map, maybe try the new wall jump you just learned.");
+                SimpleDialogueUI.Instance.StartDialogue(new string[]
+                {
+                    "Crow: Bring me one more item located in the top left quadrant of the area.",
+                    "Crow: Then this final ability will be yours."
+                });
+
                 qm.StartCollectQuest("collect_final_item", 1);
             }
             else if (!qm.questComplete)
             {
-                Debug.Log($"Crow: Keep searching. ({qm.currentAmount}/{qm.requiredAmount})");
+                SimpleDialogueUI.Instance.StartDialogue(new string[]
+                {
+                    $"Crow: You have found {qm.currentAmount} out of {qm.requiredAmount}.",
+                    "Crow: It doesn't look like you've found it yet."
+                });
             }
             else
             {
-                Debug.Log("Crow: Excellent. The last ability is yours, the double jump.");
+                SimpleDialogueUI.Instance.StartDialogue(new string[]
+                {
+                    "Crow: Excellent.",
+                    "Crow: The last ability is yours.",
+                    "You can now double jump."
+                });
+
                 GameProgress.Instance.UnlockDoubleJump();
 
                 if (abilityUnlocker != null)
@@ -126,8 +189,8 @@ public class CrowQuestGiver : MonoBehaviour
                 qm.ClearQuest();
                 GameProgress.Instance.currentQuestStage = 4;
 
-                if (exitActivator != null)
-                    exitActivator.ActivateExit();
+                if (levelExitPortal != null)
+                    levelExitPortal.SetActive(true);
             }
 
             return;
@@ -135,7 +198,11 @@ public class CrowQuestGiver : MonoBehaviour
 
         if (stage >= 4)
         {
-            Debug.Log("Crow: You are ready to continue.");
+            SimpleDialogueUI.Instance.StartDialogue(new string[]
+            {
+                "Crow: You are ready to continue.",
+                "Crow: The portal back should open right about now."
+            });
         }
     }
 
