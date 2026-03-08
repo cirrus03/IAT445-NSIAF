@@ -17,12 +17,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: c5d89425313991849b90a232ae0a6fe9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SideScroller.unity
     guid: 15db52fc8928cd94c8940ec1438175aa
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/1_DialogueCrow.unity
     guid: 922bbe4f60fe94570af58e306566de9c
+  - enabled: 1
+    path: Assets/Scenes/NewSidescroll.unity
+    guid: 5f408175cc59649c698b4992af2f6459
   - enabled: 1
     path: Assets/Scenes/LabAreaClone.unity
     guid: e1cdde185b20f3c488ccdcd556c758c5
