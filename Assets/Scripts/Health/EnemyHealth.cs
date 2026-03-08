@@ -50,6 +50,9 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         {
             Debug.Log($"{name} died");
 
+            if (QuestManager.Instance != null)
+                QuestManager.Instance.RegisterEnemyKilled();
+
             isDying = true;
             StartCoroutine(DieRoutine());
         }
@@ -79,6 +82,13 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         // disable damage hitbox script so it can't hurt player while dying
         var dmg = GetComponentInChildren<EnemyDamage>();
         if (dmg != null) dmg.enabled = false;
+
+        // disable all colliders so player can't hit or collide with corpse
+        Collider2D[] cols = GetComponentsInChildren<Collider2D>();
+        foreach (var col in cols)
+        {
+            col.enabled = false;
+        }
 
         // show death flash
         if (sr != null)

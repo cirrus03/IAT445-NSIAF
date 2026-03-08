@@ -72,7 +72,29 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         if (currentHealth <= 0)
         {
+            isDying = true;
             Debug.Log($"{name} died");
+
+            if (GameProgress.Instance != null)
+                GameProgress.Instance.MarkPlayerDied();
+
+            Animator anim = GetComponent<Animator>();//disableing animatiosn
+            if (anim != null)
+            {
+                anim.enabled = false;
+            }
+
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.enabled = false;
+            }
+
+            Collider2D[] cols = GetComponentsInChildren<Collider2D>();
+            foreach (var col in cols)
+            {
+                col.enabled = false;
+            }
 
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
             if (rb != null)

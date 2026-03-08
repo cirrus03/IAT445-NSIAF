@@ -14,7 +14,7 @@ public class PlayerAttackHitbox : MonoBehaviour
     public bool recoilPlayerOnHit = false;
     public float recoilPlayerX = 5f;
     public float recoilPlayerY = 0f;
-    public bool recoilUsesImpulse = false; 
+    public bool recoilUsesImpulse = false;
     public LayerMask recoilLayers; //set to whatever you want to recoil off of
 
     [Header("Hit VFX")]
@@ -58,29 +58,33 @@ public class PlayerAttackHitbox : MonoBehaviour
 
         bool hitSomethingValid = false;
 
-        //enemy hit
-        EnemyHealth enemyHealth = other.GetComponentInParent<EnemyHealth>(); 
+        // damageable hit (enemy, breakable wall, etc.)
+        IDamageable damageable = other.GetComponentInParent<IDamageable>();
 
-        if (enemyHealth != null)
+        if (damageable != null)
         {
             hitSomethingValid = true;
 
-            if (spawnVfxOnEnemy && !spawnedVfx)
+            if (!spawnedVfx)
             {
                 SpawnHitVfx(other.ClosestPoint(transform.position));
                 spawnedVfx = true;
             }
 
-            ApplyPooogo();
+            damageable.TakeDamage(damage);
 
-            enemyHealth.TakeDamage(damage);
-            EnemyKnockback kb = enemyHealth.GetComponent<EnemyKnockback>();
-            if (kb != null)
+            // enemy hit
+            EnemyHealth enemyHealth = other.GetComponentInParent<EnemyHealth>();
+            if (enemyHealth != null)
             {
-                kb.Apply(playerRoot.position);
+                ApplyPooogo();
+
+                EnemyKnockback kb = enemyHealth.GetComponent<EnemyKnockback>();
+                if (kb != null)
+                {
+                    kb.Apply(playerRoot.position);
+                }
             }
-
-
         }
 
         if (other.CompareTag(hazardTag)) //pogo off hazard
@@ -118,7 +122,7 @@ public class PlayerAttackHitbox : MonoBehaviour
             if (hitboxCol != null) hitboxCol.enabled = false;
         }
     }
-        private void ApplyPooogo()
+    private void ApplyPooogo()
     {
         if (!pogoOnHit || playerRb == null) return;
         if (pogoOnlyWhenFalling && playerRb.linearVelocity.y > 0f) return;
@@ -140,7 +144,7 @@ public class PlayerAttackHitbox : MonoBehaviour
         if (facing == 0)
         {
             facing = 1f;
-        } 
+        }
 
         Vector3 s = vfx.transform.localScale;
         s.x = Mathf.Abs(s.x) * (facing > 0 ? -1f : 1f);
@@ -153,7 +157,7 @@ public class PlayerAttackHitbox : MonoBehaviour
         float facing = Mathf.Sign(playerRoot.localScale.x);
         if (facing == 0) facing = 1f;
 
-        float recoilDir = -facing; 
+        float recoilDir = -facing;
         Vector2 recoil = new Vector2(recoilDir * recoilPlayerX, recoilPlayerY);
 
         if (recoilUsesImpulse)

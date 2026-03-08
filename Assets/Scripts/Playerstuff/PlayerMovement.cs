@@ -98,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerHealth.PlayerDeath += DisablePlayerMovement;
     }
-        private void OnDisable()
+    private void OnDisable()
     {
         PlayerHealth.PlayerDeath -= DisablePlayerMovement;
     }
@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         if (controlsLocked) return;
-        
+
         GroundCheck();
         ProcessGravity();
         ProcessWallSlide();
@@ -124,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
         // }
         animator.SetFloat("yVelocity", rb.linearVelocity.y);
         animator.SetFloat("magnitude", rb.linearVelocity.magnitude);
-        // animator.SetBool("isWallSliding", isWallSliding);
+        animator.SetBool("isWallSliding", isWallSliding);
         if (!isWallJumping && !isDashing && !recoilLock)
         {
             rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
@@ -145,8 +145,8 @@ public class PlayerMovement : MonoBehaviour
         if (!context.performed)
         {
             return;
-        } 
-        if (!canDash) 
+        }
+        if (!canDash)
         {
             return;
         }
@@ -154,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        if (isDashing || dashOnCD) 
+        if (isDashing || dashOnCD)
         {
             return;
         }
@@ -190,20 +190,20 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(CancelWallJump), wallJumpTime + 0.1f);
             return;
         }
-        
-            if (context.performed && jumpsRemaining > 0)
-            {
-                // hold down jump for full height
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
-                jumpsRemaining--;
-                animator.SetTrigger("Jump"); //mine is uppercase so it upper case :')
-            }
-            else if (context.canceled && rb.linearVelocity.y > 0)
-            {
-                // light tap of jump for short jump (half height)
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.1f);
-            }
-        
+
+        if (context.performed && jumpsRemaining > 0)
+        {
+            // hold down jump for full height
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
+            jumpsRemaining--;
+            animator.SetTrigger("Jump"); //mine is uppercase so it upper case :')
+        }
+        else if (context.canceled && rb.linearVelocity.y > 0)
+        {
+            // light tap of jump for short jump (half height)
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.1f);
+        }
+
 
     }
 
@@ -214,12 +214,12 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (isWallSliding) 
+        if (isWallSliding)
         {
             return;
         }
 
-        if (Time.time < lastAttackTime + attackCooldown) 
+        if (Time.time < lastAttackTime + attackCooldown)
         {
             return;
         }
@@ -231,7 +231,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentAttackDirection = AttackDirection.Up;
             activeHitbox = attackHitboxUp;
-        } 
+        }
         else if (moveInput.y < -upDownThreshold)
         {
             currentAttackDirection = AttackDirection.Down;
@@ -247,18 +247,18 @@ public class PlayerMovement : MonoBehaviour
             switch (currentAttackDirection)
             {
                 case AttackDirection.Up:
-                animator.SetTrigger("AttackUp");
-                break;
+                    animator.SetTrigger("AttackUp");
+                    break;
 
                 case AttackDirection.Down:
-                animator.SetTrigger("AttackDown");
-                break;
+                    animator.SetTrigger("AttackDown");
+                    break;
 
                 default:
-                animator.SetTrigger("Attack");
-                break;
+                    animator.SetTrigger("Attack");
+                    break;
             }
-            
+
         }
         StartCoroutine(AttackRoutine(activeHitbox));
     }
@@ -266,7 +266,7 @@ public class PlayerMovement : MonoBehaviour
     private void GroundCheck()
     {
         bool groundedNow = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer);
-         // Debug.Log("ground touched- reset jumps: " + Time.time);
+        // Debug.Log("ground touched- reset jumps: " + Time.time);
         isGrounded = groundedNow;
 
         if (groundedNow)
@@ -275,12 +275,12 @@ public class PlayerMovement : MonoBehaviour
 
             if (!wasGrounded)
             {
-                ResetJumps(); 
+                ResetJumps();
             }
         }
 
         wasGrounded = groundedNow;//reset upon landing
-        
+
     }
 
     private bool WallCheck()
@@ -314,9 +314,9 @@ public class PlayerMovement : MonoBehaviour
         // not grounded + on a wall + moving
         if (!isGrounded & WallCheck() & horizontalMovement != 0)
         {
-            if (!isWallSliding) 
+            if (!isWallSliding)
             {
-                okayButCanIDash = true; 
+                okayButCanIDash = true;
             }
             isWallSliding = true;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -wallSlideSpeed));
@@ -367,7 +367,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ResetJumps()
     {
-        jumpsRemaining = canDoubleJump ? maxJumps :1;
+        jumpsRemaining = canDoubleJump ? maxJumps : 1;
     }
 
     public IEnumerator RecoilLockRoutine(float t)
@@ -440,6 +440,29 @@ public class PlayerMovement : MonoBehaviour
         Time.timeScale = prev;
     }
 
+    public IEnumerator HazardRespawnRoutine(float lockDuration, float bounceY = 3f)
+    {
+        controlsLocked = true;
+        recoilLock = true;
+
+        if (animator != null)
+            animator.enabled = false;
+
+        rb.linearVelocity = Vector2.zero;
+
+        yield return null; // lets teleport happen cleanly first
+
+        if (bounceY > 0f)
+            rb.linearVelocity = new Vector2(0f, bounceY);
+
+        yield return new WaitForSeconds(lockDuration);
+
+        if (animator != null)
+            animator.enabled = true;
+
+        recoilLock = false;
+        controlsLocked = false;
+    }
 
     //gizmos
     public void OnDrawGizmosSelected()
@@ -470,6 +493,11 @@ public class PlayerMovement : MonoBehaviour
         if (!unlocked) wallJumpTimer = 0f;
     }
 
+    public void SetDashUnlocked(bool unlocked)
+    {
+        canDash = unlocked;
+    }
+
     private void DisablePlayerMovement()
     {
         controlsLocked = true;
@@ -479,11 +507,11 @@ public class PlayerMovement : MonoBehaviour
         // rb.bodyType =RigidbodyType2D.Static; //rigidbodies got error when you set them to static 
     }
 
-        private void EnablePlayerMovement()
+    private void EnablePlayerMovement()
     {
         controlsLocked = false;
         animator.enabled = true;
-        rb.bodyType =RigidbodyType2D.Dynamic;
+        rb.bodyType = RigidbodyType2D.Dynamic;
     }
 
 }
