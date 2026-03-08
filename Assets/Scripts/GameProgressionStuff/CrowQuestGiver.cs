@@ -8,7 +8,7 @@ public class CrowQuestGiver : MonoBehaviour
 
     [Header("Optional Ability Unlocker")]
     public AbilityUnlocker abilityUnlocker;
-
+    public LevelExitActivator exitActivator;
     private void Update()
     {
         if (interactPrompt != null)
@@ -46,7 +46,7 @@ public class CrowQuestGiver : MonoBehaviour
         {
             if (!qm.questActive)
             {
-                Debug.Log("Crow: Defeat 1 enemy. Left click attacks — even in the air.");
+                Debug.Log("Crow: Defeat 1 enemy. Use left click to attack.");
                 qm.StartKillQuest("kill_first_enemy", 1);
                 GameProgress.Instance.currentQuestStage = 1;
             }
@@ -64,7 +64,7 @@ public class CrowQuestGiver : MonoBehaviour
 
             if (qm.questActive && qm.questComplete)
             {
-                Debug.Log("Crow: Well done. Take this — Dash is now yours.");
+                Debug.Log("Crow: Well done. Take this — It's the dash ability");
                 GameProgress.Instance.UnlockDash();
 
                 if (abilityUnlocker != null)
@@ -81,16 +81,16 @@ public class CrowQuestGiver : MonoBehaviour
         {
             if (!qm.questActive)
             {
-                Debug.Log("Crow: Find the item in the upper-right part of the map.");
+                Debug.Log("Crow: Find [the item] in the upper-right part of the map."); // rememeber to update this when we get 
                 qm.StartCollectQuest("collect_top_right_item", 1);
             }
             else if (!qm.questComplete)
             {
-                Debug.Log($"Crow: The item is still out there. ({qm.currentAmount}/{qm.requiredAmount})");
+                Debug.Log($"Crow: [The item] is still out there. ({qm.currentAmount}/{qm.requiredAmount})");
             }
             else
             {
-                Debug.Log("Crow: Good. You earned Wall Jump.");
+                Debug.Log("Crow: Good. Take this. It allows you to perform a wall jump. ");
                 GameProgress.Instance.UnlockWallJump();
 
                 if (abilityUnlocker != null)
@@ -108,7 +108,7 @@ public class CrowQuestGiver : MonoBehaviour
         {
             if (!qm.questActive)
             {
-                Debug.Log("Crow: Bring me one more item.");
+                Debug.Log("Crow: Bring me one more item, this one is on the left side of the map, maybe try the new wall jump you just learned.");
                 qm.StartCollectQuest("collect_final_item", 1);
             }
             else if (!qm.questComplete)
@@ -117,7 +117,7 @@ public class CrowQuestGiver : MonoBehaviour
             }
             else
             {
-                Debug.Log("Crow: Excellent. You now have Double Jump.");
+                Debug.Log("Crow: Excellent. The last ability is yours, the double jump.");
                 GameProgress.Instance.UnlockDoubleJump();
 
                 if (abilityUnlocker != null)
@@ -125,6 +125,9 @@ public class CrowQuestGiver : MonoBehaviour
 
                 qm.ClearQuest();
                 GameProgress.Instance.currentQuestStage = 4;
+
+                if (exitActivator != null)
+                    exitActivator.ActivateExit();
             }
 
             return;
