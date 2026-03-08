@@ -5,6 +5,9 @@ public class Hazard : MonoBehaviour
     [SerializeField] private float damage = 1f;
     [SerializeField] private bool respawnPlayerOnHit = true;
     [SerializeField] private float invincibilityAfterHit = 0.6f;
+    [SerializeField] private bool ignoreIFrames = true;
+    [SerializeField] private float respawnLockTime = 0.4f;
+    [SerializeField] private float respawnBounceY = 6f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -13,15 +16,30 @@ public class Hazard : MonoBehaviour
         var playerHealth = collision.GetComponent<PlayerHealth>();
         if (playerHealth == null) return;
 
-        // iframes
-        if (playerHealth.IsInvincible) return;
+        if (!ignoreIFrames && playerHealth.IsInvincible) return;
 
-        playerHealth.TakeDamage(damage);
+        if (!playerHealth.IsInvincible || ignoreIFrames)
+        {
+            playerHealth.TakeDamage(damage);
+        }
 
         if (respawnPlayerOnHit)
         {
-            collision.GetComponent<LastSafeGround>()?.RespawnToLastSafe();
+            var pm = collision.GetComponent<PlayerMovement>();
+            var rb = collision.GetComponent<Rigidbody2D>();
+            var respawner = collision.GetComponent<LastSafeGround>();
+
+            if (rb != null)
+                rb.linearVelocity = Vector2.zero;
+
+            respawner?.RespawnToLastSafe();
+
             playerHealth.StartInvincibility(invincibilityAfterHit);
+
+            if (pm != null)
+            {
+                pm.StartCoroutine(pm.HazardRespawnRoutine(respawnLockTime, respawnBounceY));
+            }
         }
     }
 }
