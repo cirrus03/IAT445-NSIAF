@@ -106,6 +106,12 @@ public class PlayerMovement : MonoBehaviour
     {
         ResetJumps();
         EnablePlayerMovement();
+        if (GameProgress.Instance != null) // keeps unlocked information for future scenes
+        {
+            canDash = GameProgress.Instance.dashUnlocked;
+            canWallJump = GameProgress.Instance.wallJumpUnlocked;
+            canDoubleJump = GameProgress.Instance.doubleJumpUnlocked;
+        }
     }
 
     void Update()
@@ -312,7 +318,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // not grounded + on a wall + moving
-        if (!isGrounded & WallCheck() & horizontalMovement != 0)
+        if (!isGrounded && WallCheck() && horizontalMovement != 0)
         {
             if (!isWallSliding)
             {
