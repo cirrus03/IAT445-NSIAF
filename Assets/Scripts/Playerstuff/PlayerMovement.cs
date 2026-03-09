@@ -141,13 +141,22 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
+        if (controlsLocked)
+        {
+            moveInput = Vector2.zero;
+            horizontalMovement = 0f;
+            return;
+        }
         moveInput = context.ReadValue<Vector2>(); //vert movement detection time baby
         horizontalMovement = moveInput.x;
     }
 
     public void Dash(InputAction.CallbackContext context)
     {
-
+        if (controlsLocked)
+        {
+            return;
+        }
         if (!context.performed)
         {
             return;
@@ -172,7 +181,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isDashing) return;//I'm sorry little one... you have been nerfed...(comment this line out if you want the weird dash jump thing back)
+        if (controlsLocked)
+        {
+            return;
+        }
+        if (isDashing)
+        {
+            return;//I'm sorry little one... you have been nerfed...(comment this line out if you want the weird dash jump thing back)
+        }
 
         // wall jump
         if (context.performed && canWallJump && wallJumpTimer > 0f)
@@ -215,6 +231,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
+        if (controlsLocked)
+        {
+            return;
+        }
         if (!context.performed)
         {
             return;
@@ -374,6 +394,32 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJumps()
     {
         jumpsRemaining = canDoubleJump ? maxJumps : 1;
+    }
+
+    public void ForceHazardInterrupt()
+    {
+        controlsLocked = true;
+        recoilLock = true;
+
+        // clear inputs 
+        moveInput = Vector2.zero;
+        horizontalMovement = 0f;
+
+        // cancel active movement states
+        isDashing = false;
+        isWallSliding = false;
+        isWallJumping = false;
+        wallJumpTimer = 0f;
+
+        CancelInvoke(nameof(CancelWallJump));
+
+        rb.gravityScale = baseGravity;
+
+        rb.linearVelocity = Vector2.zero;
+
+        if (attackHitboxSide != null) attackHitboxSide.SetActive(false);
+        if (attackHitboxUp != null) attackHitboxUp.SetActive(false);
+        if (attackHitboxDown != null) attackHitboxDown.SetActive(false);
     }
 
     public IEnumerator RecoilLockRoutine(float t)
