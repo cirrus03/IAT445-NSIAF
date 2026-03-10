@@ -20,6 +20,9 @@ public class GameProgress : MonoBehaviour
     [Header("Flags")]
     public bool playerJustDied = false;
 
+    [Header("Player MOOD")]
+    public string playerMood = "neutral";
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -55,5 +58,10 @@ public class GameProgress : MonoBehaviour
     public void UnlockDoubleJump()
     {
         doubleJumpUnlocked = true;
+    }
+
+    public void setPlayerMood(string mood)
+    {
+        playerMood = mood;
     }
 }
