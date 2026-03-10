@@ -129,10 +129,22 @@ public class PlayerMovement : MonoBehaviour
         //     Flip();
         // }
         animator.SetFloat("yVelocity", rb.linearVelocity.y);
-        animator.SetFloat("magnitude", rb.linearVelocity.magnitude);
+        float animMove = Mathf.Abs(horizontalMovement);
+
+        if (WallCheck())
+            animMove = 0f;
+
+        animator.SetFloat("magnitude", animMove);
+        
         animator.SetBool("isWallSliding", isWallSliding);
         if (!isWallJumping && !isDashing && !recoilLock)
         {
+            float move = horizontalMovement;
+
+            if (WallCheck() && Mathf.Sign(move) == Mathf.Sign(transform.localScale.x))
+            {
+                move = 0f;
+            }
             rb.linearVelocity = new Vector2(horizontalMovement * moveSpeed, rb.linearVelocity.y);
             Flip();
         }
