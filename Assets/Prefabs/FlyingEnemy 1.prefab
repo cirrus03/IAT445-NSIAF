@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1132941356883057109}
   - component: {fileID: 6278168295013468022}
   - component: {fileID: 6861814709446322588}
-  - component: {fileID: 4372047813669067974}
   - component: {fileID: 392340285218247570}
   - component: {fileID: 8855725595102366388}
+  - component: {fileID: 3026907626088386107}
   m_Layer: 8
   m_Name: FlyingEnemy 1
   m_TagString: Enemy
@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1474573750511936422}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.6, y: 3.99, z: 0}
   m_LocalScale: {x: 0.19861, y: 0.19861, z: 0.19861}
   m_ConstrainProportionsScale: 0
@@ -88,12 +88,12 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 686e59fc690dbec479acbbeb21e5c73e, type: 3}
+  m_Sprite: {fileID: 5905681027756182028, guid: 4e36d14d908373b43ae0127561519dae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.26, y: 0.69}
+  m_Size: {x: 10.0625, y: 8.375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -159,8 +159,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.33519113, y: -0.9212665}
-  m_Size: {x: 3.6034238, y: 3.420595}
+  m_Offset: {x: 0.016391462, y: 0.9036942}
+  m_Size: {x: 5.1029725, y: 5.1029725}
   m_Direction: 1
 --- !u!114 &6861814709446322588
 MonoBehaviour:
@@ -178,28 +178,6 @@ MonoBehaviour:
   flashOnDamage: 1
   flashDuration: 0.1
   hurtSprite: {fileID: 0}
---- !u!95 &4372047813669067974
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1474573750511936422}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 628ceb341c407284fbd26f24da64b71d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &392340285218247570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,8 +209,8 @@ MonoBehaviour:
   avoidCheckDistance: 0.6
   avoidRadius: 0.25
   attackCooldown: 0.7
-  retreatTime: 0.6
-  retreatSpeed: 5
+  retreatTime: 0.3
+  retreatSpeed: 6
 --- !u!114 &8855725595102366388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,6 +227,28 @@ MonoBehaviour:
   knockbackX: 30
   knockbackY: 3
   resetVelocity: 1
+--- !u!95 &3026907626088386107
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474573750511936422}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1186457e95d1edd4a9a5c3e68dfe23da, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6910876739338472299
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +316,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.028072596, y: 0.01793933}
+  m_Offset: {x: -0.0012278557, y: 0.00020122528}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -326,7 +326,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 6.9579234, y: 5.8501487}
+  m_Size: {x: 9.711949, y: 8.053692}
   m_EdgeRadius: 0
 --- !u!114 &196379914486658166
 MonoBehaviour:
