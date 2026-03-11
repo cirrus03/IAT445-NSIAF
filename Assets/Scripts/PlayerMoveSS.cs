@@ -10,6 +10,12 @@ public class PlayerMoveSS : MonoBehaviour
     private Vector2 movement;
     void Update()
     {
+        if (DialogueManager.GetInstance().dialogueIsPlaying)
+        {
+            animator.SetBool("isWalking", false);
+            return;
+        }
+
         HandleMovement();
     }
     private void HandleMovement()
