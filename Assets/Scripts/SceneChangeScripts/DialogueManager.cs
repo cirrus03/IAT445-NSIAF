@@ -13,6 +13,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private SceneFader sceneFader;
     [SerializeField] private GameObject sceneSprite;
+    [SerializeField] private GameObject kazumiSprite;
+
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
@@ -42,6 +44,7 @@ public class DialogueManager : MonoBehaviour
 
         dialogueIsPlaying = false;
         sceneSprite.SetActive(false);
+        kazumiSprite.SetActive(false);
         dialoguePanel.SetActive(false);
         // choices
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -112,6 +115,18 @@ public class DialogueManager : MonoBehaviour
             {
                 sceneFader.FadeIn(2f);
                 sceneSprite.SetActive(true);
+            }
+
+            if (tag == "kazumitalking")
+            {
+                kazumiSprite.SetActive(true);
+                sceneSprite.SetActive(false);
+            }
+
+            if (tag == "nozomi")
+            {
+                sceneSprite.SetActive(true);
+                kazumiSprite.SetActive(false);
             }
         }
     }
