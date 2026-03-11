@@ -31,57 +31,61 @@ public class CrowQuestGiver : MonoBehaviour
         if (SimpleDialogueUI.Instance != null && SimpleDialogueUI.Instance.DialogueActive)
             return;
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             Interact();
         }
     }
 
-    void UpdateIndicators()
+void UpdateIndicators()
+{
+    if (GameProgress.Instance == null || QuestManager.Instance == null)
     {
-        if (availableIndicator != null) availableIndicator.SetActive(false);
-        if (inProgressIndicator != null) inProgressIndicator.SetActive(false);
-        if (completeIndicator != null) completeIndicator.SetActive(false);
-
-        if (GameProgress.Instance == null || QuestManager.Instance == null)
-            return;
-
-        QuestManager qm = QuestManager.Instance;
-        int stage = GameProgress.Instance.currentQuestStage;
-
-        if (GameProgress.Instance.playerJustDied)
-        {
-            if (availableIndicator != null) availableIndicator.SetActive(true);
-            return;
-        }
-
-        // Stage 0: first quest available
-        if (stage == 0)
-        {
-            if (availableIndicator != null) availableIndicator.SetActive(true);
-            return;
-        }
-
-        if (qm.questActive)
-        {
-            if (qm.questComplete)
-            {
-                if (completeIndicator != null) completeIndicator.SetActive(true);
-            }
-            else
-            {
-                if (inProgressIndicator != null) inProgressIndicator.SetActive(true);
-            }
-
-            return;
-        }
-
-        // Stage 4+: portal reminder / done state
-        if (stage >= 4)
-        {
-            if (availableIndicator != null) availableIndicator.SetActive(true);
-        }
+        SetIndicatorState(false, false, false);
+        return;
     }
+
+    QuestManager qm = QuestManager.Instance;
+    int stage = GameProgress.Instance.currentQuestStage;
+
+    bool showAvailable = false;
+    bool showInProgress = false;
+    bool showComplete = false;
+
+    if (GameProgress.Instance.playerJustDied)
+    {
+        showAvailable = true;
+    }
+    else if (stage == 0)
+    {
+        showAvailable = true;
+    }
+    else if (qm.questActive)
+    {
+        if (qm.questComplete)
+            showComplete = true;
+        else
+            showInProgress = true;
+    }
+    else if (stage >= 4)
+    {
+        showAvailable = true;
+    }
+
+    SetIndicatorState(showAvailable, showInProgress, showComplete);
+}
+
+void SetIndicatorState(bool available, bool inProgress, bool complete)
+{
+    if (availableIndicator != null && availableIndicator.activeSelf != available)
+        availableIndicator.SetActive(available);
+
+    if (inProgressIndicator != null && inProgressIndicator.activeSelf != inProgress)
+        inProgressIndicator.SetActive(inProgress);
+
+    if (completeIndicator != null && completeIndicator.activeSelf != complete)
+        completeIndicator.SetActive(complete);
+}
 
     void Interact()
     {
@@ -122,11 +126,14 @@ public class CrowQuestGiver : MonoBehaviour
                     "Crow: Return to me once you finish.",
                     "Crow: I'll give you a little somethin' somethin'.",
                     "Defeat 1 enemy.",
-                    "You can LEFT CLICK to attack."
-                });
+                    "You can [RMB] or [J] to attack."
+                },
+                () =>
+                {
 
-                qm.StartKillQuest("kill_first_enemy", 1);
-                GameProgress.Instance.currentQuestStage = 1;
+                    qm.StartKillQuest("kill_first_enemy", "Defeat 1 Enemy", 1);
+                    GameProgress.Instance.currentQuestStage = 1;
+                });
             }
             return;
         }
@@ -154,9 +161,6 @@ public class CrowQuestGiver : MonoBehaviour
                 qm.ClearQuest();
                 GameProgress.Instance.currentQuestStage = 2;
 
-                // Immediately start next quest
-                qm.StartCollectQuest("collect_top_right_item", 1);
-
                 SimpleDialogueUI.Instance.StartDialogue(new string[]
                 {
                     "Crow: Well done.",
@@ -167,6 +171,10 @@ public class CrowQuestGiver : MonoBehaviour
                     "Crow: I've got another task for you.",
                     "Crow: There is an item in the upper-right part of the map.",
                     "Crow: Bring it back to me."
+                },
+                () =>
+                {
+                    qm.StartCollectQuest("collect_top_right_item", "Collect the Upper-Right Item", 1);
                 });
 
                 return;
@@ -196,16 +204,17 @@ public class CrowQuestGiver : MonoBehaviour
                 qm.ClearQuest();
                 GameProgress.Instance.currentQuestStage = 3;
 
-                // Immediately start next quest
-                qm.StartCollectQuest("collect_final_item", 1);
-
                 SimpleDialogueUI.Instance.StartDialogue(new string[]
                 {
                     "Crow: Good.",
                     "Crow: I'll give you this ability next.",
                     "You've unlocked the wall jump ability.",
                     "Crow: One last task remains.",
-                    "Crow: Bring me the final item from the top-left part of the area.",
+                    "Crow: Bring me the final item from the top-left part of the area."
+                },
+                () =>
+                {
+                    qm.StartCollectQuest("collect_final_item", "Collect the Final Item", 1);
                 });
 
                 return;
@@ -214,12 +223,14 @@ public class CrowQuestGiver : MonoBehaviour
             // safety fallback if somehow stage is 2 but no active quest
             if (!qm.questActive)
             {
-                qm.StartCollectQuest("collect_top_right_item", 1);
-
                 SimpleDialogueUI.Instance.StartDialogue(new string[]
                 {
                     "Crow: There is an item in the upper-right part of the map.",
                     "Crow: Bring it back to me."
+                },
+                () =>
+                {
+                    qm.StartCollectQuest("collect_top_right_item", "Collect the Upper-Right Item", 1);
                 });
                 return;
             }
@@ -266,11 +277,13 @@ public class CrowQuestGiver : MonoBehaviour
             // safety fallback
             if (!qm.questActive)
             {
-                qm.StartCollectQuest("collect_final_item", 1);
-
                 SimpleDialogueUI.Instance.StartDialogue(new string[]
                 {
-                    "Crow: Bring me one more item located in the top-left quadrant of the area.",
+                    "Crow: Bring me one more item located in the top-left quadrant of the area."
+                },
+                () =>
+                {
+                    qm.StartCollectQuest("collect_final_item", "Collect the Final Item", 1);
                 });
                 return;
             }

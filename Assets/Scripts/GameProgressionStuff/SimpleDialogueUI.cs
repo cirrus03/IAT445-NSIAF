@@ -16,6 +16,7 @@ public class SimpleDialogueUI : MonoBehaviour
     private System.Action onDialogueFinished;
 
     public bool DialogueActive => dialogueActive;
+    public bool FreezeGameplay => dialogueActive;
 
     private void Awake()
     {

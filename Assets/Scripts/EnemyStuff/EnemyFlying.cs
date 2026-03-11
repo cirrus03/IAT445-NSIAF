@@ -55,7 +55,7 @@ public class EnemyFlying : MonoBehaviour
             GameObject p = GameObject.FindGameObjectWithTag("Player");
             if (p) player = p.transform;
         }
-        
+
         sr = GetComponent<SpriteRenderer>();
 
         rb = GetComponent<Rigidbody2D>();
@@ -68,6 +68,12 @@ public class EnemyFlying : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (IsGameplayFrozen())
+        {
+            if (rb != null)
+                rb.linearVelocity = Vector2.zero;
+            return;
+        }
         attackTimer -= Time.fixedDeltaTime;
         retreatTimer -= Time.fixedDeltaTime;
 
@@ -80,7 +86,7 @@ public class EnemyFlying : MonoBehaviour
         // checking for aggro
         float distToPlayer = Vector2.Distance(rb.position, player.position);
         bool canSeePlayer = HasLineOfSightToPlayer();
-        
+
         if (!isAggro)
         {
             if (distToPlayer <= aggroRange && canSeePlayer)
@@ -120,7 +126,7 @@ public class EnemyFlying : MonoBehaviour
             Vector2 desiredVelRetreat = AvoidObstacles(away * retreatSpeed);
             rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, desiredVelRetreat, accel * Time.fixedDeltaTime);
             UpdateFlip();
-        return;
+            return;
         }
 
         // velocoty
@@ -143,25 +149,25 @@ public class EnemyFlying : MonoBehaviour
             }
         }
         else
-    {
-        desiredVel = PatrolVelocity();
+        {
+            desiredVel = PatrolVelocity();
+        }
+
+        desiredVel = AvoidObstacles(desiredVel);
+        rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, desiredVel, accel * Time.fixedDeltaTime);
+
+        UpdateFlip();
     }
-
-    desiredVel = AvoidObstacles(desiredVel);
-    rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, desiredVel, accel * Time.fixedDeltaTime);
-
-    UpdateFlip();
-}
     void UpdateFlip()
     {
         if (rb.linearVelocity.x > 0 && !isFacingRight)
         {
             Flip();
-        } 
+        }
         else if (rb.linearVelocity.x < 0 && isFacingRight)
         {
             Flip();
-        } 
+        }
     }
 
     void Flip()
@@ -227,33 +233,34 @@ public class EnemyFlying : MonoBehaviour
     }
 
     Vector2 AvoidObstacles(Vector2 desiredVel)
-{
-    if (player)
     {
-        float d = Vector2.Distance(rb.position, player.position);
-        if (d < 1f && HasLineOfSightToPlayer())
+        if (player)
+        {
+            float d = Vector2.Distance(rb.position, player.position);
+            if (d < 1f && HasLineOfSightToPlayer())
+                return desiredVel;
+        }
+
+        if (desiredVel == Vector2.zero)
+        {
             return desiredVel;
-    }
+        }
 
-    if (desiredVel == Vector2.zero) {
-        return desiredVel;
-    }
+        Vector2 dir = desiredVel.normalized;
+        float speed = desiredVel.magnitude;
 
-    Vector2 dir = desiredVel.normalized;
-    float speed = desiredVel.magnitude;
+        float checkDist = Mathf.Max(avoidCheckDistance, rb.linearVelocity.magnitude * 0.25f);
 
-    float checkDist = Mathf.Max(avoidCheckDistance, rb.linearVelocity.magnitude * 0.25f);
-
-    // movment straight
-    if (!Physics2D.CircleCast(rb.position, avoidRadius, dir, checkDist, obstacleMask))
+        // movment straight
+        if (!Physics2D.CircleCast(rb.position, avoidRadius, dir, checkDist, obstacleMask))
         {
             return desiredVel;
         }
 
 
-    // try to wrap around
-    Vector2[] options = new Vector2[]
-    {
+        // try to wrap around
+        Vector2[] options = new Vector2[]
+        {
         (dir + Vector2.up).normalized,
         (dir + Vector2.down).normalized,
         Vector2.up,
@@ -262,17 +269,22 @@ public class EnemyFlying : MonoBehaviour
         (dir + Vector2.right).normalized,
         Vector2.left,
         Vector2.right
-    };
+        };
 
-    foreach (var opt in options)
-    {
-        if (!Physics2D.CircleCast(rb.position, avoidRadius, opt, checkDist, obstacleMask))
-            return opt * speed;
+        foreach (var opt in options)
+        {
+            if (!Physics2D.CircleCast(rb.position, avoidRadius, opt, checkDist, obstacleMask))
+                return opt * speed;
+        }
+
+        // if nothing, stops and leaves
+        return Vector2.zero;
     }
 
-    // if nothing, stops and leaves
-    return Vector2.zero;
-}
+    private bool IsGameplayFrozen()
+    {
+        return SimpleDialogueUI.Instance != null && SimpleDialogueUI.Instance.FreezeGameplay;
+    }
 
 
     // aggro range 

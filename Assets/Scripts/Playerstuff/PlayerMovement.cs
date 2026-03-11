@@ -116,7 +116,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (controlsLocked) return;
+        if (controlsLocked || IsGameplayFrozen())
+        {
+            rb.linearVelocity = Vector2.zero;
+            animator.SetFloat("magnitude", 0f);
+            return;
+        }
 
         GroundCheck();
         ProcessGravity();
@@ -135,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
             animMove = 0f;
 
         animator.SetFloat("magnitude", animMove);
-        
+
         animator.SetBool("isWallSliding", isWallSliding);
         if (!isWallJumping && !isDashing && !recoilLock)
         {
@@ -153,7 +158,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        if (controlsLocked)
+        if (controlsLocked || IsGameplayFrozen())
         {
             moveInput = Vector2.zero;
             horizontalMovement = 0f;
@@ -165,6 +170,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Dash(InputAction.CallbackContext context)
     {
+        if (IsGameplayFrozen()) return;
         if (controlsLocked)
         {
             return;
@@ -193,6 +199,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+        if (IsGameplayFrozen()) return;
         if (controlsLocked)
         {
             return;
@@ -243,6 +250,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
+        if (IsGameplayFrozen()) return;
         if (controlsLocked)
         {
             return;
@@ -434,6 +442,11 @@ public class PlayerMovement : MonoBehaviour
         if (attackHitboxDown != null) attackHitboxDown.SetActive(false);
     }
 
+    private bool IsGameplayFrozen()
+    {
+        return SimpleDialogueUI.Instance != null && SimpleDialogueUI.Instance.FreezeGameplay;
+    }
+
     public IEnumerator RecoilLockRoutine(float t)
     {
         recoilLock = true;
@@ -484,13 +497,11 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator DamageStunRoutine(float duration)
     {
-        controlsLocked = true;
         recoilLock = true; // also prevents your movement code from overwriting velocity
 
         yield return new WaitForSeconds(duration);
 
         recoilLock = false;
-        controlsLocked = false;
     }
 
     public IEnumerator HitStopRoutine(float duration)

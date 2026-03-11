@@ -2,19 +2,29 @@ using UnityEngine;
 
 public class FloatingBounceText : MonoBehaviour
 {
-    public float floatSpeed = 2f;
-    public float floatAmount = 0.15f;
+    public float floatSpeed = 1f;
+    public float floatAmount = 1f;
 
-    private Vector3 startPos;
+    private RectTransform rectTransform;
+    private Vector2 startPos;
 
-    void Start()
+    void Awake()
     {
-        startPos = transform.localPosition;
+        rectTransform = GetComponent<RectTransform>();
+        startPos = rectTransform.anchoredPosition;
+    }
+
+    void OnEnable()
+    {
+        if (rectTransform == null)
+            rectTransform = GetComponent<RectTransform>();
+
+        startPos = rectTransform.anchoredPosition;
     }
 
     void Update()
     {
         float newY = Mathf.Sin(Time.time * floatSpeed) * floatAmount;
-        transform.localPosition = startPos + new Vector3(0, newY, 0);
+        rectTransform.anchoredPosition = startPos + new Vector2(0f, newY);
     }
 }

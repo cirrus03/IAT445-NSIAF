@@ -7,6 +7,10 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     [SerializeField] private float startingHealth = 3f;
     public float currentHealth { get; private set; }
 
+    [Header("Drops")]
+    [SerializeField] private GameObject healthDropPrefab;
+    [SerializeField, Range(0f, 1f)] private float healthDropChance = 0.4f;
+
     [Header("Damage Flash (optional)")]
     [SerializeField] private bool flashOnDamage = true;
     [SerializeField] private float flashDuration = 0.1f;
@@ -62,6 +66,16 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         TakeDamage(damageAmount, transform.position); // no knockback direction
     }
 
+    private void TrySpawnHealthDrop()
+    {
+        if (healthDropPrefab == null) return;
+
+        if (Random.value <= healthDropChance)
+        {
+            Instantiate(healthDropPrefab, transform.position, Quaternion.identity);
+        }
+    }
+
     IEnumerator DieRoutine()
     {
         // stop all movement
@@ -96,7 +110,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             if (hurtSprite != null) sr.sprite = hurtSprite;
             else sr.color = Color.red;
         }
-
+        TrySpawnHealthDrop();
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }

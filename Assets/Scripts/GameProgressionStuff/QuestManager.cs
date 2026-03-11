@@ -21,6 +21,9 @@ public class QuestManager : MonoBehaviour
     public int requiredAmount = 0;
     public string currentQuestId = "";
 
+    [Header("Quest Display")]
+    public string currentQuestName = "";
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -32,28 +35,30 @@ public class QuestManager : MonoBehaviour
         Instance = this;
     }
 
-    public void StartKillQuest(string questId, int killTarget)
+    public void StartKillQuest(string questId, string questName, int killTarget)
     {
         currentQuest = QuestType.KillEnemies;
         currentQuestId = questId;
+        currentQuestName = questName;
         requiredAmount = killTarget;
         currentAmount = 0;
         questActive = true;
         questComplete = false;
 
-        Debug.Log($"Started kill quest: {questId} ({killTarget})");
+        Debug.Log($"Started kill quest: {questName} ({killTarget})");
     }
 
-    public void StartCollectQuest(string questId, int requiredCount = 1)
+    public void StartCollectQuest(string questId, string questName, int requiredCount = 1)
     {
         currentQuest = QuestType.CollectItem;
         currentQuestId = questId;
+        currentQuestName = questName;
         requiredAmount = requiredCount;
         currentAmount = 0;
         questActive = true;
         questComplete = false;
 
-        Debug.Log($"Started collect quest: {questId} ({requiredCount})");
+        Debug.Log($"Started collect quest: {questName} ({requiredCount})");
     }
 
     public void RegisterEnemyKilled()
