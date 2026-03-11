@@ -5,7 +5,8 @@ using System;
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [Header("Health")]
-    [SerializeField] private float startingHealth = 3f;
+    [SerializeField] private float startingHealth = 10f;
+    public float MaxHealth => startingHealth;
     public float currentHealth { get; private set; }
 
     [Header("Damage Flash (optional)")]
@@ -120,6 +121,19 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         if (invincibleRoutine != null) StopCoroutine(invincibleRoutine);
         invincibleRoutine = StartCoroutine(InvincibleRoutine(seconds));
+    }
+
+    public void Heal(float amount)
+    {
+        if (isDying) return;
+        if (amount <= 0f) return;
+
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, startingHealth);
+
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(currentHealth);
+        }
     }
 
     IEnumerator InvincibleRoutine(float seconds)
