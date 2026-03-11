@@ -12,6 +12,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private SceneFader sceneFader;
+    [SerializeField] private GameObject sceneSprite;
 
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
@@ -40,6 +41,7 @@ public class DialogueManager : MonoBehaviour
     {
 
         dialogueIsPlaying = false;
+        sceneSprite.SetActive(false);
         dialoguePanel.SetActive(false);
         // choices
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -83,6 +85,7 @@ public class DialogueManager : MonoBehaviour
         dialogueFinished = true;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        sceneSprite.SetActive(false);
     }
 
     private void ContinueStory()
@@ -108,6 +111,7 @@ public class DialogueManager : MonoBehaviour
             if (tag == "fadein")
             {
                 sceneFader.FadeIn(2f);
+                sceneSprite.SetActive(true);
             }
         }
     }
