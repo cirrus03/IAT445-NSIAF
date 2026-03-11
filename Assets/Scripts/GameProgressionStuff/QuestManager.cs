@@ -83,7 +83,13 @@ public class QuestManager : MonoBehaviour
         if (currentAmount >= requiredAmount)
         {
             questComplete = true;
+
             Debug.Log($"Quest complete: {currentQuestId}");
+
+            if (QuestCompletePopup.Instance != null)
+            {
+                QuestCompletePopup.Instance.Show("Quest Completed");
+            }
         }
     }
 
