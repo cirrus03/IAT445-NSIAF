@@ -11,6 +11,16 @@ public class Hazard : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        TryHitPlayer(collision);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        TryHitPlayer(collision);
+    }
+
+    private void TryHitPlayer(Collider2D collision)
+    {
         if (!collision.CompareTag("Player")) return;
 
         var playerHealth = collision.GetComponent<PlayerHealth>();
