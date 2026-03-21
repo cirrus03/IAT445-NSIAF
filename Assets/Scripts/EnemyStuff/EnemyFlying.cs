@@ -68,6 +68,8 @@ public class EnemyFlying : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (PauseMenu.isPaused)
+            return;
         if (IsGameplayFrozen())
         {
             if (rb != null)

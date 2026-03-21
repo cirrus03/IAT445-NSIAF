@@ -13,8 +13,8 @@ public class GameProgress : MonoBehaviour
     public int currentQuestStage = 0;
     // 0 = not started
     // 1 = kill 1 enemy
-    // 2 = collect first item/ finished first quest
-    // 3 = collect second item/ finish second quest
+    // 2 = collect first item / finished first quest
+    // 3 = collect second item / finished second quest
     // 4 = all current quests done
 
     [Header("Flags")]
@@ -60,8 +60,28 @@ public class GameProgress : MonoBehaviour
         doubleJumpUnlocked = true;
     }
 
-    public void setPlayerMood(string mood)
+    public void SetPlayerMood(string mood)
     {
         playerMood = mood;
+    }
+
+    public void ResetProgress()
+    {
+        dashUnlocked = false;
+        wallJumpUnlocked = false;
+        doubleJumpUnlocked = false;
+        currentQuestStage = 0;
+        playerJustDied = false;
+        playerMood = "neutral";
+    }
+
+    public void ApplySaveData(SaveData data)
+    {
+        if (data == null) return;
+
+        currentQuestStage = data.questStage;
+        dashUnlocked = data.dashUnlocked;
+        wallJumpUnlocked = data.wallJumpUnlocked;
+        doubleJumpUnlocked = data.doubleJumpUnlocked;
     }
 }

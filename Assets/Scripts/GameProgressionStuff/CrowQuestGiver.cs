@@ -17,6 +17,8 @@ public class CrowQuestGiver : MonoBehaviour
 
     private void Update()
     {
+        if (PauseMenu.isPaused)
+            return;
         UpdateIndicators();
 
         if (interactPrompt != null)
@@ -37,55 +39,55 @@ public class CrowQuestGiver : MonoBehaviour
         }
     }
 
-void UpdateIndicators()
-{
-    if (GameProgress.Instance == null || QuestManager.Instance == null)
+    void UpdateIndicators()
     {
-        SetIndicatorState(false, false, false);
-        return;
+        if (GameProgress.Instance == null || QuestManager.Instance == null)
+        {
+            SetIndicatorState(false, false, false);
+            return;
+        }
+
+        QuestManager qm = QuestManager.Instance;
+        int stage = GameProgress.Instance.currentQuestStage;
+
+        bool showAvailable = false;
+        bool showInProgress = false;
+        bool showComplete = false;
+
+        if (GameProgress.Instance.playerJustDied)
+        {
+            showAvailable = true;
+        }
+        else if (stage == 0)
+        {
+            showAvailable = true;
+        }
+        else if (qm.questActive)
+        {
+            if (qm.questComplete)
+                showComplete = true;
+            else
+                showInProgress = true;
+        }
+        else if (stage >= 4)
+        {
+            showAvailable = true;
+        }
+
+        SetIndicatorState(showAvailable, showInProgress, showComplete);
     }
 
-    QuestManager qm = QuestManager.Instance;
-    int stage = GameProgress.Instance.currentQuestStage;
-
-    bool showAvailable = false;
-    bool showInProgress = false;
-    bool showComplete = false;
-
-    if (GameProgress.Instance.playerJustDied)
+    void SetIndicatorState(bool available, bool inProgress, bool complete)
     {
-        showAvailable = true;
-    }
-    else if (stage == 0)
-    {
-        showAvailable = true;
-    }
-    else if (qm.questActive)
-    {
-        if (qm.questComplete)
-            showComplete = true;
-        else
-            showInProgress = true;
-    }
-    else if (stage >= 4)
-    {
-        showAvailable = true;
-    }
+        if (availableIndicator != null && availableIndicator.activeSelf != available)
+            availableIndicator.SetActive(available);
 
-    SetIndicatorState(showAvailable, showInProgress, showComplete);
-}
+        if (inProgressIndicator != null && inProgressIndicator.activeSelf != inProgress)
+            inProgressIndicator.SetActive(inProgress);
 
-void SetIndicatorState(bool available, bool inProgress, bool complete)
-{
-    if (availableIndicator != null && availableIndicator.activeSelf != available)
-        availableIndicator.SetActive(available);
-
-    if (inProgressIndicator != null && inProgressIndicator.activeSelf != inProgress)
-        inProgressIndicator.SetActive(inProgress);
-
-    if (completeIndicator != null && completeIndicator.activeSelf != complete)
-        completeIndicator.SetActive(complete);
-}
+        if (completeIndicator != null && completeIndicator.activeSelf != complete)
+            completeIndicator.SetActive(complete);
+    }
 
     void Interact()
     {
