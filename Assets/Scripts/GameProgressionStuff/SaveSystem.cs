@@ -20,6 +20,11 @@ public static class SaveSystem
         data.dashUnlocked = GameProgress.Instance.dashUnlocked;
         data.wallJumpUnlocked = GameProgress.Instance.wallJumpUnlocked;
         data.doubleJumpUnlocked = GameProgress.Instance.doubleJumpUnlocked;
+        data.level2QuestStage = GameProgress.Instance.level2QuestStage;
+        data.level2LampAcquired = GameProgress.Instance.level2LampAcquired;
+        data.level2PowerRestored = GameProgress.Instance.level2PowerRestored;
+        data.level2BugQuestStarted = GameProgress.Instance.level2BugQuestStarted;
+        data.level2BugQuestComplete = GameProgress.Instance.level2BugQuestComplete;
 
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(SavePath, json);
