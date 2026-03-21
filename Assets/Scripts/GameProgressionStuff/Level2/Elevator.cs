@@ -24,6 +24,14 @@ public class Elevator : MonoBehaviour
     [SerializeField] private string noPowerMessage = "Looks like it's not working right now.";
     [SerializeField] private string useMessage = "Hehe uppies.";
 
+    private void Start()
+    {
+        ApplySavedState();
+
+        if (interactPrompt != null)
+            interactPrompt.SetActive(false);
+    }
+
     private void Update()
     {
         if (PauseMenu.isPaused)
@@ -44,6 +52,17 @@ public class Elevator : MonoBehaviour
     public void SetPoweredOn(bool value)
     {
         poweredOn = value;
+    }
+
+    public void ApplySavedState()
+    {
+        if (GameProgress.Instance == null)
+            return;
+
+        if (requiresPower)
+        {
+            poweredOn = GameProgress.Instance.level2PowerRestored;
+        }
     }
 
     public void Interact()
