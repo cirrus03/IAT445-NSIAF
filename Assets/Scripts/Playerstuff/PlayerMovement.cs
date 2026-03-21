@@ -116,10 +116,21 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (controlsLocked || IsGameplayFrozen())
+        if (PauseMenu.isPaused || controlsLocked || IsGameplayFrozen())
         {
-            rb.linearVelocity = Vector2.zero;
-            animator.SetFloat("magnitude", 0f);
+            moveInput = Vector2.zero;
+            horizontalMovement = 0f;
+
+            if (rb != null)
+                rb.linearVelocity = Vector2.zero;
+
+            if (animator != null)
+            {
+                animator.SetFloat("magnitude", 0f);
+                animator.SetBool("isWallSliding", false);
+            }
+
+            GroundCheck();
             return;
         }
 
@@ -158,7 +169,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        if (controlsLocked || IsGameplayFrozen())
+        if (PauseMenu.isPaused || controlsLocked || IsGameplayFrozen())
         {
             moveInput = Vector2.zero;
             horizontalMovement = 0f;
@@ -170,8 +181,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Dash(InputAction.CallbackContext context)
     {
-        if (IsGameplayFrozen()) return;
-        if (controlsLocked)
+        if (PauseMenu.isPaused || IsGameplayFrozen() || controlsLocked)
         {
             return;
         }
@@ -199,8 +209,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (IsGameplayFrozen()) return;
-        if (controlsLocked)
+        if (PauseMenu.isPaused || IsGameplayFrozen() || controlsLocked)
         {
             return;
         }
@@ -250,8 +259,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (IsGameplayFrozen()) return;
-        if (controlsLocked)
+        if (PauseMenu.isPaused || IsGameplayFrozen() || controlsLocked)
         {
             return;
         }

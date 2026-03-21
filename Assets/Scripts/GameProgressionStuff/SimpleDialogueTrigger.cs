@@ -19,6 +19,8 @@ public class SimpleDialogueTrigger : MonoBehaviour
 
     private void Update()
     {
+        if (PauseMenu.isPaused)
+            return;
         if (hasTriggered && triggerOnce) return;
 
         if (triggerAutomatically && playerInRange)
