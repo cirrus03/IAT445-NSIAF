@@ -31,6 +31,8 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
+        if (DeathScreenUI.IsDeathScreenOpen)
+            return;
         if (IsDialogueOpen())
             return;
 

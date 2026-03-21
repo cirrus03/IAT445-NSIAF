@@ -121,8 +121,8 @@ public class CrowQuestGiver : MonoBehaviour
             {
                 SimpleDialogueUI.Instance.StartDialogue(new string[]
                 {
-                    "Crow: You made it.",
-                    "Crow: I know encountering enemies can be scary.",
+                    "Dr. Duocrow White: Well, if it isn’t our prized pupil.",
+                    "Dr. Duocrow Black: That’s right!",
                     "Crow: But it's okay, dying here doesn't actually affect you... probably.",
                     "Crow: Anyways... I've got a quest for you.",
                     "Crow: Return to me once you finish.",
@@ -148,7 +148,7 @@ public class CrowQuestGiver : MonoBehaviour
                 SimpleDialogueUI.Instance.StartDialogue(new string[]
                 {
                     $"Crow: You have defeated {qm.currentAmount} out of {qm.requiredAmount}.",
-                    "Crow: Come back after defeating an enemy."
+                    "Crow: Come back after defeating an enemy, there should be one nearby."
                 });
                 return;
             }
