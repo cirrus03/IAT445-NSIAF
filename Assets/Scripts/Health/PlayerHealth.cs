@@ -52,6 +52,24 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         }
     }
 
+    public void ResetHealthToFull()
+    {
+        currentHealth = startingHealth;
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(currentHealth);
+        }
+        UpdateHealthUI();
+    }
+
+    private void UpdateHealthUI()
+    {
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(currentHealth);
+        }
+    }
+
     public void TakeDamage(float damageAmount)
     {
         if (isDying) return; //shouldnt be taking extra damage if youre dead (plan B)
@@ -79,24 +97,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             if (GameProgress.Instance != null)
                 GameProgress.Instance.MarkPlayerDied();
 
-            Animator anim = GetComponent<Animator>();//disableing animatiosn
-            if (anim != null)
-            {
-                anim.enabled = false;
-            }
-
-            SpriteRenderer sr = GetComponent<SpriteRenderer>();
-            if (sr != null)
-            {
-                sr.enabled = false;
-            }
-
-            Collider2D[] cols = GetComponentsInChildren<Collider2D>();
-            foreach (var col in cols)
-            {
-                col.enabled = false;
-            }
-
+            //player freezes
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
             if (rb != null)
             {
@@ -105,13 +106,25 @@ public class PlayerHealth : MonoBehaviour, IDamageable
                 rb.simulated = false;
             }
 
-            // Disable ALL gameplay scripts on player
-            foreach (var script in GetComponents<MonoBehaviour>())
-            {
-                if (script != this) script.enabled = false;
-            }
+            if (sr != null)
+                sr.enabled = false;
 
-            PlayerDeath?.Invoke(); // UI / death screen later
+            Animator anim = GetComponent<Animator>();
+            if (anim != null)
+                anim.enabled = false;
+
+            Collider2D[] cols = GetComponentsInChildren<Collider2D>();
+            foreach (var col in cols)
+                col.enabled = false;
+
+            PlayerDeath?.Invoke();
+
+            // show death screen
+            DeathScreenUI deathScreen = FindFirstObjectByType<DeathScreenUI>();
+            if (deathScreen != null)
+            {
+                deathScreen.ShowDeathScreen();
+            }
         }
     }
 
@@ -134,6 +147,43 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         {
             healthBar.SetHealth(currentHealth);
         }
+    }
+
+    public void Revive()
+    {
+        isDying = false;
+        IsInvincible = false;
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.simulated = true;
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
+        if (sr != null)
+        {
+            sr.enabled = true;
+            sr.color = originalColor;
+            sr.sprite = originalSprite;
+        }
+
+        Animator anim = GetComponent<Animator>();
+        if (anim != null)
+        {
+            anim.enabled = true;
+            anim.Rebind();
+            anim.Update(0f);
+        }
+
+        Collider2D[] cols = GetComponentsInChildren<Collider2D>();
+        foreach (var col in cols)
+        {
+            col.enabled = true;
+        }
+
+        ResetHealthToFull();
     }
 
     IEnumerator InvincibleRoutine(float seconds)

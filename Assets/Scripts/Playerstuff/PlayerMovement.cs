@@ -455,6 +455,32 @@ public class PlayerMovement : MonoBehaviour
         return SimpleDialogueUI.Instance != null && SimpleDialogueUI.Instance.FreezeGameplay;
     }
 
+    public void EnableAfterRespawn()
+{
+    controlsLocked = false;
+    recoilLock = false;
+    isDashing = false;
+    isWallSliding = false;
+    isWallJumping = false;
+    wallJumpTimer = 0f;
+
+    moveInput = Vector2.zero;
+    horizontalMovement = 0f;
+
+    rb.linearVelocity = Vector2.zero;
+    rb.bodyType = RigidbodyType2D.Dynamic;
+
+    if (animator != null)
+    {
+        animator.enabled = true;
+        animator.speed = 1f;
+        animator.Rebind();
+        animator.Update(0f);
+    }
+
+    ResetJumps();
+}
+
     public IEnumerator RecoilLockRoutine(float t)
     {
         recoilLock = true;
