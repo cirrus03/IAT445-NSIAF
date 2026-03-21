@@ -15,6 +15,9 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     [SerializeField] private bool flashOnDamage = true;
     [SerializeField] private float flashDuration = 0.1f;
 
+    [Header("Quest Integration")]
+    [SerializeField] private bool countsForBugQuest = false;
+
     // If you assign this, it will temporarily swap to that sprite instead
     // If you leave it empty, it will just tint red instead.
     [SerializeField] private Sprite hurtSprite;
@@ -54,9 +57,21 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         {
             Debug.Log($"{name} died");
 
-            if (QuestManager.Instance != null)
-                QuestManager.Instance.RegisterEnemyKilled();
-
+            if (countsForBugQuest)
+            {
+                BugQuestGroup bugQuest = FindFirstObjectByType<BugQuestGroup>();
+                if (bugQuest != null)
+                {
+                    bugQuest.RegisterBugKilled();
+                }
+            }
+            else
+            {
+                if (QuestManager.Instance != null)
+                {
+                    QuestManager.Instance.RegisterEnemyKilled();
+                }
+            }
             isDying = true;
             StartCoroutine(DieRoutine());
         }

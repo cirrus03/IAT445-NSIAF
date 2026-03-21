@@ -32,7 +32,7 @@ public class MainMenu : MonoBehaviour
 
         if (GameProgress.Instance != null)
         {
-            GameProgress.Instance.ResetProgress();
+            GameProgress.Instance.ResetAllProgress();
         }
 
         StartCoroutine(LoadSceneWithFade(firstGameScene));

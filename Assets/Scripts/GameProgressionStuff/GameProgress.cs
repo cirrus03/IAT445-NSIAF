@@ -9,13 +9,20 @@ public class GameProgress : MonoBehaviour
     public bool wallJumpUnlocked = false;
     public bool doubleJumpUnlocked = false;
 
-    [Header("Quest Progression")]
-    public int currentQuestStage = 0;
+    [Header("Level 1 Quest Progression")]
+    public int currentQuestStage = 0; // this is for level 1 only, fked pu the naming convention because i forgot wed have more levels and im too lazy to go and edit them all
     // 0 = not started
     // 1 = kill 1 enemy
     // 2 = collect first item / finished first quest
     // 3 = collect second item / finished second quest
     // 4 = all current quests done
+
+    [Header("Level 2 Quest Progression")]
+    public int level2QuestStage = 0;
+    public bool level2LampAcquired = false;
+    public bool level2PowerRestored = false;
+    public bool level2BugQuestStarted = false;
+    public bool level2BugQuestComplete = false;
 
     [Header("Flags")]
     public bool playerJustDied = false;
@@ -65,14 +72,27 @@ public class GameProgress : MonoBehaviour
         playerMood = mood;
     }
 
-    public void ResetProgress()
+    public void ResetAllProgress()
     {
         dashUnlocked = false;
         wallJumpUnlocked = false;
         doubleJumpUnlocked = false;
+
         currentQuestStage = 0;
+
+        ResetLevel2Progress();
+
         playerJustDied = false;
         playerMood = "neutral";
+    }
+
+    public void ResetLevel2Progress()
+    {
+        level2QuestStage = 0;
+        level2LampAcquired = false;
+        level2PowerRestored = false;
+        level2BugQuestStarted = false;
+        level2BugQuestComplete = false;
     }
 
     public void ApplySaveData(SaveData data)
@@ -83,5 +103,11 @@ public class GameProgress : MonoBehaviour
         dashUnlocked = data.dashUnlocked;
         wallJumpUnlocked = data.wallJumpUnlocked;
         doubleJumpUnlocked = data.doubleJumpUnlocked;
+
+        level2QuestStage = data.level2QuestStage;
+        level2LampAcquired = data.level2LampAcquired;
+        level2PowerRestored = data.level2PowerRestored;
+        level2BugQuestStarted = data.level2BugQuestStarted;
+        level2BugQuestComplete = data.level2BugQuestComplete;
     }
 }
