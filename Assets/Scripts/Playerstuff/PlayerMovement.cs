@@ -94,6 +94,16 @@ public class PlayerMovement : MonoBehaviour
     private bool controlsLocked = false; //setting so we can prevent movement (im assuming for pause menu or something)
     private Vector2 moveInput;
 
+    private SoundFXManager audioManager; //audio player\
+
+
+    private void Awake()
+    {   
+        //assign the audio player
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundFXManager>();
+    }
+
+
     private void OnEnable()
     {
         PlayerHealth.PlayerDeath += DisablePlayerMovement;
@@ -313,6 +323,8 @@ public class PlayerMovement : MonoBehaviour
                     break;
             }
 
+            audioManager.PlaySFX(audioManager.playerAttack);
+
         }
         StartCoroutine(AttackRoutine(activeHitbox));
     }
@@ -328,7 +340,8 @@ public class PlayerMovement : MonoBehaviour
             okayButCanIDash = true;//same
 
             if (!wasGrounded)
-            {
+            {   
+                // audioManager.PlaySFX(audioManager.playerLand); //it's delayed rn 
                 ResetJumps();
             }
         }
@@ -508,6 +521,7 @@ public class PlayerMovement : MonoBehaviour
 
         // animation can add
         if (animator != null) animator.SetTrigger("Dash");
+        audioManager.PlaySFX(audioManager.playerDash); //play dash sound
 
         yield return new WaitForSeconds(dashDuration);
 
