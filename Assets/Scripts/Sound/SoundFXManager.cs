@@ -48,11 +48,6 @@ public class SoundFXManager : MonoBehaviour
         Debug.Log("enabled: " + musicSource.enabled);
         Debug.Log("volume: " + musicSource.volume);
         Debug.Log("mute: " + musicSource.mute);
-
-
-   
-
-
     }
 
 
@@ -80,6 +75,10 @@ public class SoundFXManager : MonoBehaviour
 
         //add more eventually here
 
-        
+    }
+
+    public void PlaySFX(AudioClip clip)
+    {
+        sfxSource.PlayOneShot(clip);
     }
 }
