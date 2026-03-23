@@ -12,17 +12,27 @@ public class SoundFXManager : MonoBehaviour
    [SerializeField] AudioSource sfxSource;
 
 
-    [Header("Audio Files Music")]
+    [Header("BGM FILES")]
     public AudioClip levelBGM_0;
     
-    [Header("Audio Clip SFX")]
+    [Header("PLAYER LEVEL SFX")]
     public AudioClip playerDash;
     public AudioClip playerAttack;
     public AudioClip playerLand;
+    public AudioClip playerDamageTaken;
+    public AudioClip pickUpHeal;
+    public AudioClip getQuestItem;
+    public AudioClip portalActivate;
     
-    public AudioClip menu1;
-    public AudioClip menu2;
-    public AudioClip menu3;
+    
+
+    [Header("MENU SFX")]
+    public AudioClip menuCheck1;
+    public AudioClip menuCheck2;
+    public AudioClip menuUnderline;
+
+    [Header("Audio Clip SFX")]
+
 
     private string currentSceneName;
     private AudioClip currentLevelBGM;
