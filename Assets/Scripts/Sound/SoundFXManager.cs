@@ -7,14 +7,14 @@ using UnityEngine.SceneManagement;
 
 public class SoundFXManager : MonoBehaviour
 {
-   [Header("Audio Source")]
-   [SerializeField] AudioSource musicSource;
-   [SerializeField] AudioSource sfxSource;
+    [Header("Audio Source")]
+    [SerializeField] AudioSource musicSource;
+    [SerializeField] AudioSource sfxSource;
 
 
     [Header("BGM FILES")]
     public AudioClip levelBGM_0;
-    
+
     [Header("PLAYER LEVEL SFX")]
     public AudioClip playerDash;
     public AudioClip playerAttack;
@@ -23,8 +23,8 @@ public class SoundFXManager : MonoBehaviour
     public AudioClip pickUpHeal;
     public AudioClip getQuestItem;
     public AudioClip portalActivate;
-    
-    
+
+
 
     [Header("MENU SFX")]
     public AudioClip menuCheck1;
@@ -32,27 +32,31 @@ public class SoundFXManager : MonoBehaviour
     public AudioClip menuUnderline;
 
     [Header("Audio Clip SFX")]
-
+    public AudioClip enemyHit;
+    public AudioClip enemyDeath;
+    public AudioClip hitWall;
+    public AudioClip hitGround;
+    public AudioClip[] footstepSounds;
 
     private string currentSceneName;
     private AudioClip currentLevelBGM;
 
     private void Awake()
-    {   
+    {
         //get level bgm based on current scene
         currentSceneName = getCurrentSceneName();
         chooseLevelBGM(currentSceneName);
     }
 
     void Start()
-    {   
+    {
         //set bgm to music source player
         musicSource.clip = currentLevelBGM;
         musicSource.Play();
 
         Debug.Log("isPlaying: " + musicSource.isPlaying);
 
-         Debug.Log("BGM: " + currentLevelBGM);
+        Debug.Log("BGM: " + currentLevelBGM);
         Debug.Log("Music Source: " + musicSource);
 
         Debug.Log("enabled: " + musicSource.enabled);
@@ -75,10 +79,10 @@ public class SoundFXManager : MonoBehaviour
     {
         //defaults set to basic
         currentLevelBGM = levelBGM_0;
-        
-        if(sceneName == "LabAreaClone") 
+
+        if (sceneName == "LabAreaClone")
             currentLevelBGM = levelBGM_0;
-            return;
+        return;
 
         // if(sceneName == "LabAreaClone") 
         //     currentLevelBGM = levelBGM_0;
@@ -87,8 +91,9 @@ public class SoundFXManager : MonoBehaviour
 
     }
 
-    public void PlaySFX(AudioClip clip)
+    public void PlaySFX(AudioClip clip, float volume = 1f)
     {
-        sfxSource.PlayOneShot(clip);
+        if (clip == null || sfxSource == null) return;
+        sfxSource.PlayOneShot(clip, volume);
     }
 }

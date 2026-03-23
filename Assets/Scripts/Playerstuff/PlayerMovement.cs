@@ -95,12 +95,18 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveInput;
 
     private SoundFXManager audioManager; //audio player\
-
+    [Header("Footsteps")]
+    [SerializeField] private float footstepInterval = 0.35f;
+    private float footstepTimer;
 
     private void Awake()
-    {   
+    {
         //assign the audio player
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundFXManager>();
+        GameObject audioObject = GameObject.FindGameObjectWithTag("Audio");
+        if (audioObject != null)
+        {
+            audioManager = audioObject.GetComponent<SoundFXManager>();
+        }
     }
 
 
@@ -145,6 +151,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         GroundCheck();
+        HandleFootsteps();
         ProcessGravity();
         ProcessWallSlide();
         ProcessWallJump();
@@ -323,7 +330,7 @@ public class PlayerMovement : MonoBehaviour
                     break;
             }
 
-            audioManager.PlaySFX(audioManager.playerAttack);
+            audioManager.PlaySFX(audioManager.playerAttack, 0.4f);
 
         }
         StartCoroutine(AttackRoutine(activeHitbox));
@@ -340,14 +347,41 @@ public class PlayerMovement : MonoBehaviour
             okayButCanIDash = true;//same
 
             if (!wasGrounded)
-            {   
-                // audioManager.PlaySFX(audioManager.playerLand); //it's delayed rn 
+            {
+                // audioManager.PlaySFX(audioManager.playerLand, 0.6f); //it's delayed rn 
                 ResetJumps();
             }
         }
 
         wasGrounded = groundedNow;//reset upon landing
 
+    }
+
+    private void HandleFootsteps()
+    {
+        if (isGrounded && Mathf.Abs(horizontalMovement) > 0.1f && !isDashing && !recoilLock)
+        {
+            footstepTimer -= Time.deltaTime;
+
+            if (footstepTimer <= 0f)
+            {
+                PlayFootstep();
+                footstepTimer = footstepInterval;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f;
+        }
+    }
+
+    private void PlayFootstep()
+    {
+        if (audioManager == null || audioManager.footstepSounds == null || audioManager.footstepSounds.Length == 0)
+            return;
+
+        int index = Random.Range(0, audioManager.footstepSounds.Length);
+        audioManager.PlaySFX(audioManager.footstepSounds[index], 0.25f);
     }
 
     private bool WallCheck()
@@ -469,30 +503,30 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void EnableAfterRespawn()
-{
-    controlsLocked = false;
-    recoilLock = false;
-    isDashing = false;
-    isWallSliding = false;
-    isWallJumping = false;
-    wallJumpTimer = 0f;
-
-    moveInput = Vector2.zero;
-    horizontalMovement = 0f;
-
-    rb.linearVelocity = Vector2.zero;
-    rb.bodyType = RigidbodyType2D.Dynamic;
-
-    if (animator != null)
     {
-        animator.enabled = true;
-        animator.speed = 1f;
-        animator.Rebind();
-        animator.Update(0f);
-    }
+        controlsLocked = false;
+        recoilLock = false;
+        isDashing = false;
+        isWallSliding = false;
+        isWallJumping = false;
+        wallJumpTimer = 0f;
 
-    ResetJumps();
-}
+        moveInput = Vector2.zero;
+        horizontalMovement = 0f;
+
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Dynamic;
+
+        if (animator != null)
+        {
+            animator.enabled = true;
+            animator.speed = 1f;
+            animator.Rebind();
+            animator.Update(0f);
+        }
+
+        ResetJumps();
+    }
 
     public IEnumerator RecoilLockRoutine(float t)
     {
@@ -521,7 +555,7 @@ public class PlayerMovement : MonoBehaviour
 
         // animation can add
         if (animator != null) animator.SetTrigger("Dash");
-        audioManager.PlaySFX(audioManager.playerDash); //play dash sound
+        audioManager.PlaySFX(audioManager.playerDash, 0.6f); //play dash sound
 
         yield return new WaitForSeconds(dashDuration);
 
