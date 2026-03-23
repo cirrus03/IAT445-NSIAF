@@ -126,7 +126,7 @@ public class DialogueManager : MonoBehaviour
                 sceneSprite.SetActive(true);
             }
 
-            if (tag == "kazumi")
+            if (tag == "kazumi" || tag == "kazumipuppyeyes")
             {
                 kazumiSprite.SetActive(true);
                 sceneSprite.SetActive(false);
@@ -139,10 +139,16 @@ public class DialogueManager : MonoBehaviour
                 crowSprite.SetActive(false);
             }
 
-            if (tag == "crow")
+            if (tag == "crow" || tag == "crowappears")
             {
                 sceneSprite.SetActive(false);
+                kazumiSprite.SetActive(false);
                 crowSprite.SetActive(true);
+            }
+
+            if(tag == "crowjump")
+            {
+                continueArrow.SetActive(true);
             }
         }
     }
