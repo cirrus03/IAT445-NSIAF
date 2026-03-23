@@ -11,6 +11,13 @@ public class PauseMenu : MonoBehaviour
 
     public static bool isPaused;
 
+    private SoundFXManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundFXManager>();
+    }
+
     void Start()
     {
         if (pauseMenuPanel != null)
@@ -82,6 +89,9 @@ public class PauseMenu : MonoBehaviour
 
     public void OpenMainPausePanel()
     {
+
+        audioManager.PlaySFX(audioManager.menuCheck1);
+
         if (pauseMainPanel != null)
             pauseMainPanel.SetActive(true);
 
