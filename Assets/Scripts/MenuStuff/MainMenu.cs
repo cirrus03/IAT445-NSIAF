@@ -18,16 +18,26 @@ public class MainMenu : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button continueButton;
 
+    private SoundFXManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundFXManager>();
+    }
+
     private void Start()
     {
         if (continueButton != null)
             continueButton.interactable = SaveSystem.HasSave();
 
+        audioManager.PlaySFX(audioManager.menuUnderline);
         BackToMainMenu();
     }
 
     public void NewGame()
-    {
+    {   
+        audioManager.PlaySFX(audioManager.menuUnderline);
+
         SaveSystem.DeleteSave();
 
         if (GameProgress.Instance != null)
@@ -40,6 +50,8 @@ public class MainMenu : MonoBehaviour
 
     public void ContinueGame()
     {
+        audioManager.PlaySFX(audioManager.menuUnderline);
+
         SaveData data = SaveSystem.LoadGame();
 
         if (data == null)
@@ -58,26 +70,30 @@ public class MainMenu : MonoBehaviour
 
     public void OpenSettings()
     {
+        audioManager.PlaySFX(audioManager.menuCheck1);
         ShowOnlyPanel(settingsPanel);
     }
 
     public void OpenCredits()
     {
+        audioManager.PlaySFX(audioManager.menuCheck1);
         ShowOnlyPanel(creditsPanel);
     }
 
     public void OpenControls()
     {
+        audioManager.PlaySFX(audioManager.menuCheck1);
         ShowOnlyPanel(controlsPanel);
     }
 
     public void BackToMainMenu()
     {
+        audioManager.PlaySFX(audioManager.menuCheck2);
         ShowOnlyPanel(mainMenuPanel);
     }
 
     public void QuitGame()
-    {
+    {   audioManager.PlaySFX(audioManager.menuCheck1);
         Application.Quit();
     }
 
