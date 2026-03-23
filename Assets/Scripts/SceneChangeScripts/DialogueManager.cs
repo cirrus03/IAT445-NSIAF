@@ -14,6 +14,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private SceneFader sceneFader;
     [SerializeField] private GameObject sceneSprite;
     [SerializeField] private GameObject kazumiSprite;
+    [SerializeField] private GameObject continueArrow;
+    [SerializeField] private GameObject crowSprite;
 
 
     [Header("Choices UI")]
@@ -41,11 +43,12 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-
+        continueArrow.SetActive(false);
         dialogueIsPlaying = false;
         sceneSprite.SetActive(false);
         kazumiSprite.SetActive(false);
         dialoguePanel.SetActive(false);
+        crowSprite.SetActive(false);
         // choices
         choicesText = new TextMeshProUGUI[choices.Length];
         int index = 0;
@@ -70,11 +73,17 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON)
+    public void EnterDialogueMode(TextAsset inkJSON, string knotName = "")
     {
         InputManager.GetInstance().RegisterSubmitPressed();
 
         currentStory = new Story(inkJSON.text);
+
+        if (!string.IsNullOrEmpty(knotName))
+        {
+            currentStory.ChoosePathString(knotName);
+        }
+
         dialogueIsPlaying = true;
         dialogueFinished = false;
 
@@ -117,7 +126,7 @@ public class DialogueManager : MonoBehaviour
                 sceneSprite.SetActive(true);
             }
 
-            if (tag == "kazumitalking")
+            if (tag == "kazumi")
             {
                 kazumiSprite.SetActive(true);
                 sceneSprite.SetActive(false);
@@ -127,6 +136,13 @@ public class DialogueManager : MonoBehaviour
             {
                 sceneSprite.SetActive(true);
                 kazumiSprite.SetActive(false);
+                crowSprite.SetActive(false);
+            }
+
+            if (tag == "crow")
+            {
+                sceneSprite.SetActive(false);
+                crowSprite.SetActive(true);
             }
         }
     }
