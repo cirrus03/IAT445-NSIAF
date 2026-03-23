@@ -7,6 +7,6 @@ public class IntroDialogueStarter : MonoBehaviour
     private void Start()
     {
         Debug.Log("Starting intro dialogue");
-        DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+        DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "intro");
     }
 }
