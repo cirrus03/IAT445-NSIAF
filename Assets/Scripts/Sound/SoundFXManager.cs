@@ -19,10 +19,17 @@ public class SoundFXManager : MonoBehaviour
     public AudioClip playerDash;
     public AudioClip playerAttack;
     public AudioClip playerLand;
+    public AudioClip pickUpHeal;
+    public AudioClip getQuestItem;
+    
+
+    [Header("Menu SFX")]
     
     public AudioClip menu1;
     public AudioClip menu2;
     public AudioClip menu3;
+    [Header("Audio Clip SFX")]
+
 
     private string currentSceneName;
     private AudioClip currentLevelBGM;
