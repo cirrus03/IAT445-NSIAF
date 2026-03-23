@@ -1446,7 +1446,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 63085037515228295}
         m_TargetAssemblyTypeName: VolumeControl, Assembly-CSharp
-        m_MethodName: setMusicVolume
+        m_MethodName: setSFXVolume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
