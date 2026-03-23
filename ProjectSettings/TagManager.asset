@@ -10,6 +10,7 @@ TagManager:
   - NPC
   - HealthItem
   - Audio
+  - Breakable
   layers:
   - Default
   - TransparentFX
