@@ -32,6 +32,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private Sprite originalSprite;
     private Coroutine flashRoutine;
 
+    private SoundFXManager audioManager;
+
     bool isDying = false;
 
     private void Awake()
@@ -50,6 +52,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             healthBar.SetMaxHealth(startingHealth);
             healthBar.SetHealth(currentHealth);
         }
+
+        //initalize audio player
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<SoundFXManager>();
     }
 
     public void ResetHealthToFull()
@@ -79,7 +84,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         StartInvincibility();
 
         if (healthBar != null)
-        {
+        {   
+            audioManager.PlaySFX(audioManager.playerDamageTaken); //play damage sound
             healthBar.SetHealth(currentHealth);
         }
 
@@ -113,6 +119,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             if (anim != null)
                 anim.enabled = false;
 
+            audioManager.PlaySFX(audioManager.menuUnderline);
+            
             Collider2D[] cols = GetComponentsInChildren<Collider2D>();
             foreach (var col in cols)
                 col.enabled = false;
@@ -122,9 +130,13 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             // show death screen
             DeathScreenUI deathScreen = FindFirstObjectByType<DeathScreenUI>();
             if (deathScreen != null)
-            {
+            {   
+                
                 deathScreen.ShowDeathScreen();
             }
+
+            //play death sound here
+            
         }
     }
 
