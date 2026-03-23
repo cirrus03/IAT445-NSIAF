@@ -41,7 +41,7 @@ AudioSource:
   m_GameObject: {fileID: 134960666529722810}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1532571842747142786, guid: df15022521e42f347acb6d384b7fadc5, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -188,6 +188,11 @@ MonoBehaviour:
   menuCheck1: {fileID: 8300000, guid: 7bfac203e4dfde845be0128f05146909, type: 3}
   menuCheck2: {fileID: 8300000, guid: 210cdb8d6c1049c44a8ea481dbe350e6, type: 3}
   menuUnderline: {fileID: 8300000, guid: 4441206e995df9f4ea8e9b68f79ae370, type: 3}
+  enemyHit: {fileID: 0}
+  enemyDeath: {fileID: 0}
+  hitWall: {fileID: 0}
+  hitGround: {fileID: 0}
+  footstepSounds: []
 --- !u!1 &7688862210112325452
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +235,7 @@ AudioSource:
   m_GameObject: {fileID: 7688862210112325452}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2985040381140859877, guid: df15022521e42f347acb6d384b7fadc5, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
