@@ -25,6 +25,7 @@ public class PlayerAttackHitbox : MonoBehaviour
     public bool spawnVfxOnGround = true;
     bool spawnedVfx = false;
 
+    private SoundFXManager audioManager;
 
     Transform playerRoot;
     Collider2D hitboxCol;
@@ -36,7 +37,14 @@ public class PlayerAttackHitbox : MonoBehaviour
         playerRoot = transform.root;
         playerRb = playerRoot.GetComponent<Rigidbody2D>();
         hitboxCol = GetComponent<Collider2D>();
+
+        GameObject audioObject = GameObject.FindGameObjectWithTag("Audio");
+        if (audioObject != null)
+        {
+            audioManager = audioObject.GetComponent<SoundFXManager>();
+        }
     }
+
     void OnEnable()
     {
         spawnedVfx = false;
@@ -65,24 +73,47 @@ public class PlayerAttackHitbox : MonoBehaviour
         {
             hitSomethingValid = true;
 
-            if (!spawnedVfx)
+            if (other.CompareTag("Enemy"))
             {
-                SpawnHitVfx(other.ClosestPoint(transform.position));
-                spawnedVfx = true;
-            }
-
-            damageable.TakeDamage(damage);
-
-            // enemy hit
-            EnemyHealth enemyHealth = other.GetComponentInParent<EnemyHealth>();
-            if (enemyHealth != null)
-            {
-                ApplyPooogo();
-
-                EnemyKnockback kb = enemyHealth.GetComponent<EnemyKnockback>();
-                if (kb != null)
+                if (spawnVfxOnEnemy && !spawnedVfx)
                 {
-                    kb.Apply(playerRoot.position);
+                    SpawnHitVfx(other.ClosestPoint(transform.position));
+                    spawnedVfx = true;
+                }
+
+                damageable.TakeDamage(damage);
+
+                if (audioManager != null && audioManager.enemyHit != null)
+                {
+                    audioManager.PlaySFX(audioManager.enemyHit, 0.2f);
+                }
+
+                // enemy hit
+                EnemyHealth enemyHealth = other.GetComponentInParent<EnemyHealth>();
+                if (enemyHealth != null)
+                {
+                    ApplyPooogo();
+
+                    EnemyKnockback kb = enemyHealth.GetComponent<EnemyKnockback>();
+                    if (kb != null)
+                    {
+                        kb.Apply(playerRoot.position);
+                    }
+                }
+            }
+            else if (other.CompareTag("Breakable"))
+            {
+                if (spawnVfxOnWall && !spawnedVfx)
+                {
+                    SpawnHitVfx(other.ClosestPoint(transform.position));
+                    spawnedVfx = true;
+                }
+
+                damageable.TakeDamage(damage);
+
+                if (audioManager != null && audioManager.hitWall != null)
+                {
+                    audioManager.PlaySFX(audioManager.hitWall, 0.4f);
                 }
             }
         }
@@ -111,6 +142,12 @@ public class PlayerAttackHitbox : MonoBehaviour
                     SpawnHitVfx(other.ClosestPoint(transform.position));
                     spawnedVfx = true;
                 }
+
+                if (audioManager != null && audioManager.hitWall != null)
+                {
+                    audioManager.PlaySFX(audioManager.hitWall, 0.4f);
+                }
+
                 ApplyPlayerRecoil();
             }
         }
@@ -122,6 +159,7 @@ public class PlayerAttackHitbox : MonoBehaviour
             if (hitboxCol != null) hitboxCol.enabled = false;
         }
     }
+
     private void ApplyPooogo()
     {
         if (!pogoOnHit || playerRb == null) return;
@@ -151,7 +189,6 @@ public class PlayerAttackHitbox : MonoBehaviour
         vfx.transform.localScale = s;
     }
 
-
     private void ApplyPlayerRecoil()
     {
         float facing = Mathf.Sign(playerRoot.localScale.x);
@@ -172,5 +209,4 @@ public class PlayerAttackHitbox : MonoBehaviour
         PlayerMovement pm = playerRoot.GetComponent<PlayerMovement>();
         if (pm != null) pm.StartCoroutine(pm.RecoilLockRoutine(0.1f));
     }
-
 }
