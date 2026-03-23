@@ -9,6 +9,7 @@ TagManager:
   - Hazard
   - NPC
   - HealthItem
+  - Audio
   layers:
   - Default
   - TransparentFX
