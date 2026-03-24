@@ -111,10 +111,19 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentStory.canContinue)
         {
-            dialogueText.text = currentStory.Continue();
+            string text = currentStory.Continue();
 
             HandleTags(currentStory.currentTags);
 
+            // skip empty lines
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                ContinueStory();
+                return;
+            }
+
+            if (dialogueText != null)
+                dialogueText.text = text;
             DisplayChoices();
         }
         else
