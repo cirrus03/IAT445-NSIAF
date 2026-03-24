@@ -15,6 +15,8 @@ public class CrowQuestGiver : MonoBehaviour
     public AbilityUnlocker abilityUnlocker;
     public GameObject levelExitPortal;
 
+    [SerializeField] private TutorialEnemyRespawner tutorialEnemyRespawner;
+
     private void Update()
     {
         if (PauseMenu.isPaused)
@@ -136,6 +138,10 @@ public class CrowQuestGiver : MonoBehaviour
                     qm.StartKillQuest("kill_first_enemy", "Defeat 1 Enemy", 1);
                     GameProgress.Instance.currentQuestStage = 1;
                 });
+                if (tutorialEnemyRespawner != null)
+                {
+                    tutorialEnemyRespawner.EnsureQuestEnemyExists();
+                }
             }
             return;
         }

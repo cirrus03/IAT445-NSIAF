@@ -7,21 +7,25 @@ public class QuestTrackerUI : MonoBehaviour
 
     void Update()
     {
-        if (QuestManager.Instance == null)
+        if (questText == null || GameProgress.Instance == null)
             return;
 
-        var qm = QuestManager.Instance;
+        string objective = GameProgress.Instance.currentObjectiveText;
+        string progress = GameProgress.Instance.currentObjectiveProgressText;
 
-        if (!qm.questActive)
+        if (string.IsNullOrEmpty(objective))
         {
             questText.text = "";
             return;
         }
 
-        string progress = qm.currentAmount + " / " + qm.requiredAmount;
-
-        questText.text =
-            qm.currentQuestName + "\n" +
-            progress;
+        if (string.IsNullOrEmpty(progress))
+        {
+            questText.text = objective;
+        }
+        else
+        {
+            questText.text = objective + "\n" + progress;
+        }
     }
 }

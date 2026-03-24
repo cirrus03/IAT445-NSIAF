@@ -17,7 +17,10 @@ public class BugQuestGroup : MonoBehaviour
         questStarted = true;
         currentKilled = 0;
         isComplete = false;
-
+        if (GameProgress.Instance != null)
+        {
+            GameProgress.Instance.SetObjective("Clear the attic bugs", currentKilled + " / " + requiredKills);
+        }
         Debug.Log("Bug quest started.");
     }
 
@@ -30,6 +33,11 @@ public class BugQuestGroup : MonoBehaviour
 
         Debug.Log($"Bug killed: {currentKilled}/{requiredKills}");
 
+        if (GameProgress.Instance != null)
+        {
+            GameProgress.Instance.SetObjective("Clear the attic bugs", currentKilled + " / " + requiredKills);
+        }
+
         if (currentKilled >= requiredKills)
         {
             isComplete = true;
@@ -37,6 +45,7 @@ public class BugQuestGroup : MonoBehaviour
             if (GameProgress.Instance != null)
             {
                 GameProgress.Instance.level2BugQuestComplete = true;
+                GameProgress.Instance.SetObjective("Talk to Fox");
             }
 
             if (QuestCompletePopup.Instance != null)
