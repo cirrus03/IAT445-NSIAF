@@ -964,7 +964,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1719557295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -981,7 +981,13 @@ MonoBehaviour:
   wallJumpUnlocked: 0
   doubleJumpUnlocked: 0
   currentQuestStage: 0
+  level2QuestStage: 0
+  level2LampAcquired: 0
+  level2PowerRestored: 0
+  level2BugQuestStarted: 0
+  level2BugQuestComplete: 0
   playerJustDied: 0
+  playerMood: neutral
 --- !u!4 &1719557296
 Transform:
   m_ObjectHideFlags: 0
