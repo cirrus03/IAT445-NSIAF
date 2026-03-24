@@ -8,12 +8,16 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (currentTrigger != null)
         {
-            if (currentTrigger.visualCue != null)
+            // cue not alr triggered
+            if (!currentTrigger.hasTriggered && currentTrigger.visualCue != null)
                 currentTrigger.visualCue.SetActive(true);
+            else if (currentTrigger.visualCue != null)
+                currentTrigger.visualCue.SetActive(false);
 
             if (
                 InputManager.GetInstance().GetInteractPressed() &&
                 !DialogueManager.GetInstance().dialogueIsPlaying &&
+                !currentTrigger.hasTriggered && 
                 (currentTrigger.questControl == null || !currentTrigger.questControl.QuestShown)
             )
             {
@@ -21,6 +25,11 @@ public class PlayerInteraction : MonoBehaviour
                     currentTrigger.inkJSON,
                     currentTrigger.knotName
                 );
+
+                currentTrigger.hasTriggered = true; 
+
+                if (currentTrigger.visualCue != null)
+                    currentTrigger.visualCue.SetActive(false);
             }
         }
     }
