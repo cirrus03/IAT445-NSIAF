@@ -4,6 +4,10 @@ public class GameProgress : MonoBehaviour
 {
     public static GameProgress Instance { get; private set; }
 
+    [Header("Quest Tracker UI")]
+    public string currentObjectiveText = "";
+    public string currentObjectiveProgressText = "";
+
     [Header("Ability Unlocks")]
     public bool dashUnlocked = false;
     public bool wallJumpUnlocked = false;
@@ -72,6 +76,18 @@ public class GameProgress : MonoBehaviour
         playerMood = mood;
     }
 
+    public void SetObjective(string objective, string progress = "")
+    {
+        currentObjectiveText = objective;
+        currentObjectiveProgressText = progress;
+    }
+
+    public void ClearObjective()
+    {
+        currentObjectiveText = "";
+        currentObjectiveProgressText = "";
+    }
+
     public void ResetAllProgress()
     {
         dashUnlocked = false;
@@ -84,6 +100,8 @@ public class GameProgress : MonoBehaviour
 
         playerJustDied = false;
         playerMood = "neutral";
+
+        ClearObjective();
     }
 
     public void ResetLevel2Progress()

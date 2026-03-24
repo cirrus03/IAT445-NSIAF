@@ -45,6 +45,11 @@ public class QuestManager : MonoBehaviour
         questActive = true;
         questComplete = false;
 
+        if (GameProgress.Instance != null)
+        {
+            GameProgress.Instance.SetObjective(currentQuestName, currentAmount + " / " + requiredAmount);
+        }
+
         Debug.Log($"Started kill quest: {questName} ({killTarget})");
     }
 
@@ -58,6 +63,11 @@ public class QuestManager : MonoBehaviour
         questActive = true;
         questComplete = false;
 
+        if (GameProgress.Instance != null)
+        {
+            GameProgress.Instance.SetObjective(currentQuestName, currentAmount + " / " + requiredAmount);
+        }
+
         Debug.Log($"Started collect quest: {questName} ({requiredCount})");
     }
 
@@ -69,6 +79,11 @@ public class QuestManager : MonoBehaviour
         currentAmount++;
         Debug.Log($"Enemy killed: {currentAmount}/{requiredAmount}");
 
+        if (GameProgress.Instance != null)
+        {
+            GameProgress.Instance.SetObjective(currentQuestName, currentAmount + " / " + requiredAmount);
+        }
+
         CheckCompletion();
     }
 
@@ -79,6 +94,11 @@ public class QuestManager : MonoBehaviour
 
         currentAmount++;
         Debug.Log($"Item collected: {currentAmount}/{requiredAmount}");
+
+        if (GameProgress.Instance != null)
+        {
+            GameProgress.Instance.SetObjective(currentQuestName, currentAmount + " / " + requiredAmount);
+        }
 
         CheckCompletion();
     }
@@ -106,5 +126,10 @@ public class QuestManager : MonoBehaviour
         requiredAmount = 0;
         questActive = false;
         questComplete = false;
+        
+        if (GameProgress.Instance != null)
+        {
+            GameProgress.Instance.ClearObjective();
+        }
     }
 }

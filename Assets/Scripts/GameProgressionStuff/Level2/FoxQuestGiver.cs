@@ -46,6 +46,10 @@ public class FoxQuestGiver : MonoBehaviour
 
             if (DarknessController.Instance != null)
                 DarknessController.Instance.GiveLamp();
+            if (GameProgress.Instance != null)
+            {
+                GameProgress.Instance.SetObjective("Find the breaker");
+            }
 
             GameProgress.Instance.level2LampAcquired = true;
             GameProgress.Instance.level2QuestStage = 1;
@@ -67,6 +71,11 @@ public class FoxQuestGiver : MonoBehaviour
 
             GameProgress.Instance.level2BugQuestStarted = true;
             GameProgress.Instance.level2QuestStage = 3;
+
+            if (GameProgress.Instance != null && bugQuestGroup != null)
+            {
+                GameProgress.Instance.SetObjective("Clear the attic bugs", bugQuestGroup.CurrentKilled + " / " + bugQuestGroup.RequiredKills);
+            }
             return;
         }
 
@@ -88,6 +97,10 @@ public class FoxQuestGiver : MonoBehaviour
 
         if (stage == 4)
         {
+            if (GameProgress.Instance != null)
+            {
+                GameProgress.Instance.SetObjective("Enter the portal");
+            }
             Debug.Log("Fox: Opening portal.");
 
             if (levelExitPortal != null)
