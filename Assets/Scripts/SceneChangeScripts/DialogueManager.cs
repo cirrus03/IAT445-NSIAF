@@ -22,6 +22,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Transform crowSecondSpawn;
     [SerializeField] private GameObject whitecrowSprite;
     [SerializeField] private GameObject blackcrowSprite;
+    [SerializeField] private GameObject levelExitPortal;
 
 
     [Header("Choices UI")]
@@ -265,8 +266,8 @@ public class DialogueManager : MonoBehaviour
 
             if (tag == "openportal")
             {
-                GameObject portal = GameObject.FindWithTag("LevelExitPortal");
-                if (portal != null) portal.SetActive(true);
+                if (levelExitPortal != null)
+                    levelExitPortal.SetActive(true);
             }
         }
     }
