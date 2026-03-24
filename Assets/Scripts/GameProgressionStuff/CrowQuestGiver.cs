@@ -16,6 +16,8 @@ public class CrowQuestGiver : MonoBehaviour
     public AbilityUnlocker abilityUnlocker;
     public GameObject levelExitPortal;
 
+    [SerializeField] private TutorialEnemyRespawner tutorialEnemyRespawner;
+
     private void Update()
     {
         if (PauseMenu.isPaused)

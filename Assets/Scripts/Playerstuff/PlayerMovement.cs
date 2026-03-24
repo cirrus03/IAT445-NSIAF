@@ -55,6 +55,23 @@ public class PlayerMovement : MonoBehaviour
     public float attackCooldown = 0.2f;
     private float lastAttackTime;
 
+    //getters
+    public bool DashOnCooldown => dashOnCD;
+    public bool IsGrounded => isGrounded;
+    public int JumpsRemaining => jumpsRemaining;
+    public int MaxJumpsAvailable => canDoubleJump ? maxJumps : 1;
+    public bool CanDashUnlocked => canDash;
+    public bool CanDoubleJumpUnlocked => canDoubleJump;
+    public bool CanWallJumpUnlocked => canWallJump;
+    public bool IsTouchingWall => WallCheck();
+    public float HorizontalInput => horizontalMovement;
+    public int FacingDirection => isFacingRight ? 1 : -1;
+
+    //this is to grab dash cooldown if we have enough time
+    private float dashCooldownTimer;
+    public float DashCooldownTimer => dashCooldownTimer;
+    public float DashCooldownDuration => dashCooldown;
+
     private enum AttackDirection //enums are like an array, super useful
     {
         Side,
@@ -571,7 +588,13 @@ public class PlayerMovement : MonoBehaviour
 
         isDashing = false;
 
-        yield return new WaitForSeconds(dashCooldown);
+        dashCooldownTimer = dashCooldown;
+        while (dashCooldownTimer > 0f)
+        {
+            dashCooldownTimer -= Time.deltaTime;
+            yield return null;
+        }
+        dashCooldownTimer = 0f;
         dashOnCD = false;
     }
 

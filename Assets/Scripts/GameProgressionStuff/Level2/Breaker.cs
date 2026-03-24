@@ -56,7 +56,10 @@ public class Breaker : MonoBehaviour
                     elevator.SetPoweredOn(true);
             }
         }
-
+        if (GameProgress.Instance != null)
+        {
+            GameProgress.Instance.SetObjective("Return to Fox");
+        }
         Debug.Log("You switched the breaker back on.");
         Debug.Log("The lights ARE COMING BACK");
     }
