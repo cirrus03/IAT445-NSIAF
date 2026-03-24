@@ -16,6 +16,10 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject kazumiSprite;
     [SerializeField] private GameObject continueArrow;
     [SerializeField] private GameObject crowSprite;
+    [SerializeField] private Animator crowAnimator;
+    [SerializeField] private GameObject crowInWorldObject;
+    [SerializeField] private GameObject crowParent;
+    [SerializeField] private Transform crowSecondSpawn;
 
 
     [Header("Choices UI")]
@@ -126,7 +130,7 @@ public class DialogueManager : MonoBehaviour
                 sceneSprite.SetActive(true);
             }
 
-            if (tag == "kazumi" || tag == "kazumipuppyeyes")
+            if (tag == "kazumi" || tag == "kazumipuppyeyes" || tag == "kazumicheerful")
             {
                 kazumiSprite.SetActive(true);
                 sceneSprite.SetActive(false);
@@ -139,16 +143,34 @@ public class DialogueManager : MonoBehaviour
                 crowSprite.SetActive(false);
             }
 
-            if (tag == "crow" || tag == "crowappears")
+            if (tag == "crow")
             {
                 sceneSprite.SetActive(false);
                 kazumiSprite.SetActive(false);
                 crowSprite.SetActive(true);
             }
 
-            if(tag == "crowjump")
+            if (tag == "crowjump")
             {
+                crowAnimator.SetTrigger("CrowBooksIt");
                 continueArrow.SetActive(true);
+            }
+
+            if (tag == "crowdisappear")
+            {
+                sceneSprite.SetActive(false);
+                crowAnimator.SetBool("isDisappearing", true);
+                ExitDialogueMode();
+            }
+
+            if (tag == "crowappears")
+            {
+                crowParent.transform.position = crowSecondSpawn.position;
+                sceneSprite.SetActive(false);
+                kazumiSprite.SetActive(false);
+                crowSprite.SetActive(true);
+                crowInWorldObject.SetActive(true);
+                crowAnimator.SetTrigger("CrowAppears");
             }
         }
     }
