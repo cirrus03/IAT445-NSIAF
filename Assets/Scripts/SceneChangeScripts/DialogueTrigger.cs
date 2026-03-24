@@ -11,4 +11,5 @@ public class DialogueTrigger : MonoBehaviour
 
     [Header("Quest Reference")]
     public QuestControl questControl;
+    public bool hasTriggered = false;
 }

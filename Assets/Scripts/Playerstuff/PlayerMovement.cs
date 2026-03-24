@@ -516,7 +516,13 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGameplayFrozen()
     {
-        return SimpleDialogueUI.Instance != null && SimpleDialogueUI.Instance.FreezeGameplay;
+        // freeze player duruing dialogue
+        if (DialogueManager.GetInstance() != null &&
+            DialogueManager.GetInstance().dialogueIsPlaying)
+        {
+            return true;
+        }
+        return false;
     }
 
     public void EnableAfterRespawn()

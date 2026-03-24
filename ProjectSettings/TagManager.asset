@@ -11,6 +11,7 @@ TagManager:
   - HealthItem
   - Audio
   - Breakable
+  - LevelExitPortal
   layers:
   - Default
   - TransparentFX

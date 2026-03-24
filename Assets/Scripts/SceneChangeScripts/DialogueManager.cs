@@ -20,6 +20,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject crowInWorldObject;
     [SerializeField] private GameObject crowParent;
     [SerializeField] private Transform crowSecondSpawn;
+    [SerializeField] private GameObject whitecrowSprite;
+    [SerializeField] private GameObject blackcrowSprite;
+    [SerializeField] private GameObject levelExitPortal;
 
 
     [Header("Choices UI")]
@@ -47,12 +50,14 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        continueArrow.SetActive(false);
-        dialogueIsPlaying = false;
-        sceneSprite.SetActive(false);
-        kazumiSprite.SetActive(false);
-        dialoguePanel.SetActive(false);
-        crowSprite.SetActive(false);
+        if (continueArrow != null) continueArrow.SetActive(false);
+        if (sceneSprite != null) sceneSprite.SetActive(false);
+        if (kazumiSprite != null) kazumiSprite.SetActive(false);
+        if (dialoguePanel != null) dialoguePanel.SetActive(false);
+        if (crowSprite != null) crowSprite.SetActive(false);
+        if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
+        if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
+
         // choices
         choicesText = new TextMeshProUGUI[choices.Length];
         int index = 0;
@@ -65,11 +70,8 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (!dialogueIsPlaying)
-        {
-            return;
-        }
-
+        if (PauseMenu.isPaused) return;
+        if (!dialogueIsPlaying) return;
         if (InputManager.GetInstance().GetSubmitPressed() || Input.GetMouseButtonDown(0))
         {
             ContinueStory();
@@ -101,17 +103,28 @@ public class DialogueManager : MonoBehaviour
         dialogueFinished = true;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
-        sceneSprite.SetActive(false);
+        if (sceneSprite != null) sceneSprite.SetActive(false);
+        if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
+        if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
     }
 
     private void ContinueStory()
     {
         if (currentStory.canContinue)
         {
-            dialogueText.text = currentStory.Continue();
+            string text = currentStory.Continue();
 
             HandleTags(currentStory.currentTags);
 
+            // skip empty lines
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                ContinueStory();
+                return;
+            }
+
+            if (dialogueText != null)
+                dialogueText.text = text;
             DisplayChoices();
         }
         else
@@ -126,51 +139,135 @@ public class DialogueManager : MonoBehaviour
         {
             if (tag == "fadein")
             {
-                sceneFader.FadeIn(2f);
-                sceneSprite.SetActive(true);
+                if (sceneFader != null) sceneFader.FadeIn(2f);
+                if (sceneSprite != null) sceneSprite.SetActive(true);
             }
 
             if (tag == "kazumi" || tag == "kazumipuppyeyes" || tag == "kazumicheerful")
             {
-                kazumiSprite.SetActive(true);
-                sceneSprite.SetActive(false);
+                if (kazumiSprite != null) kazumiSprite.SetActive(true);
+                if (sceneSprite != null) sceneSprite.SetActive(false);
             }
 
             if (tag == "nozomi")
             {
-                sceneSprite.SetActive(true);
-                kazumiSprite.SetActive(false);
-                crowSprite.SetActive(false);
+                if (sceneSprite != null) sceneSprite.SetActive(true);
+                if (kazumiSprite != null) kazumiSprite.SetActive(false);
+                if (crowSprite != null) crowSprite.SetActive(false);
+                if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
+                if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
             }
 
             if (tag == "crow")
             {
-                sceneSprite.SetActive(false);
-                kazumiSprite.SetActive(false);
-                crowSprite.SetActive(true);
+                if (sceneSprite != null) sceneSprite.SetActive(false);
+                if (kazumiSprite != null) kazumiSprite.SetActive(false);
+                if (crowSprite != null) crowSprite.SetActive(true);
             }
 
             if (tag == "crowjump")
             {
-                crowAnimator.SetTrigger("CrowBooksIt");
-                continueArrow.SetActive(true);
+                if (crowAnimator != null)
+                {
+                    crowAnimator.SetTrigger("CrowBooksIt");
+                }
+                if (continueArrow != null) continueArrow.SetActive(true);
             }
 
             if (tag == "crowdisappear")
             {
-                sceneSprite.SetActive(false);
-                crowAnimator.SetBool("isDisappearing", true);
+                if (sceneSprite != null) sceneSprite.SetActive(false);
+                if (crowAnimator != null)
+                {
+                    crowAnimator.SetBool("isDisappearing", true);
+                }
                 ExitDialogueMode();
             }
 
             if (tag == "crowappears")
             {
-                crowParent.transform.position = crowSecondSpawn.position;
-                sceneSprite.SetActive(false);
-                kazumiSprite.SetActive(false);
-                crowSprite.SetActive(true);
-                crowInWorldObject.SetActive(true);
-                crowAnimator.SetTrigger("CrowAppears");
+                if (crowParent != null && crowSecondSpawn != null)
+                {
+                    crowParent.transform.position = crowSecondSpawn.position;
+                }
+                if (sceneSprite != null) sceneSprite.SetActive(false);
+                if (kazumiSprite != null) kazumiSprite.SetActive(false);
+                if (crowSprite != null) crowSprite.SetActive(true);
+                if (crowInWorldObject != null) crowInWorldObject.SetActive(true);
+                if (crowAnimator != null)
+                {
+                    crowAnimator.SetTrigger("CrowAppears");
+                }
+            }
+
+            if (tag == "whiteduocrow")
+            {
+                if (sceneSprite != null) sceneSprite.SetActive(false);
+                if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
+                if (whitecrowSprite != null) whitecrowSprite.SetActive(true);
+            }
+
+            if (tag == "blackduocrow")
+            {
+                if (sceneSprite != null) sceneSprite.SetActive(false);
+                if (blackcrowSprite != null) blackcrowSprite.SetActive(true);
+                if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
+            }
+            // quest stuff pls
+            if (tag == "start_first_quest")
+            {
+                QuestManager.Instance.StartKillQuest("kill_first_enemy", "Defeat 1 Enemy", 1);
+                GameProgress.Instance.currentQuestStage = 1;
+            }
+
+            if (tag == "start_second_quest")
+            {
+                QuestManager.Instance.StartCollectQuest("collect_top_right_item", "Collect the Upper-Right Item", 1);
+            }
+
+            if (tag == "start_third_quest")
+            {
+                QuestManager.Instance.StartCollectQuest("collect_final_item", "Collect the Final Item", 1);
+            }
+
+            // ability unlocks
+            if (tag == "unlockdash")
+            {
+                GameProgress.Instance.UnlockDash();
+
+                if (FindObjectOfType<AbilityUnlocker>()?.player != null)
+                    FindObjectOfType<AbilityUnlocker>().player.SetDashUnlocked(true);
+
+                QuestManager.Instance.ClearQuest();
+                GameProgress.Instance.currentQuestStage = 2;
+            }
+
+            if (tag == "unlockwalljump")
+            {
+                GameProgress.Instance.UnlockWallJump();
+
+                if (FindObjectOfType<AbilityUnlocker>()?.player != null)
+                    FindObjectOfType<AbilityUnlocker>().player.SetWallJumpUnlocked(true);
+
+                QuestManager.Instance.ClearQuest();
+                GameProgress.Instance.currentQuestStage = 3;
+            }
+
+            if (tag == "unlockdoublejump")
+            {
+                GameProgress.Instance.UnlockDoubleJump();
+
+                if (FindObjectOfType<AbilityUnlocker>()?.player != null)
+                    FindObjectOfType<AbilityUnlocker>().player.SetDoubleJumpUnlocked(true);
+
+                QuestManager.Instance.ClearQuest();
+                GameProgress.Instance.currentQuestStage = 4;
+            }
+
+            if (tag == "openportal")
+            {
+                if (levelExitPortal != null)
+                    levelExitPortal.SetActive(true);
             }
         }
     }
@@ -204,7 +301,6 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(SelectFirstChoice());
     }
 
-
     private IEnumerator SelectFirstChoice()
     {
         if (choices.Length == 0) yield break;
@@ -213,7 +309,6 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         EventSystem.current.SetSelectedGameObject(choices[0]);
     }
-
 
     public void MakeChoice(int ChoiceIndex)
     {

@@ -5,6 +5,7 @@ public class CrowQuestGiver : MonoBehaviour
     [Header("Interaction")]
     public GameObject interactPrompt;
     public bool playerInRange = false;
+    [SerializeField] private TextAsset inkJSON;
 
     [Header("Crow Status Indicators")]
     public GameObject availableIndicator;   // ! : crow has something important
@@ -21,19 +22,19 @@ public class CrowQuestGiver : MonoBehaviour
     {
         if (PauseMenu.isPaused)
             return;
+
         UpdateIndicators();
 
         if (interactPrompt != null)
         {
             bool canShowPrompt = playerInRange &&
-                                 (SimpleDialogueUI.Instance == null || !SimpleDialogueUI.Instance.DialogueActive);
+            DialogueManager.GetInstance() != null &&
+            !DialogueManager.GetInstance().dialogueIsPlaying;
+
             interactPrompt.SetActive(canShowPrompt);
         }
 
         if (!playerInRange) return;
-
-        if (SimpleDialogueUI.Instance != null && SimpleDialogueUI.Instance.DialogueActive)
-            return;
 
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -93,217 +94,56 @@ public class CrowQuestGiver : MonoBehaviour
 
     void Interact()
     {
-        if (GameProgress.Instance == null || QuestManager.Instance == null || SimpleDialogueUI.Instance == null)
+        if (GameProgress.Instance == null || QuestManager.Instance == null)
         {
-            Debug.LogWarning("Missing GameProgress, QuestManager, or SimpleDialogueUI in scene.");
+            Debug.LogWarning("Missing GameProgress or QuestManager.");
             return;
         }
 
         int stage = GameProgress.Instance.currentQuestStage;
         QuestManager qm = QuestManager.Instance;
 
-        // death response first
-        if (GameProgress.Instance.playerJustDied)
+        // Stage 0 → intro + first quest
+        if (stage == 0 && !qm.questActive)
         {
-            SimpleDialogueUI.Instance.StartDialogue(new string[]
-            {
-                "Crow: Oh... so you died.",
-                "Crow: It's okay.",
-                "Crow: You can try again."
-            });
-
-            GameProgress.Instance.ClearDeathFlag();
+            DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "introplatformer");
             return;
         }
 
-        // Stage 0 -> give first quest
-        if (stage == 0)
-        {
-            if (!qm.questActive)
-            {
-                SimpleDialogueUI.Instance.StartDialogue(new string[]
-                {
-                    "Dr. Duocrow White: Well, if it isn’t our prized pupil.",
-                    "Dr. Duocrow Black: That’s right!",
-                    "Crow: But it's okay, dying here doesn't actually affect you... probably.",
-                    "Crow: Anyways... I've got a quest for you.",
-                    "Crow: Return to me once you finish.",
-                    "Crow: I'll give you a little somethin' somethin'.",
-                    "Defeat 1 enemy.",
-                    "You can [RMB] or [J] to attack."
-                },
-                () =>
-                {
-
-                    qm.StartKillQuest("kill_first_enemy", "Defeat 1 Enemy", 1);
-                    GameProgress.Instance.currentQuestStage = 1;
-                });
-                if (tutorialEnemyRespawner != null)
-                {
-                    tutorialEnemyRespawner.EnsureQuestEnemyExists();
-                }
-            }
-            return;
-        }
-
-        // Stage 1 -> first quest active / complete
+        // Stage 1 → waiting OR completed
         if (stage == 1)
         {
-            if (qm.questActive && !qm.questComplete)
-            {
-                SimpleDialogueUI.Instance.StartDialogue(new string[]
-                {
-                    $"Crow: You have defeated {qm.currentAmount} out of {qm.requiredAmount}.",
-                    "Crow: Come back after defeating an enemy, there should be one nearby."
-                });
-                return;
-            }
-
             if (qm.questActive && qm.questComplete)
             {
-                GameProgress.Instance.UnlockDash();
-
-                if (abilityUnlocker != null && abilityUnlocker.player != null)
-                    abilityUnlocker.player.SetDashUnlocked(true);
-
-                qm.ClearQuest();
-                GameProgress.Instance.currentQuestStage = 2;
-
-                SimpleDialogueUI.Instance.StartDialogue(new string[]
-                {
-                    "Crow: Well done.",
-                    "Crow: Take this power.",
-                    "You can dash now.",
-                    "Press [RMB] or [SHIFT] to dash.",
-                    "Crow: Don't wander off just yet.",
-                    "Crow: I've got another task for you.",
-                    "Crow: There is an item in the upper-right part of the map.",
-                    "Crow: Bring it back to me."
-                },
-                () =>
-                {
-                    qm.StartCollectQuest("collect_top_right_item", "Collect the Upper-Right Item", 1);
-                });
-
-                return;
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "firsttaskdone");
             }
+            return;
         }
 
-        // Stage 2 -> second quest active / complete
+        // Stage 2
         if (stage == 2)
         {
-            if (qm.questActive && !qm.questComplete)
-            {
-                SimpleDialogueUI.Instance.StartDialogue(new string[]
-                {
-                    $"Crow: You have found {qm.currentAmount} out of {qm.requiredAmount}.",
-                    "Crow: The item is still out there."
-                });
-                return;
-            }
-
             if (qm.questActive && qm.questComplete)
             {
-                GameProgress.Instance.UnlockWallJump();
-
-                if (abilityUnlocker != null && abilityUnlocker.player != null)
-                    abilityUnlocker.player.SetWallJumpUnlocked(true);
-
-                qm.ClearQuest();
-                GameProgress.Instance.currentQuestStage = 3;
-
-                SimpleDialogueUI.Instance.StartDialogue(new string[]
-                {
-                    "Crow: Good.",
-                    "Crow: I'll give you this ability next.",
-                    "You've unlocked the wall jump ability.",
-                    "Crow: One last task remains.",
-                    "Crow: Bring me the final item from the top-left part of the area."
-                },
-                () =>
-                {
-                    qm.StartCollectQuest("collect_final_item", "Collect the Final Item", 1);
-                });
-
-                return;
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "secondtaskdone");
             }
-
-            // safety fallback if somehow stage is 2 but no active quest
-            if (!qm.questActive)
-            {
-                SimpleDialogueUI.Instance.StartDialogue(new string[]
-                {
-                    "Crow: There is an item in the upper-right part of the map.",
-                    "Crow: Bring it back to me."
-                },
-                () =>
-                {
-                    qm.StartCollectQuest("collect_top_right_item", "Collect the Upper-Right Item", 1);
-                });
-                return;
-            }
+            return;
         }
 
-        // Stage 3 -> third quest active / complete
+        // Stage 3
         if (stage == 3)
         {
-            if (qm.questActive && !qm.questComplete)
-            {
-                SimpleDialogueUI.Instance.StartDialogue(new string[]
-                {
-                    $"Crow: You have found {qm.currentAmount} out of {qm.requiredAmount}.",
-                    "Crow: It doesn't look like you've found it yet."
-                });
-                return;
-            }
-
             if (qm.questActive && qm.questComplete)
             {
-                GameProgress.Instance.UnlockDoubleJump();
-
-                if (abilityUnlocker != null && abilityUnlocker.player != null)
-                    abilityUnlocker.player.SetDoubleJumpUnlocked(true);
-
-                qm.ClearQuest();
-                GameProgress.Instance.currentQuestStage = 4;
-
-                if (levelExitPortal != null)
-                    levelExitPortal.SetActive(true);
-
-                SimpleDialogueUI.Instance.StartDialogue(new string[]
-                {
-                    "Crow: Excellent.",
-                    "Crow: The last ability is yours.",
-                    "You can now double jump.",
-                    "Crow: You are ready to continue.",
-                    "Crow: The portal back should be open now."
-                });
-
-                return;
+                DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "lasttaskdone");
             }
-
-            // safety fallback
-            if (!qm.questActive)
-            {
-                SimpleDialogueUI.Instance.StartDialogue(new string[]
-                {
-                    "Crow: Bring me one more item located in the top-left quadrant of the area."
-                },
-                () =>
-                {
-                    qm.StartCollectQuest("collect_final_item", "Collect the Final Item", 1);
-                });
-                return;
-            }
+            return;
         }
 
+        // Stage 4+
         if (stage >= 4)
         {
-            SimpleDialogueUI.Instance.StartDialogue(new string[]
-            {
-                "Crow: You are ready to continue.",
-                "Crow: The portal back should be open right about now."
-            });
+            DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "lasttaskdone");
         }
     }
 

@@ -125,7 +125,7 @@ public class QuestManager : MonoBehaviour
         currentAmount = 0;
         requiredAmount = 0;
         questActive = false;
-        questComplete = false;
+        questComplete = true;
         
         if (GameProgress.Instance != null)
         {

@@ -40,8 +40,6 @@ public class PauseMenu : MonoBehaviour
     {
         if (DeathScreenUI.IsDeathScreenOpen)
             return;
-        if (IsDialogueOpen())
-            return;
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -150,6 +148,7 @@ public class PauseMenu : MonoBehaviour
 
     private bool IsDialogueOpen()
     {
-        return SimpleDialogueUI.Instance != null && SimpleDialogueUI.Instance.FreezeGameplay;
+        return DialogueManager.GetInstance() != null &&
+        DialogueManager.GetInstance().dialogueIsPlaying;
     }
 }
