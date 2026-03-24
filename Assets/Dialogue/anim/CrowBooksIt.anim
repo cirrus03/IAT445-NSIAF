@@ -20,30 +20,30 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0, y: -0.8298399, z: 0}
-        inSlope: {x: 0, y: 74.764175, z: 0}
-        outSlope: {x: 0, y: 74.764175, z: 0}
+        value: {x: -11.887, y: -0.8298399, z: 0}
+        inSlope: {x: 0, y: 19.276817, z: 0}
+        outSlope: {x: 0, y: 19.276817, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.30332837, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.9926639, z: 0.33333334}
       - serializedVersion: 3
         time: 0.083333336
-        value: {x: -1.79, y: 1.06, z: 0}
-        inSlope: {x: -22.107693, y: 0, z: 0}
-        outSlope: {x: -22.107693, y: 0, z: 0}
+        value: {x: -15, y: 1.06, z: 0}
+        inSlope: {x: -23.598461, y: 0, z: 0}
+        outSlope: {x: -23.598461, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.21666667
-        value: {x: -4.79, y: -3.61, z: 0}
-        inSlope: {x: -7.9120884, y: -110.95365, z: 0}
-        outSlope: {x: -7.9120884, y: 0, z: 0}
+        value: {x: -17, y: -3.61, z: 0}
+        inSlope: {x: -5.274725, y: -53.828217, z: 0}
+        outSlope: {x: -5.274725, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.40865797, z: 0.33333334}
+        inWeight: {x: 0.33333334, y: 0.48441827, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1.6
@@ -154,7 +154,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: -11.887
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -163,18 +163,18 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.083333336
-        value: -1.79
-        inSlope: -22.107693
-        outSlope: -22.107693
+        value: -15
+        inSlope: -23.598461
+        outSlope: -23.598461
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.21666667
-        value: -4.79
-        inSlope: -7.9120884
-        outSlope: -7.9120884
+        value: -17
+        inSlope: -5.274725
+        outSlope: -5.274725
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
@@ -203,12 +203,12 @@ AnimationClip:
       - serializedVersion: 3
         time: 0
         value: -0.8298399
-        inSlope: 74.764175
-        outSlope: 74.764175
+        inSlope: 19.276817
+        outSlope: 19.276817
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.30332837
+        outWeight: 0.9926639
       - serializedVersion: 3
         time: 0.083333336
         value: 1.06
@@ -221,11 +221,11 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.21666667
         value: -3.61
-        inSlope: -110.95365
-        outSlope: -110.95365
+        inSlope: -53.828217
+        outSlope: -53.828217
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.40865797
+        inWeight: 0.48441827
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -260,7 +260,7 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 1.15
+  - time: 1.6166667
     functionName: DisableCrow
     data: 
     objectReferenceParameter: {fileID: 0}
