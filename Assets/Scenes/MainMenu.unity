@@ -2801,9 +2801,33 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6577472809873973950, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
+      propertyPath: hitWall
+      value: 
+      objectReference: {fileID: 8300000, guid: 2a8d7d7ccfb2dd445b708d60f3313672, type: 3}
+    - target: {fileID: 6577472809873973950, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
       propertyPath: menuBGM
       value: 
-      objectReference: {fileID: 8300000, guid: 68b1a72b30d23c84bb607cfc092da57e, type: 3}
+      objectReference: {fileID: 8300000, guid: 219472ea285bd7d48bcbc6613b2ec059, type: 3}
+    - target: {fileID: 6577472809873973950, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
+      propertyPath: enemyHit
+      value: 
+      objectReference: {fileID: 8300000, guid: c97e46a9f3434184d9121f4232946c23, type: 3}
+    - target: {fileID: 6577472809873973950, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
+      propertyPath: hitGround
+      value: 
+      objectReference: {fileID: 8300000, guid: 2a8d7d7ccfb2dd445b708d60f3313672, type: 3}
+    - target: {fileID: 6577472809873973950, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
+      propertyPath: enemyDeath
+      value: 
+      objectReference: {fileID: 8300000, guid: 740521a156d3f0a4da4acb7fe8d9a31f, type: 3}
+    - target: {fileID: 6577472809873973950, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
+      propertyPath: playerDash
+      value: 
+      objectReference: {fileID: 8300000, guid: 53be11510f394b148a039150a19987b6, type: 3}
+    - target: {fileID: 6577472809873973950, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
+      propertyPath: playerAttack
+      value: 
+      objectReference: {fileID: 8300000, guid: dabaa965319b7aa469e7db8441ed344e, type: 3}
     - target: {fileID: 6785767958845325724, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
       propertyPath: m_Name
       value: SoundManager
