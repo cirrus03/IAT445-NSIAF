@@ -126,7 +126,27 @@ public class PlayerAttackHitbox : MonoBehaviour
                 SpawnHitVfx(other.ClosestPoint(transform.position));
                 spawnedVfx = true;
             }
+            if (audioManager != null && audioManager.hitWall != null)
+            {
+                audioManager.PlaySFX(audioManager.hitWall, 0.4f);
+            }
             ApplyPooogo();
+        }
+
+        if (other.CompareTag("Ground"))
+        {
+            hitSomethingValid = true;
+
+            if (spawnVfxOnGround && !spawnedVfx)
+            {
+                SpawnHitVfx(other.ClosestPoint(transform.position));
+                spawnedVfx = true;
+            }
+
+            if (audioManager != null && audioManager.hitWall != null)
+            {
+                audioManager.PlaySFX(audioManager.hitWall, 0.4f);
+            }
         }
 
         // wall/neemy recoil
