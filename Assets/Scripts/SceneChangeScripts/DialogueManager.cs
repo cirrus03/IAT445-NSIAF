@@ -23,6 +23,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject whitecrowSprite;
     [SerializeField] private GameObject blackcrowSprite;
     [SerializeField] private GameObject levelExitPortal;
+    [SerializeField] private TutorialEnemyRespawner tutorialEnemyRespawner;
 
 
     [Header("Choices UI")]
@@ -218,6 +219,14 @@ public class DialogueManager : MonoBehaviour
             {
                 QuestManager.Instance.StartKillQuest("kill_first_enemy", "Defeat 1 Enemy", 1);
                 GameProgress.Instance.currentQuestStage = 1;
+                if (tutorialEnemyRespawner != null)
+                {
+                    tutorialEnemyRespawner.EnsureQuestEnemyExists();
+                }
+                else
+                {
+                    Debug.LogWarning("DialogueManager: tutorialEnemyRespawner is not assigned.");
+                }
             }
 
             if (tag == "start_second_quest")
