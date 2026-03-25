@@ -179,6 +179,7 @@ MonoBehaviour:
   healthDropChance: 0.4
   flashOnDamage: 1
   flashDuration: 0.1
+  countsForBugQuest: 0
   hurtSprite: {fileID: 0}
 --- !u!95 &3026907626088386107
 Animator:
@@ -318,7 +319,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.08873749, y: 1.0199115}
+  m_Offset: {x: 0.08873749, y: -0.09752226}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -328,7 +329,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 9.532, y: 6.0142713}
+  m_Size: {x: 9.532, y: 8.249139}
   m_EdgeRadius: 0
 --- !u!114 &196379914486658166
 MonoBehaviour:
