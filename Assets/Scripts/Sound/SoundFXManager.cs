@@ -14,6 +14,7 @@ public class SoundFXManager : MonoBehaviour
 
     [Header("BGM FILES")]
     public AudioClip levelBGM_0;
+    public AudioClip menuBGM;
 
     [Header("PLAYER LEVEL SFX")]
     public AudioClip playerDash;
@@ -79,8 +80,11 @@ public class SoundFXManager : MonoBehaviour
     {
         //defaults set to basic
         currentLevelBGM = levelBGM_0;
-
-        if (sceneName == "LabAreaClone")
+        if (sceneName == "MainMenu")
+        {
+            currentLevelBGM = menuBGM;
+        }
+        else if (sceneName == "LabAreaClone")
             currentLevelBGM = levelBGM_0;
         return;
 

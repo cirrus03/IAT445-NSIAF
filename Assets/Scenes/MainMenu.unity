@@ -2680,6 +2680,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce653e6b789f7c42a34028c1bc9067c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameProgress
+  currentObjectiveText: 
+  currentObjectiveProgressText: 
   dashUnlocked: 0
   wallJumpUnlocked: 0
   doubleJumpUnlocked: 0
@@ -2798,6 +2800,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6577472809873973950, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
+      propertyPath: menuBGM
+      value: 
+      objectReference: {fileID: 8300000, guid: 68b1a72b30d23c84bb607cfc092da57e, type: 3}
     - target: {fileID: 6785767958845325724, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
       propertyPath: m_Name
       value: SoundManager
