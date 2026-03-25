@@ -178,8 +178,9 @@ MonoBehaviour:
   musicSource: {fileID: 2700501363417119146}
   sfxSource: {fileID: 8173267606458286755}
   levelBGM_0: {fileID: 8300000, guid: 85972a53790d70a40bd14ae502117894, type: 3}
-  playerDash: {fileID: 8300000, guid: caed32ba00436064589436963e80c7f8, type: 3}
-  playerAttack: {fileID: 8300000, guid: 8ec38e5f839548f4f9e854f1aaa9e9eb, type: 3}
+  menuBGM: {fileID: 8300000, guid: 593586fafe414ce41a745aab1eb8e067, type: 3}
+  playerDash: {fileID: 8300000, guid: 53be11510f394b148a039150a19987b6, type: 3}
+  playerAttack: {fileID: 8300000, guid: dabaa965319b7aa469e7db8441ed344e, type: 3}
   playerLand: {fileID: 8300000, guid: 89c0adbb1f630694e8da62f204d76b57, type: 3}
   playerDamageTaken: {fileID: 8300000, guid: c37a02a343bba1a468ef3b6d9b21945f, type: 3}
   pickUpHeal: {fileID: 8300000, guid: 0b8bc32a409e9b24aac9c935a0f8b719, type: 3}
@@ -188,10 +189,10 @@ MonoBehaviour:
   menuCheck1: {fileID: 8300000, guid: 7bfac203e4dfde845be0128f05146909, type: 3}
   menuCheck2: {fileID: 8300000, guid: 210cdb8d6c1049c44a8ea481dbe350e6, type: 3}
   menuUnderline: {fileID: 8300000, guid: 4441206e995df9f4ea8e9b68f79ae370, type: 3}
-  enemyHit: {fileID: 0}
-  enemyDeath: {fileID: 0}
-  hitWall: {fileID: 0}
-  hitGround: {fileID: 0}
+  enemyHit: {fileID: 8300000, guid: c97e46a9f3434184d9121f4232946c23, type: 3}
+  enemyDeath: {fileID: 8300000, guid: 740521a156d3f0a4da4acb7fe8d9a31f, type: 3}
+  hitWall: {fileID: 8300000, guid: 2a8d7d7ccfb2dd445b708d60f3313672, type: 3}
+  hitGround: {fileID: 8300000, guid: 2a8d7d7ccfb2dd445b708d60f3313672, type: 3}
   footstepSounds: []
 --- !u!1 &7688862210112325452
 GameObject:
