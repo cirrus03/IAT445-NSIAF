@@ -4,7 +4,9 @@ public class LastSafeGround : MonoBehaviour
 {
     public Transform groundCheckPos;
     public Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
-    public LayerMask groundLayer;
+
+    [Header("respawn on stable ground only")]
+    public LayerMask safeGroundLayer;
 
     [Header("Respawn")]
     public float respawnHeight = 1.0f;
@@ -23,9 +25,9 @@ public class LastSafeGround : MonoBehaviour
 
     void FixedUpdate()
     {
-        bool grounded = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0f, groundLayer);
+        bool grounded = Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0f, safeGroundLayer);
 
-        // Save only when landing
+        // Save only when landing on safe ground
         if (grounded && !wasGrounded)
         {
             SaveSafePosition();
@@ -38,10 +40,10 @@ public class LastSafeGround : MonoBehaviour
     {
         Vector2 origin = new Vector2(transform.position.x, groundCheckPos.position.y + 0.5f);
 
-        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, raycastDistance, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, raycastDistance, safeGroundLayer);
         if (hit.collider != null)
         {
-            // Save a point directly above the top surface
+            // save point directly above the top surface
             LastSafePos = new Vector2(transform.position.x, hit.point.y + respawnHeight);
         }
     }
