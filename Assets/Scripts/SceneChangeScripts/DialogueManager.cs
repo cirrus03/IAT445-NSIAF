@@ -32,6 +32,8 @@ public class DialogueManager : MonoBehaviour
     private Story currentStory;
     public bool dialogueIsPlaying { get; private set; }
     public bool dialogueFinished { get; private set; }
+    private bool isDowntimeLine = false;
+    private string simpleText;
     private static DialogueManager instance;
 
     private void Awake()
@@ -74,7 +76,16 @@ public class DialogueManager : MonoBehaviour
         if (!dialogueIsPlaying) return;
         if (InputManager.GetInstance().GetSubmitPressed() || Input.GetMouseButtonDown(0))
         {
-            ContinueStory();
+            if (isDowntimeLine)
+            {
+                ExitDialogueMode();
+                isDowntimeLine = false;
+            }
+            else
+            {
+                ContinueStory();
+            }
+
             InputManager.GetInstance().RegisterSubmitPressed();
         }
     }
@@ -101,6 +112,7 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueIsPlaying = false;
         dialogueFinished = true;
+        isDowntimeLine = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
         if (sceneSprite != null) sceneSprite.SetActive(false);
@@ -270,6 +282,18 @@ public class DialogueManager : MonoBehaviour
                     levelExitPortal.SetActive(true);
             }
         }
+    }
+
+    public void PlayDowntimeDialogue(string line)
+    {
+        dialogueIsPlaying = true;
+        dialogueFinished = false;
+
+        isDowntimeLine = true;
+        simpleText = line;
+
+        dialoguePanel.SetActive(true);
+        dialogueText.text = line;
     }
 
     private void DisplayChoices()
