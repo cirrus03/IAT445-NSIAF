@@ -2442,6 +2442,8 @@ MonoBehaviour:
   crowSecondSpawn: {fileID: 1261811498}
   whitecrowSprite: {fileID: 0}
   blackcrowSprite: {fileID: 0}
+  levelExitPortal: {fileID: 0}
+  tutorialEnemyRespawner: {fileID: 0}
   choices: []
 --- !u!1 &1502177094
 GameObject:
@@ -2526,7 +2528,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 6404206630361459548, guid: 45bc295ce275d440a817c3324e838e0f, type: 3}
+  m_Sprite: {fileID: -3073436057489233857, guid: ca6de43da8e23483294dfd8935bd990b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
