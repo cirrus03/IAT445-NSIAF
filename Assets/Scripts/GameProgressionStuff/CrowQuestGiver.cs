@@ -130,6 +130,14 @@ public class CrowQuestGiver : MonoBehaviour
         // stage 0
         if (stage == 0 && !qm.questActive)
         {
+            if (tutorialEnemyRespawner != null)
+            {
+                tutorialEnemyRespawner.EnsureQuestEnemyExists();
+            }
+            else
+            {
+                Debug.LogWarning("tutorialEnemyRespawner is not assigned.");
+            }
             DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "introplatformer");
             return;
         }
