@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 36de91479c66944f3800e90e88686737
+guid: 8ceb3c62004ab430ab8a3c298ef7818e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1177525654791786172
-    second: kazumiss_sprite2_0
+      213: -8535819217359734137
+    second: nozomiss_sprite2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: kazumiss_sprite2_0
+      name: nozomiss_sprite2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 312
-        height: 574
+        width: 204
+        height: 577
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 441f930e7a698afe0800000000000000
-      internalID: -1177525654791786172
+      spriteID: 78af15285adaa8980800000000000000
+      internalID: -8535819217359734137
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      kazumiss_sprite2_0: -1177525654791786172
+      nozomiss_sprite2_0: -8535819217359734137
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

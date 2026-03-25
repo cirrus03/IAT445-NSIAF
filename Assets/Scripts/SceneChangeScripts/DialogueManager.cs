@@ -13,7 +13,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private SceneFader sceneFader;
     [SerializeField] private GameObject sceneSprite;
+    [SerializeField] private GameObject nozomiHappy;
     [SerializeField] private GameObject kazumiSprite;
+    [SerializeField] private GameObject kazumiCheer;
     [SerializeField] private GameObject continueArrow;
     [SerializeField] private GameObject crowSprite;
     [SerializeField] private Animator crowAnimator;
@@ -55,7 +57,9 @@ public class DialogueManager : MonoBehaviour
     {
         if (continueArrow != null) continueArrow.SetActive(false);
         if (sceneSprite != null) sceneSprite.SetActive(false);
+        if (nozomiHappy != null) nozomiHappy.SetActive(false);
         if (kazumiSprite != null) kazumiSprite.SetActive(false);
+        if (kazumiCheer != null) kazumiCheer.SetActive(false);
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
         if (crowSprite != null) crowSprite.SetActive(false);
         if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
@@ -150,6 +154,14 @@ public class DialogueManager : MonoBehaviour
     {
         foreach (string tag in tags)
         {
+
+            if (tag == "nextlevel")
+            {
+                if (SceneControl.instance != null)
+                {
+                    SceneControl.instance.NextLevel();
+                }
+            }
             if (tag == "fadein")
             {
                 if (sceneFader != null) sceneFader.FadeIn(2f);
@@ -159,22 +171,44 @@ public class DialogueManager : MonoBehaviour
             if (tag == "kazumi" || tag == "kazumipuppyeyes" || tag == "kazumicheerful")
             {
                 if (kazumiSprite != null) kazumiSprite.SetActive(true);
+                if (kazumiCheer != null) kazumiCheer.SetActive(false);
                 if (sceneSprite != null) sceneSprite.SetActive(false);
+                if (nozomiHappy != null) nozomiHappy.SetActive(false);
+            }
+
+            if (tag == "kazumihappy")
+            {
+                if (kazumiCheer != null) kazumiCheer.SetActive(true);
+                if (sceneSprite != null) sceneSprite.SetActive(false);
+                if (nozomiHappy != null) nozomiHappy.SetActive(false);
+                if (kazumiSprite != null) kazumiSprite.SetActive(false);
             }
 
             if (tag == "nozomi")
             {
                 if (sceneSprite != null) sceneSprite.SetActive(true);
+                if (nozomiHappy != null) nozomiHappy.SetActive(false);
                 if (kazumiSprite != null) kazumiSprite.SetActive(false);
+                if (kazumiCheer != null) kazumiCheer.SetActive(false);
                 if (crowSprite != null) crowSprite.SetActive(false);
                 if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
                 if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
             }
 
+            if (tag == "nozomihappy")
+            {
+                if (nozomiHappy != null) nozomiHappy.SetActive(true);
+                if (sceneSprite != null) sceneSprite.SetActive(false);
+                if (kazumiSprite != null) kazumiSprite.SetActive(false);
+                if (kazumiCheer != null) kazumiCheer.SetActive(false);
+            }
+
             if (tag == "crow")
             {
                 if (sceneSprite != null) sceneSprite.SetActive(false);
+                if (nozomiHappy != null) nozomiHappy.SetActive(false);
                 if (kazumiSprite != null) kazumiSprite.SetActive(false);
+                if (kazumiCheer != null) kazumiCheer.SetActive(false);
                 if (crowSprite != null) crowSprite.SetActive(true);
             }
 
@@ -196,17 +230,26 @@ public class DialogueManager : MonoBehaviour
                 }
                 ExitDialogueMode();
             }
-
             if (tag == "crowappears")
             {
                 if (crowParent != null && crowSecondSpawn != null)
                 {
                     crowParent.transform.position = crowSecondSpawn.position;
                 }
+
+                // enable crow anyway
+                if (crowParent != null && (crowSecondSpawn == null || crowAnimator == null))
+                {
+                    crowParent.SetActive(true);
+                }
+
                 if (sceneSprite != null) sceneSprite.SetActive(false);
+                if (nozomiHappy != null) nozomiHappy.SetActive(false);
                 if (kazumiSprite != null) kazumiSprite.SetActive(false);
+                if (kazumiCheer != null) kazumiCheer.SetActive(false);
                 if (crowSprite != null) crowSprite.SetActive(true);
                 if (crowInWorldObject != null) crowInWorldObject.SetActive(true);
+
                 if (crowAnimator != null)
                 {
                     crowAnimator.SetTrigger("CrowAppears");
