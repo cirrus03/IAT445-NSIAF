@@ -14,4 +14,6 @@ public class SaveData
     public bool level2PowerRestored;
     public bool level2BugQuestStarted;
     public bool level2BugQuestComplete;
+    public int level2BugKillsCurrent;
+    public GameProgress.MoodState playerMood;
 }

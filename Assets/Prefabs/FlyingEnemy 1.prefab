@@ -351,6 +351,7 @@ MonoBehaviour:
   knockbackY: 6
   hitStopTime: 0.05
   stunTime: 0.18
+  touchDamageCooldown: 0.15
 --- !u!1 &2817751261689409807
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,7 +414,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -491,7 +492,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -603,3 +604,4 @@ MonoBehaviour:
   knockbackY: 6
   hitStopTime: 0.05
   stunTime: 0.18
+  touchDamageCooldown: 0.15
