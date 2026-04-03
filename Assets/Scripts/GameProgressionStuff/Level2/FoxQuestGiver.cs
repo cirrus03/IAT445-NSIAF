@@ -10,7 +10,10 @@ public class FoxQuestGiver : MonoBehaviour
     [SerializeField] private Elevator mainToUpperElevator;
     [SerializeField] private BugQuestGroup bugQuestGroup;
     [SerializeField] private GameObject levelExitPortal;
-
+    private void Start()
+    {
+        RestoreLevel2StateFromProgress();
+    }
     private void Update()
     {
         if (PauseMenu.isPaused)
@@ -27,6 +30,71 @@ public class FoxQuestGiver : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             Interact();
+        }
+    }
+
+    private void RestoreLevel2StateFromProgress()
+    {
+        if (GameProgress.Instance == null)
+        {
+            Debug.LogWarning("Missing GameProgress in scene.");
+            return;
+        }
+
+        int stage = GameProgress.Instance.level2QuestStage;
+
+        // lamp / darkness state
+        if (GameProgress.Instance.level2LampAcquired)
+        {
+            if (DarknessController.Instance != null)
+                DarknessController.Instance.GiveLamp();
+        }
+
+        // portal state
+        if (levelExitPortal != null)
+        {
+            levelExitPortal.SetActive(stage >= 5 || GameProgress.Instance.level2BugQuestComplete);
+        }
+
+        // bug quest state
+        if (bugQuestGroup != null && GameProgress.Instance.level2BugQuestStarted)
+        {
+            bugQuestGroup.BeginQuest();
+        }
+
+        // restoring objective text based on saved stage
+        switch (stage)
+        {
+            case 0:
+                GameProgress.Instance.ClearObjective();
+                break;
+
+            case 1:
+                GameProgress.Instance.SetObjective("Find the breaker");
+                break;
+
+            case 2:
+                GameProgress.Instance.SetObjective("Return to Fox");
+                break;
+
+            case 3:
+                if (bugQuestGroup != null)
+                {
+                    GameProgress.Instance.SetObjective(
+                        "Clear the attic bugs",
+                        bugQuestGroup.CurrentKilled + " / " + bugQuestGroup.RequiredKills
+                    );
+                }
+                else
+                {
+                    GameProgress.Instance.SetObjective("Clear the attic bugs");
+                }
+                break;
+
+            case 4:
+            case 5:
+                GameProgress.Instance.SetObjective("Enter the portal");
+                break;
         }
     }
 

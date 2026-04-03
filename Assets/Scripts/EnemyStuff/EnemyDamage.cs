@@ -13,8 +13,33 @@ public class EnemyDamage : MonoBehaviour
     public float hitStopTime = 0.05f;   // freeze frame feel
     public float stunTime = 0.18f;      // controls locked
 
+    [Header("Contact Re-hit")]
+    public float touchDamageCooldown = 0.15f;
+
+    private float touchDamageTimer = 0f;
+
+    private void Update()
+    {
+        if (touchDamageTimer > 0f)
+        {
+            touchDamageTimer -= Time.deltaTime;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
+        TryDamagePlayer(other);
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        TryDamagePlayer(other);
+    }
+
+    private void TryDamagePlayer(Collider2D other)
+    {
+        if (touchDamageTimer > 0f) return;
+
         if (!other.CompareTag("Player")) return;
 
         var playerHealth = other.GetComponent<PlayerHealth>();
@@ -26,11 +51,13 @@ public class EnemyDamage : MonoBehaviour
         // Deal damage to player
         playerHealth.TakeDamage(damage);
 
-        // Knockback (use direction away from enemy root)
+        // local cooldown so it doesnt hit every frame while overlapping
+        touchDamageTimer = touchDamageCooldown;
+
         Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            float dir = Mathf.Sign(other.transform.position.x - transform.root.position.x);
+            float dir = Mathf.Sign(other.transform.position.x - transform.position.x);
             if (dir == 0) dir = 1f;
 
             rb.linearVelocity = Vector2.zero;
@@ -44,13 +71,11 @@ public class EnemyDamage : MonoBehaviour
             pm.StartCoroutine(pm.DamageStunRoutine(stunTime));
             pm.StartCoroutine(pm.HitStopRoutine(hitStopTime));
         }
-        
+
         EnemyFlying flying = GetComponentInParent<EnemyFlying>();
         if (flying != null)
         {
             flying.NotifyHitPlayer();
         }
-
-
     }
 }

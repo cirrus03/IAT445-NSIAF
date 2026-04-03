@@ -28,11 +28,14 @@ public class GameProgress : MonoBehaviour
 
     [Header("Level 1 Quest Progression")]
     public int currentQuestStage = 0; // this is for level 1 only, fked pu the naming convention because i forgot wed have more levels and im too lazy to go and edit them all
-    // 0 = not started
-    // 1 = kill 1 enemy
-    // 2 = collect first item / finished first quest
-    // 3 = collect second item / finished second quest
-    // 4 = all current quests done
+                                      // 0 = not started
+                                      // 1 = kill 1 enemy
+                                      // 2 = collect first item / finished first quest
+                                      // 3 = collect second item / finished second quest
+                                      // 4 = all current quests done
+
+    [Header("Level 2 Bug Progress")]
+    public int level2BugKillsCurrent = 0;
 
     [Header("Level 2 Quest Progression")]
     public int level2QuestStage = 0;
@@ -130,6 +133,7 @@ public class GameProgress : MonoBehaviour
         level2PowerRestored = false;
         level2BugQuestStarted = false;
         level2BugQuestComplete = false;
+        level2BugKillsCurrent = 0;
     }
 
     public void ApplySaveData(SaveData data)
@@ -146,8 +150,8 @@ public class GameProgress : MonoBehaviour
         level2PowerRestored = data.level2PowerRestored;
         level2BugQuestStarted = data.level2BugQuestStarted;
         level2BugQuestComplete = data.level2BugQuestComplete;
-        // add once SaveData has a mood field
-        // playerMood = data.playerMood;
+        level2BugKillsCurrent = data.level2BugKillsCurrent;
+        playerMood = data.playerMood;
     }
 
 }
