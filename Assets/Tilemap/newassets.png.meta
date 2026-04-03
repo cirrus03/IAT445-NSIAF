@@ -1,16 +1,19 @@
 fileFormatVersion: 2
-guid: 1cfc1034ddf60d949b2e606b61cd1956
+guid: 2d99e32ea78fa8c4d841ce309d1a0cc9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2645064607895768547
-    second: school tiles-Sheet_0
+      213: -3404370004898229456
+    second: newassets_0
   - first:
-      213: -7219228326675197184
-    second: school tiles-Sheet_1
+      213: -5141976222511140498
+    second: newassets_1
   - first:
-      213: 8083136948555903713
-    second: school tiles-Sheet_2
+      213: 2571231511846017340
+    second: newassets_2
+  - first:
+      213: -2915337425124782032
+    second: newassets_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -43,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -106,7 +109,51 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: school tiles-Sheet_0
+      name: newassets_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 033db06848f31c0d0800000000000000
+      internalID: -3404370004898229456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newassets_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e61f7b57ed704a8b0800000000000000
+      internalID: -5141976222511140498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newassets_2
       rect:
         serializedVersion: 2
         x: 64
@@ -121,14 +168,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d123a66d0c7da4bd0800000000000000
-      internalID: -2645064607895768547
+      spriteID: c395fd2ef69dea320800000000000000
+      internalID: 2571231511846017340
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: school tiles-Sheet_1
+      name: newassets_3
       rect:
         serializedVersion: 2
         x: 96
@@ -143,14 +190,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0035614061620db90800000000000000
-      internalID: -7219228326675197184
+      spriteID: 0301907de04aa87d0800000000000000
+      internalID: -2915337425124782032
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: school tiles-Sheet_2
+      name: newassets_4
       rect:
         serializedVersion: 2
         x: 128
@@ -163,16 +210,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 1e272897a321d2070800000000000000
-      internalID: 8083136948555903713
+      spriteID: 61d89be3aeb5e1045a2a2b45cf9d055d
+      internalID: -804934991
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: school tiles-Sheet_3
+      name: newassets_5
       rect:
         serializedVersion: 2
         x: 160
@@ -187,14 +234,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 17974106833eb3847a126804017b0f65
-      internalID: -447364546
+      spriteID: 9d44cad92ceb2944e97ed812bdff61c6
+      internalID: 1241257626
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: school tiles-Sheet_4
+      name: newassets_6
       rect:
         serializedVersion: 2
         x: 192
@@ -209,14 +256,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b68f728bfe2152c4cbcf58a01f7e49ed
-      internalID: -1672621699
+      spriteID: 50350eb3953773047b26715d6d8cbf0c
+      internalID: -667181675
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: school tiles-Sheet_5
+      name: newassets_7
       rect:
         serializedVersion: 2
         x: 224
@@ -231,14 +278,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7aee4ade983b4204b8f98df63fa1bc12
-      internalID: 1950989886
+      spriteID: 2315e8ff09ca42a4dae062f32f357050
+      internalID: -1835224959
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: school tiles-Sheet_6
+      name: newassets_8
       rect:
         serializedVersion: 2
         x: 256
@@ -253,18 +300,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7dbae0ec14128e44e846a5f3f910455c
-      internalID: -144862941
+      spriteID: b572fe5be0869854fa24df31f638118c
+      internalID: 145968165
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: school tiles-Sheet_7
+      name: newassets_9
       rect:
         serializedVersion: 2
-        x: 288
-        y: 256
+        x: 0
+        y: 224
         width: 32
         height: 32
       alignment: 0
@@ -275,18 +322,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ff14de2024307f40b1f869c0bdf8460
-      internalID: 1884196869
+      spriteID: 46ee075b276560a43a297e6e5829cb46
+      internalID: -1971340500
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: school tiles-Sheet_8
+      name: newassets_10
       rect:
         serializedVersion: 2
-        x: 320
-        y: 256
+        x: 32
+        y: 224
         width: 32
         height: 32
       alignment: 0
@@ -297,14 +344,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 847adbf2c617fb8409441080597bc9bf
-      internalID: 1037494913
+      spriteID: 7d8113393c466484fb487aa7c9201c0e
+      internalID: -2005154601
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: school tiles-Sheet_9
+      name: newassets_11
       rect:
         serializedVersion: 2
         x: 64
@@ -319,8 +366,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed766e386f4862548a43d94b80c6f339
-      internalID: 527411056
+      spriteID: f3aa3aaf9bde7d24893e79a63bd1fc86
+      internalID: -1969869855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newassets_12
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41e93a8a0eabfed4b9a188f612a45e19
+      internalID: -608540830
       vertices: []
       indices: 
       edges: []
@@ -329,7 +398,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: d8b5ce6dbc303bf41828b7dd5060058b
+    spriteID: 3e67b97bf29dd0245a0b599dcd6133f8
     internalID: 0
     vertices: []
     indices: 
@@ -339,18 +408,21 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":1,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      school tiles-Sheet_0: -2645064607895768547
-      school tiles-Sheet_1: -7219228326675197184
-      school tiles-Sheet_2: 8083136948555903713
-      school tiles-Sheet_3: -447364546
-      school tiles-Sheet_4: -1672621699
-      school tiles-Sheet_5: 1950989886
-      school tiles-Sheet_6: -144862941
-      school tiles-Sheet_7: 1884196869
-      school tiles-Sheet_8: 1037494913
-      school tiles-Sheet_9: 527411056
+      newassets_0: -3404370004898229456
+      newassets_1: -5141976222511140498
+      newassets_10: -2005154601
+      newassets_11: -1969869855
+      newassets_12: -608540830
+      newassets_2: 2571231511846017340
+      newassets_3: -2915337425124782032
+      newassets_4: -804934991
+      newassets_5: 1241257626
+      newassets_6: -667181675
+      newassets_7: -1835224959
+      newassets_8: 145968165
+      newassets_9: -1971340500
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
