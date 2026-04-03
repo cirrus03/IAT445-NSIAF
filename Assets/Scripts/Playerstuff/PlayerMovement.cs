@@ -96,7 +96,13 @@ public class PlayerMovement : MonoBehaviour
     private bool dashOnCD;
     private float dashGravitySaved;
 
-    private bool okayButCanIDash = true;
+    private int okayButHowManyDashes = 1;
+
+    [Header("Mood System")]
+    [SerializeField] private float angryStillTimeRequired = 1.5f;
+    [SerializeField] private GameObject protectionBubble;
+    private float angryStillTimer = 0f;
+    private bool angryInvincibilityActive = false;
 
     [Header("Ability Toggles (so we can use these as unlocks as abilities)")]
     public bool canDoubleJump = false;
@@ -110,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool controlsLocked = false; //setting so we can prevent movement (im assuming for pause menu or something)
     private Vector2 moveInput;
+    private Vector2 platformVelocity = Vector2.zero;
 
     private SoundFXManager audioManager; //audio player\
     [Header("Footsteps")]
@@ -145,6 +152,7 @@ public class PlayerMovement : MonoBehaviour
             canWallJump = GameProgress.Instance.wallJumpUnlocked;
             canDoubleJump = GameProgress.Instance.doubleJumpUnlocked;
         }
+        ResetDashCharges();
     }
 
     void Update()
@@ -168,6 +176,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         GroundCheck();
+        UpdateMoodEffects();
         HandleFootsteps();
         ProcessGravity();
         ProcessWallSlide();
@@ -227,16 +236,23 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        if (!okayButCanIDash)
+        if (okayButHowManyDashes <= 0)
         {
             return;
         }
-        if (isDashing || dashOnCD)
+        bool isSadMood = GetCurrentMood() == GameProgress.MoodState.Sad;
+
+        if (isDashing)
         {
             return;
         }
 
-        okayButCanIDash = false;
+        if (dashOnCD && !(isSadMood && okayButHowManyDashes > 1))
+        {
+            return;
+        }
+
+        okayButHowManyDashes--;
 
         StartCoroutine(DashRoutine());
     }
@@ -361,7 +377,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (groundedNow)
         {
-            okayButCanIDash = true;//same
+            ResetDashCharges();//same
 
             if (!wasGrounded)
             {
@@ -434,7 +450,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!isWallSliding)
             {
-                okayButCanIDash = true;
+                ResetDashCharges();
             }
             isWallSliding = true;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Max(rb.linearVelocity.y, -wallSlideSpeed));
@@ -486,6 +502,99 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJumps()
     {
         jumpsRemaining = canDoubleJump ? maxJumps : 1;
+    }
+
+    // taking mood from global
+    private GameProgress.MoodState GetCurrentMood()
+    {
+        if (GameProgress.Instance == null)
+            return GameProgress.MoodState.Neutral;
+
+        return GameProgress.Instance.playerMood;
+    }
+
+    // setting dashes to two on asd MOOD
+    private int GetMaxDashCharges()
+    {
+        return GetCurrentMood() == GameProgress.MoodState.Sad ? 2 : 1;
+    }
+
+    // refresh dash count
+    private void ResetDashCharges()
+    {
+        if (dashOnCD && GetCurrentMood() != GameProgress.MoodState.Sad)
+            return;
+
+        okayButHowManyDashes = GetMaxDashCharges();
+    }
+
+    // insta dash on sad
+    private bool CanChainDashImmediately()
+    {
+        return GetMaxDashCharges() > 1;
+    }
+
+    // for the agnry MOOD
+    // stand still for 2 seconds = invincible
+    // instantly removed when upon movement
+    private void UpdateMoodEffects()
+    {
+        PlayerHealth ph = GetComponent<PlayerHealth>();
+        if (ph == null) return;
+
+        if (GetCurrentMood() != GameProgress.MoodState.Angry)
+        {
+            angryStillTimer = 0f;
+
+            if (angryInvincibilityActive)
+            {
+                angryInvincibilityActive = false;
+                ph.SetMoodInvincible(false);
+                if (protectionBubble != null)
+                    protectionBubble.SetActive(false);
+            }
+
+            return;
+        }
+
+        bool standingStill =
+            Mathf.Abs(moveInput.x) < 0.01f &&
+            moveInput.y <= 0f &&
+            isGrounded &&
+            !isDashing &&
+            !isWallSliding &&
+            !isWallJumping &&
+            !recoilLock;
+
+        if (standingStill)
+        {
+            angryStillTimer += Time.deltaTime;
+
+            if (!angryInvincibilityActive && angryStillTimer >= angryStillTimeRequired)
+            {
+                angryInvincibilityActive = true;
+                ph.SetMoodInvincible(true);
+                if (protectionBubble != null)
+                    protectionBubble.SetActive(true);
+            }
+        }
+        else
+        {
+            angryStillTimer = 0f;
+
+            if (angryInvincibilityActive)
+            {
+                angryInvincibilityActive = false;
+                ph.SetMoodInvincible(false);
+                if (protectionBubble != null)
+                    protectionBubble.SetActive(false);
+            }
+        }
+    }
+
+    public void SetPlatformVelocity(Vector2 velocity)
+    {
+        platformVelocity = velocity;
     }
 
     public void ForceHazardInterrupt()
@@ -548,6 +657,20 @@ public class PlayerMovement : MonoBehaviour
             animator.Update(0f);
         }
 
+        angryStillTimer = 0f;
+        angryInvincibilityActive = false;
+        ResetDashCharges();
+
+        PlayerHealth ph = GetComponent<PlayerHealth>();
+        if (ph != null)
+        {
+            ph.SetMoodInvincible(false);
+        }
+        if (protectionBubble != null)
+        {
+            protectionBubble.SetActive(false);
+        }
+
         ResetJumps();
     }
 
@@ -588,13 +711,18 @@ public class PlayerMovement : MonoBehaviour
 
         isDashing = false;
 
-        dashCooldownTimer = dashCooldown;
-        while (dashCooldownTimer > 0f)
+        // cooldown only applied after first dash is spent
+        if (okayButHowManyDashes <= 0)
         {
-            dashCooldownTimer -= Time.deltaTime;
-            yield return null;
+            dashCooldownTimer = dashCooldown;
+            while (dashCooldownTimer > 0f)
+            {
+                dashCooldownTimer -= Time.deltaTime;
+                yield return null;
+            }
+            dashCooldownTimer = 0f;
         }
-        dashCooldownTimer = 0f;
+
         dashOnCD = false;
     }
 
@@ -691,6 +819,19 @@ public class PlayerMovement : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Kinematic;
         animator.enabled = false;
         // rb.bodyType =RigidbodyType2D.Static; //rigidbodies got error when you set them to static 
+
+        angryStillTimer = 0f;
+        angryInvincibilityActive = false;
+
+        PlayerHealth ph = GetComponent<PlayerHealth>();
+        if (ph != null)
+        {
+            ph.SetMoodInvincible(false);
+        }
+        if (protectionBubble != null)
+        {
+            protectionBubble.SetActive(false);
+        }
     }
 
     private void EnablePlayerMovement()

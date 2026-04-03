@@ -1,8 +1,21 @@
 using UnityEngine;
-
+//Because gameprogress is now enum based use these for setting MOOD!
+// GameProgress.Instance.SetPlayerMood(GameProgress.MoodState.Neutral);
+// GameProgress.Instance.SetPlayerMood(GameProgress.MoodState.Angry);
+// GameProgress.Instance.SetPlayerMood(GameProgress.MoodState.Sad);
+// GameProgress.Instance.SetPlayerMood(GameProgress.MoodState.Happy);
 public class GameProgress : MonoBehaviour
 {
     public static GameProgress Instance { get; private set; }
+
+    public enum MoodState
+    {
+        Neutral,
+        Angry,
+        Sad,
+        Happy
+    }
+
 
     [Header("Quest Tracker UI")]
     public string currentObjectiveText = "";
@@ -31,8 +44,8 @@ public class GameProgress : MonoBehaviour
     [Header("Flags")]
     public bool playerJustDied = false;
 
-    [Header("Player MOOD")]
-    public string playerMood = "neutral";
+    [Header("Player Mood")]
+    public MoodState playerMood = MoodState.Neutral;
 
     private void Awake()
     {
@@ -71,9 +84,15 @@ public class GameProgress : MonoBehaviour
         doubleJumpUnlocked = true;
     }
 
-    public void SetPlayerMood(string mood)
+    public void SetPlayerMood(MoodState mood)
     {
         playerMood = mood;
+        Debug.Log("Player mood set to: " + playerMood);
+    }
+
+    public bool IsMood(MoodState mood)
+    {
+        return playerMood == mood;
     }
 
     public void SetObjective(string objective, string progress = "")
@@ -99,7 +118,7 @@ public class GameProgress : MonoBehaviour
         ResetLevel2Progress();
 
         playerJustDied = false;
-        playerMood = "neutral";
+        playerMood = MoodState.Neutral;
 
         ClearObjective();
     }
@@ -127,5 +146,8 @@ public class GameProgress : MonoBehaviour
         level2PowerRestored = data.level2PowerRestored;
         level2BugQuestStarted = data.level2BugQuestStarted;
         level2BugQuestComplete = data.level2BugQuestComplete;
+        // add once SaveData has a mood field
+        // playerMood = data.playerMood;
     }
+
 }
