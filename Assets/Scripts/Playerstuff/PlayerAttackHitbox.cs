@@ -55,6 +55,19 @@ public class PlayerAttackHitbox : MonoBehaviour
         }
     }
 
+    private float GetFinalDamage()
+    {
+        float finalDamage = damage;
+
+        if (GameProgress.Instance != null &&
+            GameProgress.Instance.playerMood == GameProgress.MoodState.Happy)
+        {
+            finalDamage *= 2f;
+        }
+
+        return finalDamage;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (smacked)
@@ -81,7 +94,7 @@ public class PlayerAttackHitbox : MonoBehaviour
                     spawnedVfx = true;
                 }
 
-                damageable.TakeDamage(damage);
+                damageable.TakeDamage(GetFinalDamage());
 
                 if (audioManager != null && audioManager.enemyHit != null)
                 {
@@ -109,7 +122,7 @@ public class PlayerAttackHitbox : MonoBehaviour
                     spawnedVfx = true;
                 }
 
-                damageable.TakeDamage(damage);
+                damageable.TakeDamage(GetFinalDamage());
 
                 if (audioManager != null && audioManager.hitWall != null)
                 {

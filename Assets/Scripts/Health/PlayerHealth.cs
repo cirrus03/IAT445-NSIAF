@@ -15,7 +15,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     [Header("Invincibility (Player)")]
     [SerializeField] private float invincibilityTime = 0.6f;
-    public bool IsInvincible { get; private set; }
+    private bool damageIFramesActive = false;
+    private bool moodInvincibleActive = false;
+    public bool IsInvincible => damageIFramesActive || moodInvincibleActive;
     private Coroutine invincibleRoutine;
 
     [Header("UI Stuff")]
@@ -84,7 +86,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         StartInvincibility();
 
         if (healthBar != null)
-        {   
+        {
             audioManager.PlaySFX(audioManager.playerDamageTaken); //play damage sound
             healthBar.SetHealth(currentHealth);
         }
@@ -120,7 +122,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
                 anim.enabled = false;
 
             audioManager.PlaySFX(audioManager.menuUnderline);
-            
+
             Collider2D[] cols = GetComponentsInChildren<Collider2D>();
             foreach (var col in cols)
                 col.enabled = false;
@@ -130,13 +132,13 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             // show death screen
             DeathScreenUI deathScreen = FindFirstObjectByType<DeathScreenUI>();
             if (deathScreen != null)
-            {   
-                
+            {
+
                 deathScreen.ShowDeathScreen();
             }
 
             //play death sound here
-            
+
         }
     }
 
@@ -146,6 +148,11 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         if (invincibleRoutine != null) StopCoroutine(invincibleRoutine);
         invincibleRoutine = StartCoroutine(InvincibleRoutine(seconds));
+    }
+
+    public void SetMoodInvincible(bool value)
+    {
+        moodInvincibleActive = value;
     }
 
     public void Heal(float amount)
@@ -164,7 +171,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public void Revive()
     {
         isDying = false;
-        IsInvincible = false;
+        damageIFramesActive = false;
+        moodInvincibleActive = false; 
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
@@ -200,9 +208,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     IEnumerator InvincibleRoutine(float seconds)
     {
-        IsInvincible = true;
+        damageIFramesActive = true;
         yield return new WaitForSeconds(seconds);
-        IsInvincible = false;
+        damageIFramesActive = false;
         invincibleRoutine = null;
     }
 

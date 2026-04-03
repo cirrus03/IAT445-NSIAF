@@ -2692,7 +2692,7 @@ MonoBehaviour:
   level2BugQuestStarted: 0
   level2BugQuestComplete: 0
   playerJustDied: 0
-  playerMood: neutral
+  playerMood: 0
 --- !u!4 &818828600
 Transform:
   m_ObjectHideFlags: 0
@@ -2807,7 +2807,7 @@ PrefabInstance:
     - target: {fileID: 6577472809873973950, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
       propertyPath: menuBGM
       value: 
-      objectReference: {fileID: 8300000, guid: 593586fafe414ce41a745aab1eb8e067, type: 3}
+      objectReference: {fileID: 8300000, guid: 364becfbadb92c1488e6f078083cdf36, type: 3}
     - target: {fileID: 6577472809873973950, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
       propertyPath: enemyHit
       value: 
