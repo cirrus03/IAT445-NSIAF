@@ -6,10 +6,22 @@ public class FoxQuestGiver : MonoBehaviour
     public GameObject interactPrompt;
     public bool playerInRange = false;
 
+    [Header("Dialogue")]
+    [SerializeField] private TextAsset inkJSON;
+
     [Header("Scene References")]
     [SerializeField] private Elevator mainToUpperElevator;
     [SerializeField] private BugQuestGroup bugQuestGroup;
     [SerializeField] private GameObject levelExitPortal;
+
+    [Header("Downtime Dialogue")]
+    [SerializeField]
+    private string[] downtimeLines = {
+    "The power is still out...",
+    "Find the breaker.",
+    "Erm..",
+    "Darkness still reigns..."
+};
     private void Start()
     {
         RestoreLevel2StateFromProgress();
@@ -98,6 +110,15 @@ public class FoxQuestGiver : MonoBehaviour
         }
     }
 
+    void PlayDowntimeDialogue()
+    {
+        DialogueManager dm = DialogueManager.GetInstance();
+        if (dm == null) return;
+
+        string line = downtimeLines[Random.Range(0, downtimeLines.Length)];
+        dm.PlayDowntimeDialogue(line);
+    }
+
     private void Interact()
     {
         if (GameProgress.Instance == null)
@@ -106,81 +127,58 @@ public class FoxQuestGiver : MonoBehaviour
             return;
         }
 
+        DialogueManager dm = DialogueManager.GetInstance();
+        if (dm == null || dm.dialogueIsPlaying) return;
+
         int stage = GameProgress.Instance.level2QuestStage;
 
+        // stage 0  intro
         if (stage == 0)
         {
-            Debug.Log("Fox: Gave lamp. Find the breaker.");
-
-            if (DarknessController.Instance != null)
-                DarknessController.Instance.GiveLamp();
-            if (GameProgress.Instance != null)
-            {
-                GameProgress.Instance.SetObjective("Find the breaker");
-            }
-
-            GameProgress.Instance.level2LampAcquired = true;
-            GameProgress.Instance.level2QuestStage = 1;
+            Debug.Log("Ink JSON is null? " + (inkJSON == null));
+            dm.EnterDialogueMode(inkJSON, "platformer2");
             return;
         }
 
+        // stage 1  breaker not done
         if (stage == 1)
         {
-            Debug.Log("Fox: Breaker is still off.");
+            PlayDowntimeDialogue();
             return;
         }
 
+        // stage 2  power restored 
         if (stage == 2)
         {
-            Debug.Log("Fox: Power restored. Start bug quest.");
-
-            if (bugQuestGroup != null)
-                bugQuestGroup.BeginQuest();
-
-            GameProgress.Instance.level2BugQuestStarted = true;
-            GameProgress.Instance.level2QuestStage = 3;
-
-            if (GameProgress.Instance != null && bugQuestGroup != null)
-            {
-                GameProgress.Instance.SetObjective("Clear the attic bugs", bugQuestGroup.CurrentKilled + " / " + bugQuestGroup.RequiredKills);
-            }
+            dm.EnterDialogueMode(inkJSON, "firsttask_gotpower");
             return;
         }
 
+        // stage 3 bug quest
         if (stage == 3)
         {
             if (bugQuestGroup != null && !bugQuestGroup.IsComplete)
             {
-                Debug.Log($"Fox: Bugs killed {bugQuestGroup.CurrentKilled}/{bugQuestGroup.RequiredKills}");
+                dm.EnterDialogueMode(inkJSON, "fox_bug_progress");
             }
             else
             {
-                Debug.Log("Fox: Bugs cleared.");
-
-                GameProgress.Instance.level2BugQuestComplete = true;
-                GameProgress.Instance.level2QuestStage = 4;
+                dm.EnterDialogueMode(inkJSON, "secondtask_bugscleared");
             }
             return;
         }
 
+        // stage 4 open portal
         if (stage == 4)
         {
-            if (GameProgress.Instance != null)
-            {
-                GameProgress.Instance.SetObjective("Enter the portal");
-            }
-            Debug.Log("Fox: Opening portal.");
-
-            if (levelExitPortal != null)
-                levelExitPortal.SetActive(true);
-
-            GameProgress.Instance.level2QuestStage = 5;
+            dm.EnterDialogueMode(inkJSON, "lasttask_enterportal");
             return;
         }
 
+        // stage 5
         if (stage >= 5)
         {
-            Debug.Log("Fox: Done.");
+            dm.EnterDialogueMode(inkJSON, "fox_done");
         }
     }
 
