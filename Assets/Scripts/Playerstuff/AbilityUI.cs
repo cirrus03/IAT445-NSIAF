@@ -39,7 +39,7 @@ public class AbilityUI : MonoBehaviour
 
         if (!player.CanDashUnlocked) return;
 
-        bool ready = !player.DashOnCooldown;
+        bool ready = player.CanDashNow;
 
         if (dashIcon != null)
             dashIcon.color = ready ? readyColor : unavailableColor;

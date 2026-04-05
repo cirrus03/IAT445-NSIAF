@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
     public bool IsTouchingWall => WallCheck();
     public float HorizontalInput => horizontalMovement;
     public int FacingDirection => isFacingRight ? 1 : -1;
-
+    public bool CanDashNow => canDash && !isDashing && okayButHowManyDashes > 0 && !dashOnCD;
     //this is to grab dash cooldown if we have enough time
     private float dashCooldownTimer;
     public float DashCooldownTimer => dashCooldownTimer;
@@ -86,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject attackHitboxSide;
     public GameObject attackHitboxUp;
     public GameObject attackHitboxDown;
+    public GameObject attackHitboxDownAir;
 
     [Header("Dash")]
     public float dashSpeed = 18f;
@@ -336,10 +337,11 @@ public class PlayerMovement : MonoBehaviour
             currentAttackDirection = AttackDirection.Up;
             activeHitbox = attackHitboxUp;
         }
+        
         else if (moveInput.y < -upDownThreshold)
         {
             currentAttackDirection = AttackDirection.Down;
-            activeHitbox = attackHitboxDown;
+            activeHitbox = isGrounded ? attackHitboxDown : attackHitboxDownAir;
         }
         else
         {
@@ -375,19 +377,13 @@ public class PlayerMovement : MonoBehaviour
         // Debug.Log("ground touched- reset jumps: " + Time.time);
         isGrounded = groundedNow;
 
-        if (groundedNow)
+        if (groundedNow && !wasGrounded)
         {
             ResetDashCharges();//same
-
-            if (!wasGrounded)
-            {
-                // audioManager.PlaySFX(audioManager.playerLand, 0.6f); //it's delayed rn 
-                ResetJumps();
-            }
+                               // audioManager.PlaySFX(audioManager.playerLand, 0.6f); //it's delayed rn 
+            ResetJumps();
         }
-
         wasGrounded = groundedNow;//reset upon landing
-
     }
 
     private void HandleFootsteps()
@@ -724,6 +720,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         dashOnCD = false;
+        if (isGrounded || isWallSliding)
+        {
+            okayButHowManyDashes = GetMaxDashCharges();
+        }
     }
 
     private IEnumerator AttackRoutine(GameObject hitbox)
