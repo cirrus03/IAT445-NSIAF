@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject nozomiHappy;
     [SerializeField] private GameObject kazumiSprite;
     [SerializeField] private GameObject kazumiCheer;
+    [SerializeField] private GameObject foxSprite;
     [SerializeField] private GameObject continueArrow;
     [SerializeField] private GameObject crowSprite;
     [SerializeField] private Animator crowAnimator;
@@ -64,6 +65,7 @@ public class DialogueManager : MonoBehaviour
         if (crowSprite != null) crowSprite.SetActive(false);
         if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
         if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
+        if (foxSprite != null) foxSprite.SetActive(false);
 
         // choices
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -79,7 +81,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (PauseMenu.isPaused) return;
         if (!dialogueIsPlaying) return;
-        if (InputManager.GetInstance().GetSubmitPressed() || Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
         {
             if (isDowntimeLine)
             {
@@ -91,13 +93,14 @@ public class DialogueManager : MonoBehaviour
                 ContinueStory();
             }
 
-            InputManager.GetInstance().RegisterSubmitPressed();
         }
     }
 
     public void EnterDialogueMode(TextAsset inkJSON, string knotName = "")
     {
-        InputManager.GetInstance().RegisterSubmitPressed();
+        Debug.Log("inkJSON null? " + (inkJSON == null));
+        Debug.Log("dialoguePanel null? " + (dialoguePanel == null));
+        Debug.Log("InputManager null? " + (InputManager.GetInstance() == null));
 
         currentStory = new Story(inkJSON.text);
 
@@ -121,6 +124,7 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
         if (sceneSprite != null) sceneSprite.SetActive(false);
+        if (foxSprite != null) foxSprite.SetActive(false);
         if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
         if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
     }
@@ -142,7 +146,7 @@ public class DialogueManager : MonoBehaviour
 
             if (dialogueText != null)
                 dialogueText.text = text;
-            DisplayChoices();
+            // DisplayChoices();
         }
         else
         {
@@ -193,6 +197,7 @@ public class DialogueManager : MonoBehaviour
                 if (crowSprite != null) crowSprite.SetActive(false);
                 if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
                 if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
+                if (foxSprite != null) foxSprite.SetActive(false);
             }
 
             if (tag == "nozomihappy")
@@ -210,6 +215,12 @@ public class DialogueManager : MonoBehaviour
                 if (kazumiSprite != null) kazumiSprite.SetActive(false);
                 if (kazumiCheer != null) kazumiCheer.SetActive(false);
                 if (crowSprite != null) crowSprite.SetActive(true);
+            }
+
+            if (tag == "fox")
+            {
+                if (sceneSprite != null) sceneSprite.SetActive(false);
+                if (foxSprite != null) foxSprite.SetActive(true);
             }
 
             if (tag == "crowjump")
@@ -292,6 +303,49 @@ public class DialogueManager : MonoBehaviour
             if (tag == "start_third_quest")
             {
                 QuestManager.Instance.StartCollectQuest("collect_final_item", "Collect the Final Item", 1);
+            }
+
+            // level 1 quest tags
+
+            if (tag == "fox_give_lamp")
+            {
+                DarknessController.Instance?.GiveLamp();
+
+                GameProgress.Instance.level2LampAcquired = true;
+                GameProgress.Instance.level2QuestStage = 1;
+                GameProgress.Instance.SetObjective("Find the breaker");
+            }
+
+            if (tag == "fox_power_restored")
+            {
+                GameProgress.Instance.level2QuestStage = 3;
+                GameProgress.Instance.level2BugQuestStarted = true;
+
+                BugQuestGroup bugQuest = FindObjectOfType<BugQuestGroup>();
+                if (bugQuest != null)
+                {
+                    bugQuest.BeginQuest();
+
+                    GameProgress.Instance.SetObjective(
+                        "Clear the attic bugs",
+                        bugQuest.CurrentKilled + " / " + bugQuest.RequiredKills
+                    );
+                }
+            }
+
+            if (tag == "fox_bugs_cleared")
+            {
+                GameProgress.Instance.level2BugQuestComplete = true;
+                GameProgress.Instance.level2QuestStage = 4;
+                GameProgress.Instance.SetObjective("Enter the portal");
+            }
+
+            if (tag == "fox_open_portal")
+            {
+                GameProgress.Instance.level2QuestStage = 5;
+
+                if (levelExitPortal != null)
+                    levelExitPortal.SetActive(true);
             }
 
             // ability unlocks
