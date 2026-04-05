@@ -43,6 +43,7 @@ Transform:
   - {fileID: 36173622672024497}
   - {fileID: 3375603063541611340}
   - {fileID: 3825882924670328960}
+  - {fileID: 6879134197732817924}
   - {fileID: 9091049963710412400}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -93,7 +94,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1055287291
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_MaskInteraction: 0
   m_Sprite: {fileID: 8793639957104055765, guid: bfa0556ed2cd43c4eb695db5cb18c21e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -206,11 +207,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   baseGravity: 4
-  maxFallSpeed: 18
-  fallSpeedMultiplier: 3
+  maxFallSpeed: 25
+  fallSpeedMultiplier: 3.5
   wallSlideSpeed: 4
   wallJumpTime: 0.1
-  wallJumpPower: {x: 3, y: 16}
+  wallJumpPower: {x: 5, y: 18}
   attackDamage: 1
   attackRange: 0.8
   attackBoxSize: {x: 0.9, y: 0.6}
@@ -222,16 +223,17 @@ MonoBehaviour:
   attackHitboxSide: {fileID: 5549846461174210282}
   attackHitboxUp: {fileID: 7441916476548642009}
   attackHitboxDown: {fileID: 645110301353682504}
+  attackHitboxDownAir: {fileID: 7895720438385908194}
   dashSpeed: 18
   dashDuration: 0.25
   dashCooldown: 0.25
   dashGravityNono: 1
   angryStillTimeRequired: 1.5
   protectionBubble: {fileID: 3721763156839747557}
-  canDoubleJump: 0
+  canDoubleJump: 1
   canWallSlide: 1
-  canWallJump: 0
-  canDash: 0
+  canWallJump: 1
+  canDash: 1
   recoilLock: 0
   footstepInterval: 0.35
 --- !u!114 &7841232307871766596
@@ -430,7 +432,7 @@ MonoBehaviour:
   groundCheckSize: {x: 0.5, y: 0.05}
   safeGroundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   respawnHeight: 1
   raycastDistance: 2
 --- !u!114 &15989277922337540
@@ -481,7 +483,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3825882924670328960
 Transform:
   m_ObjectHideFlags: 0
@@ -531,8 +533,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.42720413, y: -0.019711852}
-  m_Size: {x: 1.5909195, y: 2.6993306}
+  m_Offset: {x: -0.16977692, y: 0.4215933}
+  m_Size: {x: 1.0760651, y: 1.8167202}
   m_Direction: 0
 --- !u!114 &4148764328447596990
 MonoBehaviour:
@@ -557,7 +559,7 @@ MonoBehaviour:
   recoilUsesImpulse: 0
   recoilLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   hitVfxPrefab: {fileID: 764859567238011871, guid: d0faabe347a3bd34c90f0b06d63ef064, type: 3}
   hitVfxOffset: {x: 0, y: 0, z: 0}
   spawnVfxOnEnemy: 1
@@ -755,7 +757,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &36173622672024497
 Transform:
   m_ObjectHideFlags: 0
@@ -885,7 +887,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3375603063541611340
 Transform:
   m_ObjectHideFlags: 0
@@ -962,6 +964,105 @@ MonoBehaviour:
   recoilLayers:
     serializedVersion: 2
     m_Bits: 0
+  hitVfxPrefab: {fileID: 764859567238011871, guid: d0faabe347a3bd34c90f0b06d63ef064, type: 3}
+  hitVfxOffset: {x: 0, y: 0, z: 0}
+  spawnVfxOnEnemy: 1
+  spawnVfxOnWall: 1
+  spawnVfxOnGround: 1
+--- !u!1 &7895720438385908194
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6879134197732817924}
+  - component: {fileID: 9089234521624670988}
+  - component: {fileID: 2194128106528960309}
+  m_Layer: 7
+  m_Name: HitBox_DAir
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6879134197732817924
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7895720438385908194}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.197, y: -0.644, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5620646120440825784}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &9089234521624670988
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7895720438385908194}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.13027954, y: -0.5465145}
+  m_Size: {x: 1.6292267, y: 2.3161964}
+  m_Direction: 0
+--- !u!114 &2194128106528960309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7895720438385908194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 228d2074b99a76b43a1756805f672bdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackHitbox
+  damage: 1
+  pogoOnHit: 1
+  pogoBounceY: 14
+  pogoOnlyWhenFalling: 1
+  hazardTag: Hazard
+  recoilPlayerOnHit: 0
+  recoilPlayerX: 5
+  recoilPlayerY: 0
+  recoilUsesImpulse: 0
+  recoilLayers:
+    serializedVersion: 2
+    m_Bits: 256
   hitVfxPrefab: {fileID: 764859567238011871, guid: d0faabe347a3bd34c90f0b06d63ef064, type: 3}
   hitVfxOffset: {x: 0, y: 0, z: 0}
   spawnVfxOnEnemy: 1
