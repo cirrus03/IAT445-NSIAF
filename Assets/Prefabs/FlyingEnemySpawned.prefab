@@ -177,9 +177,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9878320bbd6266d4aa9558c015bd551c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  startingHealth: 3
+  startingHealth: 1
   healthDropPrefab: {fileID: 8549208334071225197, guid: 417cf4298269fb84fa883fb86534760c, type: 3}
   healthDropChance: 0.4
+  spawnFlyingEnemiesOnHit: 0
+  flyingEnemySpawnedPrefab: {fileID: 0}
+  spawnCountOnHit: 2
+  spawnCooldown: 0.5
+  spawnPoints: []
   flashOnDamage: 1
   flashDuration: 0.1
   countsForBugQuest: 0
