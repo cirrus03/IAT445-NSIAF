@@ -5,20 +5,15 @@ public class Checkpoint : MonoBehaviour
     [Header("Respawn Point")]
     [SerializeField] private Transform respawnPoint;
 
-    private bool isActivated = false;
-
     public void ActivateCheckpoint()
     {
-        if (isActivated)
+        if (CheckpointManager.Instance == null)
             return;
 
-        isActivated = true;
+        if (CheckpointManager.Instance.GetCurrentCheckpoint() == this)
+            return;
 
-        if (CheckpointManager.Instance != null)
-        {
-            CheckpointManager.Instance.SetCheckpoint(this);
-        }
-
+        CheckpointManager.Instance.SetCheckpoint(this);
         Debug.Log("Activated checkpoint: " + name);
     }
 

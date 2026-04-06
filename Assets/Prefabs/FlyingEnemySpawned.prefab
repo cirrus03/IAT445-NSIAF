@@ -224,13 +224,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFlying
   player: {fileID: 0}
-  aggroRange: 6
-  deaggroRange: 8
+  aggroRange: 11.7
+  deaggroRange: 11
   loseSightDelay: 2.5
   searchSpeed: 2.5
   reachLastSeenDistance: 0.4
-  flySpeed: 7
-  accel: 12
+  flySpeed: 4
+  accel: 7
   stopDistance: 0.5
   patrolSpeed: 1.5
   patrolDistance: 3

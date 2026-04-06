@@ -23,6 +23,11 @@ public class CheckpointManager : MonoBehaviour
         Debug.Log("Checkpoint set to: " + checkpoint.name);
     }
 
+    public Checkpoint GetCurrentCheckpoint()
+    {
+        return currentCheckpoint;
+    }
+
     public Vector3 GetRespawnPosition()
     {
         if (currentCheckpoint != null)
