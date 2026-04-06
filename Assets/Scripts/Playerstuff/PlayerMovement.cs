@@ -838,7 +838,7 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(wallCheckPos.position, wallCheckSize);
 
-                if (bodyCollider == null) return;
+        if (bodyCollider == null) return;
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(
@@ -876,6 +876,16 @@ public class PlayerMovement : MonoBehaviour
     public void SetDashUnlocked(bool unlocked)
     {
         canDash = unlocked;
+    }
+
+    public void RestoreOneJump()
+    {
+        int maxAllowed = canDoubleJump ? maxJumps : 1;
+
+        if (jumpsRemaining < maxAllowed)
+        {
+            jumpsRemaining++;
+        }
     }
 
     private void DisablePlayerMovement()
