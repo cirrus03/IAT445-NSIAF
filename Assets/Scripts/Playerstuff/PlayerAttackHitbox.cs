@@ -70,70 +70,73 @@ public class PlayerAttackHitbox : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (smacked)
-        {
-            return;
-        }
+        if (smacked) return;
+
         // enemies only
         if (other.CompareTag("Player")) return;
-
-        bool hitSomethingValid = false;
 
         // damageable hit (enemy, breakable wall, etc.)
         IDamageable damageable = other.GetComponentInParent<IDamageable>();
 
-        if (damageable != null)
+        // ENEMIES
+        if (damageable != null && other.CompareTag("Enemy"))
         {
-            hitSomethingValid = true;
-
-            if (other.CompareTag("Enemy"))
+            if (spawnVfxOnEnemy && !spawnedVfx)
             {
-                if (spawnVfxOnEnemy && !spawnedVfx)
+                SpawnHitVfx(other.ClosestPoint(transform.position));
+                spawnedVfx = true;
+            }
+
+            damageable.TakeDamage(GetFinalDamage());
+
+            if (audioManager != null && audioManager.enemyHit != null)
+            {
+                audioManager.PlaySFX(audioManager.enemyHit, 0.2f);
+            }
+
+            // enemy hit
+            EnemyHealth enemyHealth = other.GetComponentInParent<EnemyHealth>();
+            if (enemyHealth != null)
+            {
+                ApplyPooogo();
+
+                EnemyKnockback kb = enemyHealth.GetComponent<EnemyKnockback>();
+                if (kb != null)
                 {
-                    SpawnHitVfx(other.ClosestPoint(transform.position));
-                    spawnedVfx = true;
-                }
-
-                damageable.TakeDamage(GetFinalDamage());
-
-                if (audioManager != null && audioManager.enemyHit != null)
-                {
-                    audioManager.PlaySFX(audioManager.enemyHit, 0.2f);
-                }
-
-                // enemy hit
-                EnemyHealth enemyHealth = other.GetComponentInParent<EnemyHealth>();
-                if (enemyHealth != null)
-                {
-                    ApplyPooogo();
-
-                    EnemyKnockback kb = enemyHealth.GetComponent<EnemyKnockback>();
-                    if (kb != null)
-                    {
-                        kb.Apply(playerRoot.position);
-                    }
+                    kb.Apply(playerRoot.position);
                 }
             }
-            else if (other.CompareTag("Breakable"))
-            {
-                if (spawnVfxOnWall && !spawnedVfx)
-                {
-                    SpawnHitVfx(other.ClosestPoint(transform.position));
-                    spawnedVfx = true;
-                }
 
-                damageable.TakeDamage(GetFinalDamage());
-
-                if (audioManager != null && audioManager.hitWall != null)
-                {
-                    audioManager.PlaySFX(audioManager.hitWall, 0.4f);
-                }
-            }
+            // consume swing on enemy hit and stop — don't process geometry
+            smacked = true;
+            if (hitboxCol != null) hitboxCol.enabled = false;
+            return;
         }
 
-        if (other.CompareTag(hazardTag)) //pogo off hazard
+        // BREAKABLES
+        if (damageable != null && other.CompareTag("Breakable"))
         {
-            hitSomethingValid = true;
+            if (spawnVfxOnWall && !spawnedVfx)
+            {
+                SpawnHitVfx(other.ClosestPoint(transform.position));
+                spawnedVfx = true;
+            }
+
+            damageable.TakeDamage(GetFinalDamage());
+
+            if (audioManager != null && audioManager.hitWall != null)
+            {
+                audioManager.PlaySFX(audioManager.hitWall, 0.4f);
+            }
+
+            smacked = true;
+            if (hitboxCol != null) hitboxCol.enabled = false;
+            return;
+        }
+
+        // HAZARD POGO
+        if (other.CompareTag(hazardTag))
+        {
             if (!spawnedVfx)
             {
                 SpawnHitVfx(other.ClosestPoint(transform.position));
@@ -144,12 +147,11 @@ public class PlayerAttackHitbox : MonoBehaviour
                 audioManager.PlaySFX(audioManager.hitWall, 0.4f);
             }
             ApplyPooogo();
+            return;
         }
 
         if (other.CompareTag("Ground"))
         {
-            hitSomethingValid = true;
-
             if (spawnVfxOnGround && !spawnedVfx)
             {
                 SpawnHitVfx(other.ClosestPoint(transform.position));
@@ -160,16 +162,16 @@ public class PlayerAttackHitbox : MonoBehaviour
             {
                 audioManager.PlaySFX(audioManager.hitWall, 0.4f);
             }
+            return;
         }
 
-        // wall/neemy recoil
+        // wall/enemy recoil (does NOT consume swing so enemy nearby can still be hit)
         if (recoilPlayerOnHit && playerRb != null)
         {
             bool inRecoilLayer = (recoilLayers.value & (1 << other.gameObject.layer)) != 0;
 
             if (inRecoilLayer)
             {
-                hitSomethingValid = true;
                 if (spawnVfxOnWall && !spawnedVfx)
                 {
                     SpawnHitVfx(other.ClosestPoint(transform.position));
@@ -184,21 +186,20 @@ public class PlayerAttackHitbox : MonoBehaviour
                 ApplyPlayerRecoil();
             }
         }
-
-        // consume swing if it its target
-        if (hitSomethingValid)
-        {
-            smacked = true;
-            if (hitboxCol != null) hitboxCol.enabled = false;
-        }
     }
 
     private void ApplyPooogo()
     {
         if (!pogoOnHit || playerRb == null) return;
-        if (pogoOnlyWhenFalling && playerRb.linearVelocity.y > 0f) return;
+        // if (pogoOnlyWhenFalling && playerRb.linearVelocity.y > 0f) return;
 
         playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, pogoBounceY);
+
+        PlayerMovement pm = playerRoot.GetComponent<PlayerMovement>();
+        if (pm != null)
+        {
+            pm.RestoreOneJump();
+        }
     }
 
     void SpawnHitVfx(Vector3 pos)
@@ -240,6 +241,6 @@ public class PlayerAttackHitbox : MonoBehaviour
         }
 
         PlayerMovement pm = playerRoot.GetComponent<PlayerMovement>();
-        if (pm != null) pm.StartCoroutine(pm.RecoilLockRoutine(0.1f));
+        if (pm != null) pm.StartCoroutine(pm.RecoilLockRoutine(0.1f)); //recoil lock routine
     }
 }
