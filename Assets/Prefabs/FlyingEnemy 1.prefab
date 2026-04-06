@@ -224,7 +224,7 @@ MonoBehaviour:
   loseSightDelay: 2.5
   searchSpeed: 2.5
   reachLastSeenDistance: 0.4
-  flySpeed: 3
+  flySpeed: 6
   accel: 12
   stopDistance: 0.5
   patrolSpeed: 1.5
@@ -237,8 +237,11 @@ MonoBehaviour:
   avoidCheckDistance: 0.6
   avoidRadius: 0.25
   attackCooldown: 0.7
-  retreatTime: 0.3
+  retreatTime: 0.2
   retreatSpeed: 6
+  hitRetreatSpeedBonus: 3
+  maxRetreatSpeed: 8
+  hitPlayerRetreatSpeed: 9
 --- !u!114 &8855725595102366388
 MonoBehaviour:
   m_ObjectHideFlags: 0

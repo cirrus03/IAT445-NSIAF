@@ -88,6 +88,13 @@ public class PlayerMovement : MonoBehaviour
     public GameObject attackHitboxDown;
     public GameObject attackHitboxDownAir;
 
+    [Header("Hurtbox (Body Collider)")]
+    [SerializeField] private BoxCollider2D bodyCollider;
+    [SerializeField] private Vector2 normalHurtboxSize;
+    [SerializeField] private Vector2 normalHurtboxOffset;
+    [SerializeField] private Vector2 downAirHurtboxSize;
+    [SerializeField] private Vector2 downAirHurtboxOffset;
+
     [Header("Dash")]
     public float dashSpeed = 18f;
     public float dashDuration = 0.12f;
@@ -154,6 +161,12 @@ public class PlayerMovement : MonoBehaviour
             canDoubleJump = GameProgress.Instance.doubleJumpUnlocked;
         }
         ResetDashCharges();
+
+        if (bodyCollider != null)
+        {
+            normalHurtboxSize = bodyCollider.size;
+            normalHurtboxOffset = bodyCollider.offset;
+        }
     }
 
     void Update()
@@ -332,23 +345,33 @@ public class PlayerMovement : MonoBehaviour
         lastAttackTime = Time.time;
 
         // choose direction based on W/S
+        bool useDownAirHurtbox = false;
+
         if (moveInput.y > upDownThreshold)
         {
             currentAttackDirection = AttackDirection.Up;
             activeHitbox = attackHitboxUp;
         }
-        
         else if (moveInput.y < -upDownThreshold)
         {
             currentAttackDirection = AttackDirection.Down;
-            activeHitbox = isGrounded ? attackHitboxDown : attackHitboxDownAir;
+
+            if (isGrounded)
+            {
+                activeHitbox = attackHitboxDown;
+            }
+            else
+            {
+                activeHitbox = attackHitboxDownAir;
+                useDownAirHurtbox = true;
+            }
         }
         else
         {
             currentAttackDirection = AttackDirection.Side;
             activeHitbox = attackHitboxSide;
         }
-        if (animator != null)//guys i swear switches are good 
+        if (animator != null)
         {
             switch (currentAttackDirection)
             {
@@ -357,7 +380,10 @@ public class PlayerMovement : MonoBehaviour
                     break;
 
                 case AttackDirection.Down:
-                    animator.SetTrigger("AttackDown");
+                    if (isGrounded)
+                        animator.SetTrigger("AttackDown");
+                    else
+                        animator.SetTrigger("AttackDownAir");
                     break;
 
                 default:
@@ -368,7 +394,7 @@ public class PlayerMovement : MonoBehaviour
             audioManager.PlaySFX(audioManager.playerAttack, 0.4f);
 
         }
-        StartCoroutine(AttackRoutine(activeHitbox));
+        StartCoroutine(AttackRoutine(activeHitbox, useDownAirHurtbox));
     }
 
     private void GroundCheck()
@@ -617,6 +643,8 @@ public class PlayerMovement : MonoBehaviour
         if (attackHitboxSide != null) attackHitboxSide.SetActive(false);
         if (attackHitboxUp != null) attackHitboxUp.SetActive(false);
         if (attackHitboxDown != null) attackHitboxDown.SetActive(false);
+        if (attackHitboxDownAir != null) attackHitboxDownAir.SetActive(false);
+        DisableDownAirHurtbox();
     }
 
     private bool IsGameplayFrozen()
@@ -668,6 +696,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         ResetJumps();
+        DisableDownAirHurtbox();
     }
 
     public IEnumerator RecoilLockRoutine(float t)
@@ -726,17 +755,40 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator AttackRoutine(GameObject hitbox)
+    private IEnumerator AttackRoutine(GameObject hitbox, bool useDownAirHurtbox = false)
     {
         if (hitbox == null) yield break;
+
+        if (useDownAirHurtbox)
+            EnableDownAirHurtbox();
+
         hitbox.SetActive(true);
         yield return new WaitForSeconds(0.1f); // active frames
         hitbox.SetActive(false);
+
+        if (useDownAirHurtbox)
+            DisableDownAirHurtbox();
+    }
+
+    private void EnableDownAirHurtbox()
+    {
+        if (bodyCollider == null) return;
+
+        bodyCollider.size = downAirHurtboxSize;
+        bodyCollider.offset = downAirHurtboxOffset;
+    }
+
+    private void DisableDownAirHurtbox()
+    {
+        if (bodyCollider == null) return;
+
+        bodyCollider.size = normalHurtboxSize;
+        bodyCollider.offset = normalHurtboxOffset;
     }
 
     public IEnumerator DamageStunRoutine(float duration)
     {
-        recoilLock = true; // also prevents your movement code from overwriting velocity
+        recoilLock = true;
 
         yield return new WaitForSeconds(duration);
 
@@ -785,6 +837,20 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(wallCheckPos.position, wallCheckSize);
+
+                if (bodyCollider == null) return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(
+            transform.position + (Vector3)bodyCollider.offset,
+            bodyCollider.size
+        );
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(
+            transform.position + (Vector3)downAirHurtboxOffset,
+            downAirHurtboxSize
+        );
     }
 
     //toggles for later
@@ -832,6 +898,7 @@ public class PlayerMovement : MonoBehaviour
         {
             protectionBubble.SetActive(false);
         }
+        DisableDownAirHurtbox();
     }
 
     private void EnablePlayerMovement()

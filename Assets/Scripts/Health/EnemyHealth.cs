@@ -53,6 +53,16 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             flashRoutine = StartCoroutine(FlashDamage());
         }
 
+        // run away when hit, but only if still alive
+        if (currentHealth > 0)
+        {
+            EnemyFlying flying = GetComponent<EnemyFlying>();
+            if (flying != null)
+            {
+                flying.NotifyDamaged();
+            }
+        }
+
         if (currentHealth <= 0)
         {
             Debug.Log($"{name} died");
@@ -127,6 +137,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         }
         TrySpawnHealthDrop();
         yield return new WaitForSeconds(0.5f);
+        GetComponent<EnemyPathMover>()?.StopMovingForever();
         Destroy(gameObject);
     }
 
