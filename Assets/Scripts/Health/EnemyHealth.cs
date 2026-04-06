@@ -137,7 +137,6 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         }
         TrySpawnHealthDrop();
         yield return new WaitForSeconds(0.5f);
-        GetComponent<EnemyPathMover>()?.StopMovingForever();
         Destroy(gameObject);
     }
 
