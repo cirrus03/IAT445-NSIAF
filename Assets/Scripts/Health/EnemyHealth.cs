@@ -11,6 +11,15 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     [SerializeField] private GameObject healthDropPrefab;
     [SerializeField, Range(0f, 1f)] private float healthDropChance = 0.4f;
 
+    [Header("Leetle guy spawn On Hit")]
+    [SerializeField] private bool spawnFlyingEnemiesOnHit = false;
+    [SerializeField] private GameObject flyingEnemySpawnedPrefab;
+    [SerializeField] private int spawnCountOnHit = 2;
+    [SerializeField] private float spawnCooldown = 0.5f;
+    [SerializeField] private Transform[] spawnPoints;
+
+    private float spawnCooldownTimer = 0f;
+
     [Header("Damage Flash (optional)")]
     [SerializeField] private bool flashOnDamage = true;
     [SerializeField] private float flashDuration = 0.1f;
@@ -41,6 +50,14 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         }
     }
 
+    private void Update()
+    {
+        if (spawnCooldownTimer > 0f)
+        {
+            spawnCooldownTimer -= Time.deltaTime;
+        }
+    }
+
     public void TakeDamage(float damageAmount, Vector2 attackerPos)
     {
         if (isDying) return; //shouldnt be taking extra damage if youre dead (plan B)
@@ -61,6 +78,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             {
                 flying.NotifyDamaged();
             }
+            TrySpawnFlyingEnemiesOnHit();
         }
 
         if (currentHealth <= 0)
@@ -98,6 +116,32 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         if (Random.value <= healthDropChance)
         {
             Instantiate(healthDropPrefab, transform.position, Quaternion.identity);
+        }
+    }
+
+    private void TrySpawnFlyingEnemiesOnHit()
+    {
+        if (spawnCooldownTimer > 0f) return;
+        if (flyingEnemySpawnedPrefab == null) return;
+        if (!spawnFlyingEnemiesOnHit) return;
+
+        spawnCooldownTimer = spawnCooldown;
+
+        for (int i = 0; i < spawnCountOnHit; i++)
+        {
+            Vector3 spawnPos = transform.position;
+
+            if (spawnPoints != null && spawnPoints.Length > 0 && spawnPoints[i % spawnPoints.Length] != null)
+            {
+                spawnPos = spawnPoints[i % spawnPoints.Length].position;
+            }
+            else
+            {
+                float offsetX = (i % 2 == 0) ? -1f : 1f;
+                spawnPos += new Vector3(offsetX, 0.5f, 0f);
+            }
+
+            Instantiate(flyingEnemySpawnedPrefab, spawnPos, Quaternion.identity);
         }
     }
 
