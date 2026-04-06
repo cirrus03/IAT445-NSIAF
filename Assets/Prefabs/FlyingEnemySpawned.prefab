@@ -229,7 +229,7 @@ MonoBehaviour:
   loseSightDelay: 2.5
   searchSpeed: 2.5
   reachLastSeenDistance: 0.4
-  flySpeed: 9
+  flySpeed: 7
   accel: 12
   stopDistance: 0.5
   patrolSpeed: 1.5
