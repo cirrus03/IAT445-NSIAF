@@ -201,15 +201,15 @@ MonoBehaviour:
   groundCheckSize: {x: 0.66, y: 0.06}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 4160
+    m_Bits: 36928
   wallCheckPos: {fileID: 4760253762752879397}
   wallCheckSize: {x: 0.09, y: 1.58}
   wallLayer:
     serializedVersion: 2
     m_Bits: 8
   baseGravity: 4
-  maxFallSpeed: 19
-  fallSpeedMultiplier: 2
+  maxFallSpeed: 25
+  fallSpeedMultiplier: 3.5
   wallSlideSpeed: 4
   wallJumpTime: 0.1
   wallJumpPower: {x: 5, y: 18}
@@ -228,8 +228,8 @@ MonoBehaviour:
   bodyCollider: {fileID: 8219527690354506983}
   normalHurtboxSize: {x: 0.3788681, y: 1.69828}
   normalHurtboxOffset: {x: -0.003505707, y: -0.01532364}
-  downAirHurtboxSize: {x: 0.56, y: 0.51}
-  downAirHurtboxOffset: {x: 0, y: 0.11}
+  downAirHurtboxSize: {x: 0.38, y: 1.38}
+  downAirHurtboxOffset: {x: 0, y: 0.14}
   dashSpeed: 18
   dashDuration: 0.25
   dashCooldown: 0.25
@@ -1164,7 +1164,7 @@ MonoBehaviour:
   recoilUsesImpulse: 0
   recoilLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 8448
   hitVfxPrefab: {fileID: 764859567238011871, guid: d0faabe347a3bd34c90f0b06d63ef064, type: 3}
   hitVfxOffset: {x: 0, y: 0, z: 0}
   spawnVfxOnEnemy: 1
