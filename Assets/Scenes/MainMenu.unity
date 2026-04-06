@@ -2686,6 +2686,7 @@ MonoBehaviour:
   wallJumpUnlocked: 0
   doubleJumpUnlocked: 0
   currentQuestStage: 0
+  level2BugKillsCurrent: 0
   level2QuestStage: 0
   level2LampAcquired: 0
   level2PowerRestored: 0
@@ -2828,6 +2829,10 @@ PrefabInstance:
       propertyPath: playerAttack
       value: 
       objectReference: {fileID: 8300000, guid: dabaa965319b7aa469e7db8441ed344e, type: 3}
+    - target: {fileID: 6577472809873973950, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
+      propertyPath: levelBGM_SelfDoubt
+      value: 
+      objectReference: {fileID: 8300000, guid: 50b1276d3b458794ba345cfff4b03f97, type: 3}
     - target: {fileID: 6785767958845325724, guid: 845cca108e0c9cb4e9d42ce3b30cbbb7, type: 3}
       propertyPath: m_Name
       value: SoundManager
@@ -3074,6 +3079,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneFader
   image: {fileID: 652338112}
+  fadeText: {fileID: 0}
+  fadeOnStart: 0
+  startFadeDuration: 1.5
 --- !u!4 &1066991663
 Transform:
   m_ObjectHideFlags: 0

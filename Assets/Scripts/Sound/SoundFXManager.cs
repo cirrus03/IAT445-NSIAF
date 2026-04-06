@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class SoundFXManager : MonoBehaviour
 {
+
+    public static SoundFXManager Instance { get; private set; }
     [Header("Audio Source")]
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource sfxSource;
@@ -15,6 +17,7 @@ public class SoundFXManager : MonoBehaviour
     [Header("BGM FILES")]
     public AudioClip levelBGM_0;
     public AudioClip menuBGM;
+    public AudioClip levelBGM_SelfDoubt;
 
     [Header("PLAYER LEVEL SFX")]
     public AudioClip playerDash;
@@ -44,6 +47,16 @@ public class SoundFXManager : MonoBehaviour
 
     private void Awake()
     {
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+
         //get level bgm based on current scene
         currentSceneName = getCurrentSceneName();
         chooseLevelBGM(currentSceneName);
@@ -65,7 +78,23 @@ public class SoundFXManager : MonoBehaviour
         Debug.Log("mute: " + musicSource.mute);
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        currentSceneName = scene.name;
+        chooseLevelBGM(currentSceneName);
+        musicSource.clip = currentLevelBGM;
+        musicSource.Play();
+    }
 
     private string getCurrentSceneName()
     {
@@ -79,19 +108,25 @@ public class SoundFXManager : MonoBehaviour
     private void chooseLevelBGM(string sceneName)
     {
         //defaults set to basic
-        currentLevelBGM = levelBGM_0;
-        if (sceneName == "MainMenu")
+        currentLevelBGM = null;
+
+
+        switch (sceneName)
         {
-            currentLevelBGM = menuBGM;
+            case "MainMenu":
+                currentLevelBGM = menuBGM;
+                break;
+            case "LabAreaClone":
+                currentLevelBGM = levelBGM_0;
+                break;
+            case "Level1SelfDoubt":
+                currentLevelBGM = levelBGM_SelfDoubt;
+                break;
+                // add more eventually here
+                // case "Level2Confusion":
+                //     currentLevelBGM = levelBGM_Whatever;
+                //     break;
         }
-        else if (sceneName == "LabAreaClone")
-            currentLevelBGM = levelBGM_0;
-        return;
-
-        // if(sceneName == "LabAreaClone") 
-        //     currentLevelBGM = levelBGM_0;
-
-        //add more eventually here
 
     }
 
