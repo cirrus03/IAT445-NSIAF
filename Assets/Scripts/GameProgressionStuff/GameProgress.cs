@@ -50,6 +50,9 @@ public class GameProgress : MonoBehaviour
     [Header("Player Mood")]
     public MoodState playerMood = MoodState.Neutral;
 
+    [Header("Level 3 Quest Progression")]
+    public bool scene3DoorKeyCollected = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -122,7 +125,7 @@ public class GameProgress : MonoBehaviour
 
         playerJustDied = false;
         playerMood = MoodState.Neutral;
-
+        scene3DoorKeyCollected = false;
         ClearObjective();
     }
 
@@ -152,6 +155,7 @@ public class GameProgress : MonoBehaviour
         level2BugQuestComplete = data.level2BugQuestComplete;
         level2BugKillsCurrent = data.level2BugKillsCurrent;
         playerMood = data.playerMood;
+        scene3DoorKeyCollected = data.scene3DoorKeyCollected;
     }
 
 }

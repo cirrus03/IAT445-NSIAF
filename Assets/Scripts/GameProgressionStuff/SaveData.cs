@@ -8,7 +8,7 @@ public class SaveData
     public bool dashUnlocked;
     public bool wallJumpUnlocked;
     public bool doubleJumpUnlocked;
-
+    public bool scene3DoorKeyCollected;
     public int level2QuestStage;
     public bool level2LampAcquired;
     public bool level2PowerRestored;
