@@ -39,9 +39,14 @@ public class EnemyFlying : MonoBehaviour
     [Header("Attack Behavior")]
     public float attackCooldown = 0.7f;   // time between damage attempts
     public float retreatTime = 0.25f;     // how long it backs off after a hit
-    public float retreatSpeed = 4f;       // how fast it backs off
+    public float retreatSpeed = 4f;       // base retreat speed
+    public float hitRetreatSpeedBonus = 1f; // speed added each time it gets hit
+    public float maxRetreatSpeed = 10f;   // cap so it doesnt get ridiculous
+    public float hitPlayerRetreatSpeed = 4f; // retreat when enemy hits you
+
     private float attackTimer = 0f;
     private float retreatTimer = 0f;
+    private float currentRetreatSpeed;
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
@@ -64,6 +69,7 @@ public class EnemyFlying : MonoBehaviour
         rb.freezeRotation = true;
 
         startPos = rb.position;
+        currentRetreatSpeed = retreatSpeed;
     }
 
     void FixedUpdate()
@@ -116,6 +122,7 @@ public class EnemyFlying : MonoBehaviour
                 isAggro = false;
                 loseSightTimer = 0f;
                 hasLastSeen = false;
+                currentRetreatSpeed = retreatSpeed;
             }
         }
 
@@ -125,8 +132,9 @@ public class EnemyFlying : MonoBehaviour
         if (isAggro && retreatTimer > 0f && player != null)
         {
             Vector2 away = (rb.position - (Vector2)player.position).normalized;
-            Vector2 desiredVelRetreat = AvoidObstacles(away * retreatSpeed);
-            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, desiredVelRetreat, accel * Time.fixedDeltaTime);
+            Vector2 desiredVelRetreat = AvoidObstacles(away * currentRetreatSpeed);
+            float retreatAccelMultiplier = 1.5f;
+            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, desiredVelRetreat, accel * retreatAccelMultiplier * Time.fixedDeltaTime);
             UpdateFlip();
             return;
         }
@@ -217,6 +225,33 @@ public class EnemyFlying : MonoBehaviour
     {
         attackTimer = attackCooldown;
         retreatTimer = retreatTime;
+
+        currentRetreatSpeed = hitPlayerRetreatSpeed;
+
+        if (player != null)
+        {
+            isAggro = true;
+            loseSightTimer = 0f;
+            lastSeenPos = player.position;
+            hasLastSeen = true;
+        }
+    }
+
+    public void NotifyDamaged()
+    {
+        attackTimer = attackCooldown;
+        retreatTimer = retreatTime;
+
+        currentRetreatSpeed += hitRetreatSpeedBonus;
+        currentRetreatSpeed = Mathf.Min(currentRetreatSpeed, maxRetreatSpeed);
+
+        if (player != null)
+        {
+            isAggro = true;
+            loseSightTimer = 0f;
+            lastSeenPos = player.position;
+            hasLastSeen = true;
+        }
     }
 
     Vector2 PatrolVelocity()

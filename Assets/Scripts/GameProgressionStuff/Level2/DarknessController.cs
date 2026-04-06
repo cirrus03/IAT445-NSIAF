@@ -12,7 +12,7 @@ public class DarknessController : MonoBehaviour
     [Header("Player Light Settings")]
     [SerializeField] private float noLampRadius = 0f;
     [SerializeField] private float noLampIntensity = 0f;
-    [SerializeField] private float lampRadius = 5f;
+    [SerializeField] private float lampRadius = 9f;
     [SerializeField] private float lampIntensity = 1.0f;
 
     [Header("Global Light Settings")]
@@ -21,6 +21,7 @@ public class DarknessController : MonoBehaviour
 
     public bool HasLamp { get; private set; }
     public bool PowerRestored { get; private set; }
+    private bool forceDarkOverride = false;
 
     private void Awake()
     {
@@ -64,6 +65,12 @@ public class DarknessController : MonoBehaviour
         UpdateLight();
     }
 
+    public void SetForceDark(bool value)
+    {
+        forceDarkOverride = value;
+        UpdateLight();
+    }
+
     public void ApplySavedState()
     {
         if (GameProgress.Instance != null)
@@ -79,12 +86,22 @@ public class DarknessController : MonoBehaviour
     {
         if (globalLight != null)
         {
-            globalLight.intensity = PowerRestored ? powerOnGlobalIntensity : darkGlobalIntensity;
+            if (globalLight != null)
+            {
+                if (forceDarkOverride)
+                {
+                    globalLight.intensity = darkGlobalIntensity; 
+                }
+                else
+                {
+                    globalLight.intensity = PowerRestored ? powerOnGlobalIntensity : darkGlobalIntensity;
+                }
+            }
         }
 
         if (playerLight == null) return;
 
-        if (PowerRestored)
+        if (PowerRestored && !forceDarkOverride)
         {
             playerLight.enabled = false;
             return;

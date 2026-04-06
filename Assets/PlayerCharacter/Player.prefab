@@ -45,6 +45,7 @@ Transform:
   - {fileID: 3825882924670328960}
   - {fileID: 6879134197732817924}
   - {fileID: 9091049963710412400}
+  - {fileID: 4358675716704355197}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1810003946063990170
@@ -200,15 +201,15 @@ MonoBehaviour:
   groundCheckSize: {x: 0.66, y: 0.06}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 4160
   wallCheckPos: {fileID: 4760253762752879397}
   wallCheckSize: {x: 0.09, y: 1.58}
   wallLayer:
     serializedVersion: 2
     m_Bits: 8
   baseGravity: 4
-  maxFallSpeed: 25
-  fallSpeedMultiplier: 3.5
+  maxFallSpeed: 19
+  fallSpeedMultiplier: 2
   wallSlideSpeed: 4
   wallJumpTime: 0.1
   wallJumpPower: {x: 5, y: 18}
@@ -224,6 +225,11 @@ MonoBehaviour:
   attackHitboxUp: {fileID: 7441916476548642009}
   attackHitboxDown: {fileID: 645110301353682504}
   attackHitboxDownAir: {fileID: 7895720438385908194}
+  bodyCollider: {fileID: 8219527690354506983}
+  normalHurtboxSize: {x: 0.3788681, y: 1.69828}
+  normalHurtboxOffset: {x: -0.003505707, y: -0.01532364}
+  downAirHurtboxSize: {x: 0.56, y: 0.51}
+  downAirHurtboxOffset: {x: 0, y: 0.11}
   dashSpeed: 18
   dashDuration: 0.25
   dashCooldown: 0.25
@@ -338,7 +344,19 @@ MonoBehaviour:
     m_ActionId: c95b2375-e6d9-4b88-9c4c-c5e76515df4b
     m_ActionName: 'UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: e8edaf86803594554a8ade0f345513a3, type: 3}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 7607c7b6-cd76-4816-beef-bd0341cfe950
     m_ActionName: 'UI/Submit[/Keyboard/enter]'
   - m_PersistentCalls:
@@ -483,7 +501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3825882924670328960
 Transform:
   m_ObjectHideFlags: 0
@@ -740,6 +758,90 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &5084902671406656706
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4358675716704355197}
+  - component: {fileID: 6248354301162401225}
+  m_Layer: 7
+  m_Name: FlashlightLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4358675716704355197
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5084902671406656706}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5620646120440825784}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6248354301162401225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5084902671406656706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.Light2D
+  m_ComponentVersion: 2
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0
+  m_Color: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
+  m_Intensity: 0.64
+  m_LightVolumeIntensity: 1
+  m_LightVolumeEnabled: 0
+  m_ApplyToSortingLayers: 000000002de21c5481922d3f9dadc32a059819c1
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowsEnabled: 1
+  m_ShadowIntensity: 0.75
+  m_ShadowSoftness: 0.3
+  m_ShadowSoftnessFalloffIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 0
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
 --- !u!1 &5549846461174210282
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,7 +859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &36173622672024497
 Transform:
   m_ObjectHideFlags: 0
@@ -780,7 +882,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5549846461174210282}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -807,8 +909,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.47517568, y: -0.09988708}
-  m_Size: {x: 1.6909308, y: 1.3040159}
+  m_Offset: {x: 0.57265514, y: -0.099887095}
+  m_Size: {x: 1.8858962, y: 1.3040191}
   m_Direction: 1
 --- !u!114 &9111364046199452231
 MonoBehaviour:
@@ -887,7 +989,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3375603063541611340
 Transform:
   m_ObjectHideFlags: 0
@@ -937,9 +1039,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.10012221, y: 0.32019174}
-  m_Size: {x: 1.4751163, y: 2.006612}
-  m_Direction: 0
+  m_Offset: {x: 0.74952626, y: 0.46641204}
+  m_Size: {x: 2.7009773, y: 2.5060527}
+  m_Direction: 1
 --- !u!114 &932554749151385363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -986,7 +1088,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6879134197732817924
 Transform:
   m_ObjectHideFlags: 0
@@ -1036,8 +1138,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.13027954, y: -0.5465145}
-  m_Size: {x: 1.6292267, y: 2.3161964}
+  m_Offset: {x: -0.053268433, y: -0.1460433}
+  m_Size: {x: 2.5431213, y: 2.5431213}
   m_Direction: 0
 --- !u!114 &2194128106528960309
 MonoBehaviour:
