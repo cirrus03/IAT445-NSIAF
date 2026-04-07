@@ -28,6 +28,26 @@ public class CheckpointManager : MonoBehaviour
         return currentCheckpoint;
     }
 
+    public void RestoreCheckpointById(string checkpointId)
+    {
+        if (string.IsNullOrEmpty(checkpointId))
+            return;
+
+        Checkpoint[] allCheckpoints = FindObjectsByType<Checkpoint>(FindObjectsSortMode.None);
+
+        foreach (Checkpoint cp in allCheckpoints)
+        {
+            if (cp.CheckpointID == checkpointId)
+            {
+                currentCheckpoint = cp;
+                Debug.Log("Restored checkpoint: " + cp.name);
+                return;
+            }
+        }
+
+        Debug.LogWarning("Could not find checkpoint with ID: " + checkpointId);
+    }
+
     public Vector3 GetRespawnPosition()
     {
         if (currentCheckpoint != null)
