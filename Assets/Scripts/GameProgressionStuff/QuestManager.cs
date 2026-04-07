@@ -71,6 +71,25 @@ public class QuestManager : MonoBehaviour
         Debug.Log($"Started collect quest: {questName} ({requiredCount})");
     }
 
+    public void ForceCompleteQuest(string questId, string questName, QuestType questType, int requiredCount = 1)
+    {
+        currentQuest = questType;
+        currentQuestId = questId;
+        currentQuestName = questName;
+        requiredAmount = requiredCount;
+        currentAmount = requiredCount;
+
+        questActive = true;
+        questComplete = true;
+
+        if (GameProgress.Instance != null)
+        {
+            GameProgress.Instance.SetObjective("Talk to Crow");
+        }
+
+        Debug.Log($"Force completed quest: {questId}");
+    }
+
     public void RegisterEnemyKilled()
     {
         if (!questActive || questComplete) return;
