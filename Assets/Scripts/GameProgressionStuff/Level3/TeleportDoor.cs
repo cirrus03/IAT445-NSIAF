@@ -38,6 +38,13 @@ public class TeleportDoor : MonoBehaviour
         if (requiresKey && !HasRequiredKey())
         {
             Debug.Log(lockedMessage);
+
+            if (GameProgress.Instance != null && GameProgress.Instance.level3QuestStage < 3)
+            {
+                GameProgress.Instance.level3QuestStage = 3;
+                GameProgress.Instance.SetObjective("Find key");
+            }
+
             return;
         }
 
@@ -57,6 +64,12 @@ public class TeleportDoor : MonoBehaviour
         {
             Debug.LogWarning("Player transform not found.");
             return;
+        }
+
+        if (GameProgress.Instance != null)
+        {
+            GameProgress.Instance.level3QuestStage = 5;
+            GameProgress.Instance.SetObjective("...");
         }
 
         StartCoroutine(TeleportRoutine());

@@ -32,6 +32,9 @@ public class DoorKeyPickup : MonoBehaviour
         if (GameProgress.Instance != null)
         {
             GameProgress.Instance.scene3DoorKeyCollected = true;
+            GameProgress.Instance.level3QuestStage = 4;
+            GameProgress.Instance.SetObjective("Return to door");
+
             Debug.Log(pickupMessage);
         }
         else

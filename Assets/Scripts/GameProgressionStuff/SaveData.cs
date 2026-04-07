@@ -18,7 +18,7 @@ public class SaveData
 
     public GameProgress.MoodState playerMood;
     public bool scene3DoorKeyCollected;
-
+    public int level3QuestStage;
     // QuestManager
     public QuestManager.QuestType currentQuest;
     public bool questActive;
