@@ -180,6 +180,14 @@ MonoBehaviour:
   startingHealth: 3
   healthDropPrefab: {fileID: 8549208334071225197, guid: 417cf4298269fb84fa883fb86534760c, type: 3}
   healthDropChance: 0.4
+  spawnFlyingEnemiesOnHit: 0
+  flyingEnemySpawnedPrefab: {fileID: 0}
+  spawnCountOnHit: 2
+  spawnCooldown: 0.5
+  spawnChanceOnHit: 1
+  spawnMinRadius: 0.36
+  spawnMaxRadius: 2.73
+  spawnPoints: []
   flashOnDamage: 1
   flashDuration: 0.1
   countsForBugQuest: 0

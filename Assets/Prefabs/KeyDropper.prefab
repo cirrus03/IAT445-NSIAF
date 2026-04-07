@@ -184,6 +184,9 @@ MonoBehaviour:
   flyingEnemySpawnedPrefab: {fileID: 0}
   spawnCountOnHit: 2
   spawnCooldown: 0.5
+  spawnChanceOnHit: 1
+  spawnMinRadius: 1.5
+  spawnMaxRadius: 3
   spawnPoints: []
   flashOnDamage: 1
   flashDuration: 0.1
@@ -224,13 +227,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFlying
   player: {fileID: 0}
-  aggroRange: 6
-  deaggroRange: 8
+  aggroRange: 16.1
+  deaggroRange: 19.51
   loseSightDelay: 2.5
   searchSpeed: 2.5
   reachLastSeenDistance: 0.4
-  flySpeed: 7
-  accel: 12
+  flySpeed: 4
+  accel: 10
   stopDistance: 0.5
   patrolSpeed: 1.5
   patrolDistance: 3

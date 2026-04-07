@@ -184,6 +184,9 @@ MonoBehaviour:
   flyingEnemySpawnedPrefab: {fileID: 0}
   spawnCountOnHit: 2
   spawnCooldown: 0.5
+  spawnChanceOnHit: 1
+  spawnMinRadius: 1.5
+  spawnMaxRadius: 3
   spawnPoints: []
   flashOnDamage: 1
   flashDuration: 0.1
@@ -229,8 +232,8 @@ MonoBehaviour:
   loseSightDelay: 2.5
   searchSpeed: 2.5
   reachLastSeenDistance: 0.4
-  flySpeed: 4
-  accel: 7
+  flySpeed: 3
+  accel: 5
   stopDistance: 0.5
   patrolSpeed: 1.5
   patrolDistance: 3
