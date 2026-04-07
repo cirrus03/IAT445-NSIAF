@@ -49,6 +49,13 @@ public class Elevator : MonoBehaviour
         }
     }
 
+    void ElevatorLine()
+    {
+        DialogueManager dm = DialogueManager.GetInstance();
+        if (dm == null) return;
+        dm.PlayDowntimeDialogue(noPowerMessage, Speaker.Nozomi);
+    }
+
     public void SetPoweredOn(bool value)
     {
         poweredOn = value;
@@ -69,7 +76,7 @@ public class Elevator : MonoBehaviour
     {
         if (requiresPower && !poweredOn)
         {
-            Debug.Log(noPowerMessage);
+            ElevatorLine();
             return;
         }
 
