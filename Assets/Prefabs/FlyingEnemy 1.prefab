@@ -246,8 +246,8 @@ MonoBehaviour:
   avoidCheckDistance: 0.6
   avoidRadius: 0.25
   attackCooldown: 0.7
-  retreatTime: 0.2
-  retreatSpeed: 6
+  retreatTime: 0.3
+  retreatSpeed: 8
   hitRetreatSpeedBonus: 3
   maxRetreatSpeed: 8
   hitPlayerRetreatSpeed: 9

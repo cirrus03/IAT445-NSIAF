@@ -39,10 +39,15 @@ public class TeleportDoor : MonoBehaviour
         {
             Debug.Log(lockedMessage);
 
-            if (GameProgress.Instance != null && GameProgress.Instance.level3QuestStage < 3)
+            if (GameProgress.Instance != null)
             {
-                GameProgress.Instance.level3QuestStage = 3;
-                GameProgress.Instance.SetObjective("Find key");
+                if (GameProgress.Instance.level3QuestStage < 3)
+                {
+                    GameProgress.Instance.level3QuestStage = 3;
+                    GameProgress.Instance.SetObjective("Find key");
+                }
+
+                GameProgress.Instance.level3HazardSpawnUnlocked = true;
             }
 
             return;

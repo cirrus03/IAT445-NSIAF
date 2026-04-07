@@ -130834,7 +130834,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1451408762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130863,6 +130863,7 @@ MonoBehaviour:
   playerMood: 1
   level3QuestStage: 0
   scene3DoorKeyCollected: 0
+  level3HazardSpawnUnlocked: 0
 --- !u!4 &1451408763
 Transform:
   m_ObjectHideFlags: 0
