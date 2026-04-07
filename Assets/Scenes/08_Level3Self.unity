@@ -4546,9 +4546,29 @@ PrefabInstance:
       value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
+      propertyPath: noJumpsLeftColor.b
+      value: 0.63857245
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
+      propertyPath: noJumpsLeftColor.g
+      value: 0.63857245
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
+      propertyPath: noJumpsLeftColor.r
+      value: 0.7735849
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: fallSpeedMultiplier
       value: 3.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
+      propertyPath: playerRenderers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
+      propertyPath: 'playerRenderers.Array.data[0]'
+      value: 
+      objectReference: {fileID: 386690493}
     - target: {fileID: 3207523418519364129, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: slider
       value: 
@@ -4601,6 +4621,11 @@ PrefabInstance:
 --- !u!4 &386690492 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5620646120440825784, guid: 730d832921f599e48968f32d5f568b58, type: 3}
+  m_PrefabInstance: {fileID: 386690491}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &386690493 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1810003946063990170, guid: 730d832921f599e48968f32d5f568b58, type: 3}
   m_PrefabInstance: {fileID: 386690491}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &394416441

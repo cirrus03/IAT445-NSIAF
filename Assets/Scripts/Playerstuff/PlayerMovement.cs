@@ -18,6 +18,12 @@ public class PlayerMovement : MonoBehaviour
     public int maxJumps = 2;
     int jumpsRemaining;
 
+    [Header("Diegetic UI - Jump")]
+    [SerializeField] private SpriteRenderer[] playerRenderers;
+    [SerializeField] private Color fullJumpColor = Color.white;
+    [SerializeField] private Color oneJumpLeftColor = new Color(0.6f, 0.6f, 0.6f, 1f);
+    [SerializeField] private Color noJumpsLeftColor = new Color(0.2f, 0.2f, 0.2f, 1f);
+
     [Header("GroundCheck")]
     public Transform groundCheckPos;
     public Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
@@ -167,6 +173,7 @@ public class PlayerMovement : MonoBehaviour
             normalHurtboxSize = bodyCollider.size;
             normalHurtboxOffset = bodyCollider.offset;
         }
+        UpdateJumpTint();
     }
 
     void Update()
@@ -310,7 +317,8 @@ public class PlayerMovement : MonoBehaviour
             // hold down jump for full height
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
             jumpsRemaining--;
-            animator.SetTrigger("Jump"); //mine is uppercase so it upper case :')
+            animator.SetTrigger("Jump");
+            UpdateJumpTint();
         }
         else if (context.canceled && rb.linearVelocity.y > 0)
         {
@@ -524,6 +532,7 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJumps()
     {
         jumpsRemaining = canDoubleJump ? maxJumps : 1;
+        UpdateJumpTint();
     }
 
     // taking mood from global
@@ -533,6 +542,40 @@ public class PlayerMovement : MonoBehaviour
             return GameProgress.MoodState.Neutral;
 
         return GameProgress.Instance.playerMood;
+    }
+
+    private void UpdateJumpTint()
+    {
+        if (playerRenderers == null || playerRenderers.Length == 0)
+            return;
+
+        Color targetColor = fullJumpColor;
+
+        if (canDoubleJump)
+        {
+            if (jumpsRemaining <= 0)
+            {
+                targetColor = noJumpsLeftColor;
+            }
+            else if (jumpsRemaining == 1)
+            {
+                targetColor = oneJumpLeftColor;
+            }
+            else
+            {
+                targetColor = fullJumpColor;
+            }
+        }
+        else
+        {
+            targetColor = fullJumpColor;
+        }
+
+        for (int i = 0; i < playerRenderers.Length; i++)
+        {
+            if (playerRenderers[i] != null)
+                playerRenderers[i].color = targetColor;
+        }
     }
 
     // setting dashes to two on asd MOOD
@@ -859,6 +902,7 @@ public class PlayerMovement : MonoBehaviour
     {
         canDoubleJump = unlocked;
         ResetJumps();
+        UpdateJumpTint();
     }
 
     public void SetWallSlideUnlocked(bool unlocked)
@@ -886,6 +930,7 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpsRemaining++;
         }
+        UpdateJumpTint();
     }
 
     private void DisablePlayerMovement()
