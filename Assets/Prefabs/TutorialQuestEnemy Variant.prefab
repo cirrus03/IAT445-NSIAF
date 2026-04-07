@@ -8,9 +8,65 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 176115904809459584, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bc518be1ec5774b47881b207b86b8be3, type: 3}
+    - target: {fileID: 385707711050190297, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Size.x
+      value: 7.3061795
+      objectReference: {fileID: 0}
+    - target: {fileID: 385707711050190297, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Size.y
+      value: 2.2145405
+      objectReference: {fileID: 0}
+    - target: {fileID: 385707711050190297, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.76119256
+      objectReference: {fileID: 0}
+    - target: {fileID: 385707711050190297, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.15099823
+      objectReference: {fileID: 0}
     - target: {fileID: 1474573750511936422, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
       propertyPath: m_Name
       value: TutorialQuestEnemy Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1792407745646842139, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Size.x
+      value: 7.5524898
+      objectReference: {fileID: 0}
+    - target: {fileID: 1792407745646842139, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Size.y
+      value: 3.432665
+      objectReference: {fileID: 0}
+    - target: {fileID: 1792407745646842139, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.74903464
+      objectReference: {fileID: 0}
+    - target: {fileID: 1792407745646842139, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.48850524
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026907626088386107, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d7d354026822d9240b0944f790d8f3fb, type: 2}
+    - target: {fileID: 4112845027156007512, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Size.x
+      value: 2.547152
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112845027156007512, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Size.y
+      value: 3.6318982
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112845027156007512, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.19981122
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112845027156007512, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Offset.y
+      value: 1.9342202
       objectReference: {fileID: 0}
     - target: {fileID: 5140364100522381220, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
       propertyPath: m_LocalPosition.x
@@ -51,6 +107,22 @@ PrefabInstance:
     - target: {fileID: 5140364100522381220, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7605877855879686699, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Size.x
+      value: 4.0130286
+      objectReference: {fileID: 0}
+    - target: {fileID: 7605877855879686699, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Size.y
+      value: 4.72557
+      objectReference: {fileID: 0}
+    - target: {fileID: 7605877855879686699, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.31897122
+      objectReference: {fileID: 0}
+    - target: {fileID: 7605877855879686699, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+      propertyPath: m_Offset.y
+      value: 2.0407298
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -53,6 +53,7 @@ public class GameProgress : MonoBehaviour
     [Header("Level 3 Quest Progression")]
     public int level3QuestStage = 0;
     public bool scene3DoorKeyCollected = false;
+    public bool level3HazardSpawnUnlocked = false;
 
     private void Awake()
     {
@@ -128,6 +129,7 @@ public class GameProgress : MonoBehaviour
         playerMood = MoodState.Neutral;
         scene3DoorKeyCollected = false;
         level3QuestStage = 0;
+        level3HazardSpawnUnlocked = false;
         ClearObjective();
     }
 
@@ -159,6 +161,7 @@ public class GameProgress : MonoBehaviour
         playerMood = data.playerMood;
         scene3DoorKeyCollected = data.scene3DoorKeyCollected;
         level3QuestStage = data.level3QuestStage;
+        level3HazardSpawnUnlocked = data.level3HazardSpawnUnlocked;
     }
 
 }
