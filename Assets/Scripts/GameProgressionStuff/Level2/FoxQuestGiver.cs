@@ -17,11 +17,17 @@ public class FoxQuestGiver : MonoBehaviour
     [Header("Downtime Dialogue")]
     [SerializeField]
     private string[] downtimeLines = {
-    "The power is still out...",
+    "The power is still out.",
     "Find the breaker.",
-    "Erm..",
     "Darkness still reigns..."
 };
+    [SerializeField]
+    private string[] downtimeLines2 =
+    {
+        "Goodness, the area is still swarming with bugs.",
+        "They make my skin crawl... Please get rid of them.",
+        "Are you sure they're all gone?"
+    };
     private void Start()
     {
         RestoreLevel2StateFromProgress();
@@ -110,13 +116,13 @@ public class FoxQuestGiver : MonoBehaviour
         }
     }
 
-    void PlayDowntimeDialogue()
+    void PlayDowntimeDialogue(string[] lines)
     {
         DialogueManager dm = DialogueManager.GetInstance();
-        if (dm == null) return;
+        if (dm == null || lines == null || lines.Length == 0) return;
 
-        string line = downtimeLines[Random.Range(0, downtimeLines.Length)];
-        dm.PlayDowntimeDialogue(line);
+        string line = lines[Random.Range(0, lines.Length)];
+        dm.PlayDowntimeDialogue(line, Speaker.Fox);
     }
 
     private void Interact()
@@ -143,7 +149,7 @@ public class FoxQuestGiver : MonoBehaviour
         // stage 1  breaker not done
         if (stage == 1)
         {
-            PlayDowntimeDialogue();
+            PlayDowntimeDialogue(downtimeLines);
             return;
         }
 
@@ -159,7 +165,7 @@ public class FoxQuestGiver : MonoBehaviour
         {
             if (bugQuestGroup != null && !bugQuestGroup.IsComplete)
             {
-                dm.EnterDialogueMode(inkJSON, "fox_bug_progress");
+                PlayDowntimeDialogue(downtimeLines2);
             }
             else
             {

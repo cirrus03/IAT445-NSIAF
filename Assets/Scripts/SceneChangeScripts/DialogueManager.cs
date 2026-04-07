@@ -5,6 +5,15 @@ using TMPro;
 using Ink.Runtime;
 using UnityEngine.EventSystems;
 
+public enum Speaker
+{
+    None,
+    Fox,
+    Crow,
+    Kazumi,
+    Nozomi
+}
+
 public class DialogueManager : MonoBehaviour
 {
 
@@ -390,7 +399,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void PlayDowntimeDialogue(string line)
+    public void PlayDowntimeDialogue(string line, Speaker speaker = Speaker.None)
     {
         dialogueIsPlaying = true;
         dialogueFinished = false;
@@ -400,6 +409,41 @@ public class DialogueManager : MonoBehaviour
 
         dialoguePanel.SetActive(true);
         dialogueText.text = line;
+
+        HideAllSprites();
+
+        GameObject spriteToShow = GetSpeaker(speaker);
+        if (spriteToShow != null)
+            spriteToShow.SetActive(true);
+    }
+
+    private void HideAllSprites()
+    {
+        if (sceneSprite != null) sceneSprite.SetActive(false);
+        if (nozomiHappy != null) nozomiHappy.SetActive(false);
+        if (kazumiSprite != null) kazumiSprite.SetActive(false);
+        if (kazumiCheer != null) kazumiCheer.SetActive(false);
+        if (crowSprite != null) crowSprite.SetActive(false);
+        if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
+        if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
+        if (foxSprite != null) foxSprite.SetActive(false);
+    }
+
+    public GameObject GetSpeaker(Speaker speaker)
+    {
+        switch (speaker)
+        {
+            case Speaker.Fox:
+                return foxSprite;
+            case Speaker.Crow:
+                return whitecrowSprite;
+            case Speaker.Kazumi:
+                return kazumiSprite;
+            case Speaker.Nozomi:
+                return sceneSprite;
+            default:
+                return null;
+        }
     }
 
     private void DisplayChoices()

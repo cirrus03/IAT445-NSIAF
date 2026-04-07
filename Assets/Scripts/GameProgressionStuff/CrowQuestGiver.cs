@@ -18,11 +18,21 @@ public class CrowQuestGiver : MonoBehaviour
 
     [Header("Downtime Dialogue")]
     [SerializeField]
-    private string[] downtimeLines = {
-    "Have you made any progress?",
-    "I expect great things from you.",
-    "You still have an unfinished task.",
-    "Go on now."
+    private string[] downtimeLines1 = {
+    "Eliminating a single enemy is a rather easy task, is it not?",
+    "There should be an enemy nearby, to the right.",
+    "Return to us once you've eliminated an enemy."
+};
+    private string[] downtimeLines2 = {
+    "Head upwards and retrieve your notes.",
+    "There is a path upwards to the right of the lab.",
+    "If needed, you can access the controls through the pause menu."
+};
+
+    private string[] downtimeLines3 = {
+    "To the left, your final task awaits.",
+    "Remember to make full use of your skillset.",
+    "If you're truly ready for tomorrow's test, make haste."
 };
 
     [SerializeField] private TutorialEnemyRespawner tutorialEnemyRespawner;
@@ -101,13 +111,13 @@ public class CrowQuestGiver : MonoBehaviour
             completeIndicator.SetActive(complete);
     }
 
-    void PlayDowntimeDialogue()
+    void PlayDowntimeDialogue(string[] lines)
     {
         DialogueManager dm = DialogueManager.GetInstance();
-        if (dm == null) return;
+        if (dm == null || lines == null || lines.Length == 0) return;
 
-        string line = downtimeLines[Random.Range(0, downtimeLines.Length)];
-        dm.PlayDowntimeDialogue(line);
+        string line = lines[Random.Range(0, lines.Length)];
+        dm.PlayDowntimeDialogue(line, Speaker.Crow);
     }
 
     void Interact()
@@ -120,12 +130,6 @@ public class CrowQuestGiver : MonoBehaviour
 
         int stage = GameProgress.Instance.currentQuestStage;
         QuestManager qm = QuestManager.Instance;
-        // downtime dialogue
-        if (qm.questActive && !qm.questComplete)
-        {
-            PlayDowntimeDialogue();
-            return;
-        }
 
         // stage 0
         if (stage == 0 && !qm.questActive)
@@ -145,7 +149,11 @@ public class CrowQuestGiver : MonoBehaviour
         // stage 1
         if (stage == 1)
         {
-            if (qm.questActive && qm.questComplete)
+            if (qm.questActive && !qm.questComplete)
+            {
+                PlayDowntimeDialogue(downtimeLines1);
+            } 
+            else
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "firsttaskdone");
             }
@@ -155,7 +163,11 @@ public class CrowQuestGiver : MonoBehaviour
         // stage 2
         if (stage == 2)
         {
-            if (qm.questActive && qm.questComplete)
+            if (qm.questActive && !qm.questComplete)
+            {
+                PlayDowntimeDialogue(downtimeLines2);
+            }
+            else
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "secondtaskdone");
             }
@@ -165,7 +177,11 @@ public class CrowQuestGiver : MonoBehaviour
         // stage 3
         if (stage == 3)
         {
-            if (qm.questActive && qm.questComplete)
+            if (qm.questActive && !qm.questComplete)
+            {
+                PlayDowntimeDialogue(downtimeLines3);
+            }
+            else
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "lasttaskdone");
             }
