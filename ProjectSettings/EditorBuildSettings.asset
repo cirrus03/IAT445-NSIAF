@@ -24,13 +24,13 @@ EditorBuildSettings:
     path: Assets/Scenes/1_DialogueCrow.unity
     guid: 922bbe4f60fe94570af58e306566de9c
   - enabled: 1
-    path: Assets/Scenes/NewSidescroll.unity
+    path: Assets/Scenes/SS_1.unity
     guid: 5f408175cc59649c698b4992af2f6459
   - enabled: 1
     path: Assets/Scenes/LabAreaClone.unity
     guid: e1cdde185b20f3c488ccdcd556c758c5
   - enabled: 1
-    path: Assets/Scenes/NewSidescrollClonePH.unity
+    path: Assets/Scenes/SS_2.unity
     guid: 22760d08f83ed4440a19fa23c7b58417
   - enabled: 0
     path: Assets/Scenes/LabArea.unity
@@ -47,6 +47,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level1SelfDoubt.unity
     guid: b6615e389bc0d7548aef1a3027a399bb
+  - enabled: 1
+    path: Assets/Scenes/SS_3.unity
+    guid: 152468c4e14c5453eb112a231b16709c
+  - enabled: 1
+    path: Assets/Scenes/Level2Confusion.unity
+    guid: 474afcb5f7d63db4c8ecc4e002411913
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

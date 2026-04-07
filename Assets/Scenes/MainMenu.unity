@@ -2694,6 +2694,7 @@ MonoBehaviour:
   level2BugQuestComplete: 0
   playerJustDied: 0
   playerMood: 0
+  scene3DoorKeyCollected: 0
 --- !u!4 &818828600
 Transform:
   m_ObjectHideFlags: 0
@@ -5356,7 +5357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   sceneFader: {fileID: 1066991662}
-  firstGameScene: NewSidescroll
+  firstGameScene: SS_1
   mainMenuPanel: {fileID: 1780244478}
   settingsPanel: {fileID: 370687636}
   creditsPanel: {fileID: 1089448848}
