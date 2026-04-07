@@ -16,7 +16,10 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     [SerializeField] private GameObject flyingEnemySpawnedPrefab;
     [SerializeField] private int spawnCountOnHit = 2;
     [SerializeField] private float spawnCooldown = 0.5f;
-    [SerializeField] private Transform[] spawnPoints;
+    [SerializeField, Range(0f, 1f)] private float spawnChanceOnHit = 1f; // 1 = 100%
+    [SerializeField] private float spawnMinRadius = 1.5f;
+    [SerializeField] private float spawnMaxRadius = 3f;
+    [SerializeField] private Transform[] spawnPoints;//optional — if empty, uses radius ring
 
     private float spawnCooldownTimer = 0f;
 
@@ -125,11 +128,13 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         if (flyingEnemySpawnedPrefab == null) return;
         if (!spawnFlyingEnemiesOnHit) return;
 
+        if (Random.value > spawnChanceOnHit) return;
+
         spawnCooldownTimer = spawnCooldown;
 
         for (int i = 0; i < spawnCountOnHit; i++)
         {
-            Vector3 spawnPos = transform.position;
+            Vector3 spawnPos;
 
             if (spawnPoints != null && spawnPoints.Length > 0 && spawnPoints[i % spawnPoints.Length] != null)
             {
@@ -137,8 +142,10 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             }
             else
             {
-                float offsetX = (i % 2 == 0) ? -1f : 1f;
-                spawnPos += new Vector3(offsetX, 0.5f, 0f);
+                float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+                float distance = Random.Range(spawnMinRadius, spawnMaxRadius);
+                Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
+                spawnPos = (Vector2)transform.position + offset;
             }
 
             Instantiate(flyingEnemySpawnedPrefab, spawnPos, Quaternion.identity);
@@ -201,5 +208,13 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         }
 
         flashRoutine = null;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, spawnMinRadius);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, spawnMaxRadius);
     }
 }
