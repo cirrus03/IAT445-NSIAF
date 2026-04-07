@@ -5,6 +5,7 @@ public class BossHealth : MonoBehaviour, IDamageable
     [Header("Health")]
     [SerializeField] private float maxHealth = 100f;
     public float CurrentHealth { get; private set; }
+    public float MaxHealth => maxHealth;
 
     [Header("State")]
     public bool IsInvincible { get; private set; } = false;

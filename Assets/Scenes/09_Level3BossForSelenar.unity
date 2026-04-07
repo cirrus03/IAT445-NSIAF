@@ -480,9 +480,6 @@ GameObject:
   - component: {fileID: 155914498}
   - component: {fileID: 155914500}
   - component: {fileID: 155914499}
-  - component: {fileID: 155914503}
-  - component: {fileID: 155914502}
-  - component: {fileID: 155914501}
   m_Layer: 8
   m_Name: Boss
   m_TagString: Enemy
@@ -523,7 +520,10 @@ MonoBehaviour:
   - rid: 3319857882367525325
   - rid: 3319857882367525326
   - rid: 3319857882367525686
-  - rid: 3319857882367525769
+  - rid: 3319857882367525806
+  - rid: 3319857887834276705
+  - rid: 3319857887834276706
+  - rid: 3319857887834276707
   m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
@@ -554,7 +554,7 @@ MonoBehaviour:
           m_Value1: 7753391781717530275
         Name: Boss_animator
         m_Value: {fileID: 1133040364}
-    - rid: 3319857882367525769
+    - rid: 3319857882367525806
       type: {class: 'BlackboardVariable`1[[BossStateMachine, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
@@ -562,6 +562,30 @@ MonoBehaviour:
           m_Value1: 10296788275268463757
         Name: New Boss State Machine
         m_Value: {fileID: 155914497}
+    - rid: 3319857887834276705
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 602417896460556685
+          m_Value1: 2383495772306134062
+        Name: dashRange
+        m_Value: 10
+    - rid: 3319857887834276706
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 6573889848271437387
+          m_Value1: 13249828201171434456
+        Name: flyRange
+        m_Value: 17
+    - rid: 3319857887834276707
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 10452192806849934969
+          m_Value1: 8004351864783350946
+        Name: Player
+        m_Value: {fileID: 386690492}
 --- !u!114 &155914497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,6 +598,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b37d0cf40370ad43ac4238d5a12d399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  player: {fileID: 386690492}
+  moveSpeed: 3
+  dashSpeed: 12
+  dashDuration: 0.2
+  dashCooldown: 2
+  flySpeed: 15
+  flyDuration: 1
+  flyCooldown: 4
 --- !u!114 &155914498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,87 +649,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   maxHealth: 20
---- !u!114 &155914501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 155914494}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9878320bbd6266d4aa9558c015bd551c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  startingHealth: 20
-  healthDropPrefab: {fileID: 0}
-  healthDropChance: 0.4
-  spawnFlyingEnemiesOnHit: 0
-  flyingEnemySpawnedPrefab: {fileID: 0}
-  spawnCountOnHit: 2
-  spawnCooldown: 0.5
-  spawnChanceOnHit: 1
-  spawnMinRadius: 1.5
-  spawnMaxRadius: 3
-  spawnPoints: []
-  flashOnDamage: 1
-  flashDuration: 0.1
-  countsForBugQuest: 0
-  hurtSprite: {fileID: 0}
---- !u!114 &155914502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 155914494}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b6bfd7b7559950479acedf059e6297d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyFlying
-  player: {fileID: 386690492}
-  aggroRange: 6
-  deaggroRange: 8
-  loseSightDelay: 2.5
-  searchSpeed: 2.5
-  reachLastSeenDistance: 0.4
-  flySpeed: 3
-  accel: 12
-  stopDistance: 0.5
-  patrolSpeed: 1.5
-  patrolDistance: 3
-  patrolHeightBob: 0.5
-  bobSpeed: 2
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  avoidCheckDistance: 0.6
-  avoidRadius: 0.25
-  attackCooldown: 0.7
-  retreatTime: 0.25
-  retreatSpeed: 4
-  hitRetreatSpeedBonus: 1
-  maxRetreatSpeed: 10
-  hitPlayerRetreatSpeed: 4
---- !u!114 &155914503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 155914494}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb399b50b1c35c34482e5ea038ccfede, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyDamage
-  damage: 1
-  knockbackX: 12
-  knockbackY: 6
-  hitStopTime: 0.05
-  stunTime: 0.18
-  touchDamageCooldown: 0.15
 --- !u!1 &192081845
 GameObject:
   m_ObjectHideFlags: 0
