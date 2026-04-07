@@ -36,6 +36,8 @@ public static class SaveSystem
 
         data.playerMood = GameProgress.Instance.playerMood;
         data.scene3DoorKeyCollected = GameProgress.Instance.scene3DoorKeyCollected;
+        data.level3QuestStage = GameProgress.Instance.level3QuestStage;
+
 
         // QuestManager
         if (QuestManager.Instance != null)

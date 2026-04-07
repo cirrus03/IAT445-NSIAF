@@ -10,10 +10,10 @@ public class TeleportDoor : MonoBehaviour
     [Header("Lock Settings")]
     [SerializeField] private bool requiresKey = true;
     [SerializeField] private string lockedMessage = "It's locked. I need a key.";
-    [SerializeField] private string interactMessage = "Press E to enter.";
+    [SerializeField] private string interactMessage = "Press F to enter.";
 
     [Header("Interaction")]
-    [SerializeField] private KeyCode interactKey = KeyCode.E;
+    [SerializeField] private KeyCode interactKey = KeyCode.F;
 
     [Header("Cooldown")]
     [SerializeField] private float teleportCooldown = 0.35f;
