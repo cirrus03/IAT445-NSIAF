@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     [Header("Scene")]
     [SerializeField] private SceneFader sceneFader;
-    [SerializeField] private string firstGameScene = "SS_1";
+    [SerializeField] private string firstGameScene = "03_Sidescroll1";
 
     [Header("Panels")]
     [SerializeField] private GameObject mainMenuPanel;
