@@ -19,6 +19,7 @@ public class SaveData
     public GameProgress.MoodState playerMood;
     public bool scene3DoorKeyCollected;
     public int level3QuestStage;
+    public bool level3HazardSpawnUnlocked;
     // QuestManager
     public QuestManager.QuestType currentQuest;
     public bool questActive;

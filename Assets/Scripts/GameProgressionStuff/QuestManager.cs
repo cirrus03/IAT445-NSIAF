@@ -111,6 +111,11 @@ public class QuestManager : MonoBehaviour
 
             Debug.Log($"Quest complete: {currentQuestId}");
 
+            if (GameProgress.Instance != null)
+            {
+                GameProgress.Instance.SetObjective("Talk to Crow");
+            }
+
             if (QuestCompletePopup.Instance != null)
             {
                 QuestCompletePopup.Instance.Show("Quest Completed");
