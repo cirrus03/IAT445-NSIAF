@@ -7,9 +7,15 @@ public class SceneFader : MonoBehaviour
 {
     public Image image;
     public TextMeshProUGUI fadeText;
+    public static SceneFader Instance;
+    public bool isFading { get; private set; }
     [SerializeField] private bool fadeOnStart = false;
     [SerializeField] private float startFadeDuration = 1.5f;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
         if (fadeOnStart)
@@ -63,6 +69,7 @@ public class SceneFader : MonoBehaviour
 
     IEnumerator FadeInRoutine(float duration)
     {
+        isFading = true;
         float t = 0;
         Color c = image.color;
 
@@ -76,6 +83,7 @@ public class SceneFader : MonoBehaviour
 
         c.a = 0;
         image.color = c;
+        isFading = false;
     }
 
     public void FadeToBlack(float duration)
@@ -85,6 +93,7 @@ public class SceneFader : MonoBehaviour
 
     IEnumerator FadeToBlackRoutine(float duration)
     {
+        isFading = true;
         float t = 0;
         Color c = image.color;
 
