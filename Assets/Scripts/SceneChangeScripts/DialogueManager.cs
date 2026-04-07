@@ -23,6 +23,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private SceneFader sceneFader;
     [SerializeField] private GameObject sceneSprite;
     [SerializeField] private GameObject nozomiHappy;
+    [SerializeField] private GameObject nozomiNeutral;
     [SerializeField] private GameObject kazumiSprite;
     [SerializeField] private GameObject kazumiCheer;
     [SerializeField] private GameObject foxSprite;
@@ -65,9 +66,15 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
+        foreach (GameObject choice in choices)
+        {
+            if (choice != null)
+                choice.SetActive(false);
+        }
         if (continueArrow != null) continueArrow.SetActive(false);
         if (sceneSprite != null) sceneSprite.SetActive(false);
         if (nozomiHappy != null) nozomiHappy.SetActive(false);
+        if (nozomiNeutral != null) nozomiNeutral.SetActive(false);
         if (kazumiSprite != null) kazumiSprite.SetActive(false);
         if (kazumiCheer != null) kazumiCheer.SetActive(false);
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
@@ -90,6 +97,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (PauseMenu.isPaused) return;
         if (!dialogueIsPlaying) return;
+        if (currentStory.currentChoices.Count > 0) return;
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
         {
             if (isDowntimeLine)
@@ -155,7 +163,7 @@ public class DialogueManager : MonoBehaviour
 
             if (dialogueText != null)
                 dialogueText.text = text;
-            // DisplayChoices();
+            DisplayChoices();
         }
         else
         {
@@ -167,7 +175,6 @@ public class DialogueManager : MonoBehaviour
     {
         foreach (string tag in tags)
         {
-
             if (tag == "nextlevel")
             {
                 if (SceneControl.instance != null)
@@ -187,6 +194,7 @@ public class DialogueManager : MonoBehaviour
                 if (kazumiCheer != null) kazumiCheer.SetActive(false);
                 if (sceneSprite != null) sceneSprite.SetActive(false);
                 if (nozomiHappy != null) nozomiHappy.SetActive(false);
+                if (nozomiNeutral != null) nozomiNeutral.SetActive(false);
             }
 
             if (tag == "kazumihappy")
@@ -194,6 +202,7 @@ public class DialogueManager : MonoBehaviour
                 if (kazumiCheer != null) kazumiCheer.SetActive(true);
                 if (sceneSprite != null) sceneSprite.SetActive(false);
                 if (nozomiHappy != null) nozomiHappy.SetActive(false);
+                if (nozomiNeutral != null) nozomiNeutral.SetActive(false);
                 if (kazumiSprite != null) kazumiSprite.SetActive(false);
             }
 
@@ -201,6 +210,7 @@ public class DialogueManager : MonoBehaviour
             {
                 if (sceneSprite != null) sceneSprite.SetActive(true);
                 if (nozomiHappy != null) nozomiHappy.SetActive(false);
+                if (nozomiNeutral != null) nozomiNeutral.SetActive(false);
                 if (kazumiSprite != null) kazumiSprite.SetActive(false);
                 if (kazumiCheer != null) kazumiCheer.SetActive(false);
                 if (crowSprite != null) crowSprite.SetActive(false);
@@ -212,6 +222,16 @@ public class DialogueManager : MonoBehaviour
             if (tag == "nozomihappy")
             {
                 if (nozomiHappy != null) nozomiHappy.SetActive(true);
+                if (nozomiNeutral != null) nozomiNeutral.SetActive(false);
+                if (sceneSprite != null) sceneSprite.SetActive(false);
+                if (kazumiSprite != null) kazumiSprite.SetActive(false);
+                if (kazumiCheer != null) kazumiCheer.SetActive(false);
+            }
+
+            if (tag == "nozomineutral")
+            {
+                if (nozomiHappy != null) nozomiHappy.SetActive(false);
+                if (nozomiNeutral != null) nozomiNeutral.SetActive(true);
                 if (sceneSprite != null) sceneSprite.SetActive(false);
                 if (kazumiSprite != null) kazumiSprite.SetActive(false);
                 if (kazumiCheer != null) kazumiCheer.SetActive(false);
@@ -221,6 +241,7 @@ public class DialogueManager : MonoBehaviour
             {
                 if (sceneSprite != null) sceneSprite.SetActive(false);
                 if (nozomiHappy != null) nozomiHappy.SetActive(false);
+                if (nozomiNeutral != null) nozomiNeutral.SetActive(false);
                 if (kazumiSprite != null) kazumiSprite.SetActive(false);
                 if (kazumiCheer != null) kazumiCheer.SetActive(false);
                 if (crowSprite != null) crowSprite.SetActive(true);
@@ -265,6 +286,7 @@ public class DialogueManager : MonoBehaviour
 
                 if (sceneSprite != null) sceneSprite.SetActive(false);
                 if (nozomiHappy != null) nozomiHappy.SetActive(false);
+                if (nozomiNeutral != null) nozomiNeutral.SetActive(false);
                 if (kazumiSprite != null) kazumiSprite.SetActive(false);
                 if (kazumiCheer != null) kazumiCheer.SetActive(false);
                 if (crowSprite != null) crowSprite.SetActive(true);
@@ -396,6 +418,28 @@ public class DialogueManager : MonoBehaviour
                 if (levelExitPortal != null)
                     levelExitPortal.SetActive(true);
             }
+
+            if (tag.StartsWith("setMood:"))
+            {
+                string mood = tag.Split(':')[1].ToLower();
+
+                switch (mood)
+                {
+                    case "happy":
+                        GameProgress.Instance.SetPlayerMood(GameProgress.MoodState.Happy);
+                        break;
+                    case "sad":
+                        GameProgress.Instance.SetPlayerMood(GameProgress.MoodState.Sad);
+                        break;
+                    case "angry":
+                        GameProgress.Instance.SetPlayerMood(GameProgress.MoodState.Angry);
+                        break;
+                    default:
+                        GameProgress.Instance.SetPlayerMood(GameProgress.MoodState.Neutral);
+                        break;
+                }
+                Debug.Log("Mood tag received: " + tag);
+            }
         }
     }
 
@@ -487,5 +531,6 @@ public class DialogueManager : MonoBehaviour
     public void MakeChoice(int ChoiceIndex)
     {
         currentStory.ChooseChoiceIndex(ChoiceIndex);
+        ContinueStory();
     }
 }

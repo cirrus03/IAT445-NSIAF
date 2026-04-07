@@ -10,7 +10,7 @@ public class PlayerMoveSS : MonoBehaviour
     private Vector2 movement;
     void Update()
     {
-        if (DialogueManager.GetInstance().dialogueIsPlaying)
+        if (DialogueManager.GetInstance().dialogueIsPlaying || (SceneFader.Instance != null && SceneFader.Instance.isFading))
         {
             animator.SetBool("isWalking", false);
             return;
