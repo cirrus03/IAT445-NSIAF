@@ -176,6 +176,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6afb583f699280a48801c23edb0f0a0b, type: 3}
+--- !u!1 &65773216 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 291766274948151623, guid: 730d832921f599e48968f32d5f568b58, type: 3}
+  m_PrefabInstance: {fileID: 386690491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &68440577
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,6 +475,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 155914495}
+  - component: {fileID: 155914497}
+  - component: {fileID: 155914496}
+  - component: {fileID: 155914498}
   m_Layer: 16
   m_Name: Boss
   m_TagString: Enemy
@@ -493,6 +501,86 @@ Transform:
   - {fileID: 1133040362}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &155914496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155914494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.BehaviorGraphAgent
+  m_Graph: {fileID: 3459905058717093328, guid: b4dcb595d3225514fb8877a96be9ec7e, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 3319857882367525325
+  - rid: 3319857882367525326
+  - rid: 3319857882367525686
+  - rid: 3319857882367525769
+  m_OriginalGraph: {fileID: 0}
+  m_IsInitialised: 0
+  m_IsStarted: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 3319857882367525325
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 155914494}
+    - rid: 3319857882367525326
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1638054527205859847
+          m_Value1: 18310433755459459389
+        Name: Target
+        m_Value: {fileID: 65773216}
+    - rid: 3319857882367525686
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Animator, UnityEngine.AnimationModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 6186808639963032433
+          m_Value1: 7753391781717530275
+        Name: Boss_animator
+        m_Value: {fileID: 1133040364}
+    - rid: 3319857882367525769
+      type: {class: 'BlackboardVariable`1[[BossStateMachine, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 13033953924374194338
+          m_Value1: 10296788275268463757
+        Name: New Boss State Machine
+        m_Value: {fileID: 155914497}
+--- !u!114 &155914497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155914494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b37d0cf40370ad43ac4238d5a12d399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!114 &155914498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155914494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d30e4fc6a70a0e14f9410e4d3a09ebdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &192081845
 GameObject:
   m_ObjectHideFlags: 0
@@ -5843,7 +5931,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 15989277922337540, guid: 730d832921f599e48968f32d5f568b58, type: 3}
   m_PrefabInstance: {fileID: 386690491}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 65773216}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6dec342845702f34dbeb41d14d237bd1, type: 3}
@@ -5854,7 +5942,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
   m_PrefabInstance: {fileID: 386690491}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 65773216}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b849d522e35af6c48a4e9073d1902fa6, type: 3}
@@ -142378,7 +142466,7 @@ Transform:
   m_GameObject: {fileID: 1739796375}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -87.805405, y: -42.200245, z: -10}
+  m_LocalPosition: {x: -88.258026, y: -42.19025, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
