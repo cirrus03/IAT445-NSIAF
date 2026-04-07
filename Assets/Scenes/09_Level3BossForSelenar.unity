@@ -577,7 +577,7 @@ MonoBehaviour:
           m_Value0: 6573889848271437387
           m_Value1: 13249828201171434456
         Name: flyRange
-        m_Value: 17
+        m_Value: 20
     - rid: 3319857887834276707
       type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -599,12 +599,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   player: {fileID: 386690492}
-  moveSpeed: 3
-  dashSpeed: 12
+  moveSpeed: 5
+  dashSpeed: 20
   dashDuration: 0.2
   dashCooldown: 2
   flySpeed: 15
-  flyDuration: 1
+  flyDuration: 5
   flyCooldown: 4
 --- !u!114 &155914498
 MonoBehaviour:
