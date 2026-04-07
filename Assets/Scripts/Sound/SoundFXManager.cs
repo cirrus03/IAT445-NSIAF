@@ -122,6 +122,9 @@ public class SoundFXManager : MonoBehaviour
             case "06_Level2Fox":
                 currentLevelBGM = levelBGM_SelfDoubt;
                 break;
+            case "08_Level3Self":
+                currentLevelBGM = levelBGM_SelfDoubt;
+                break;
                 // add more eventually here
                 // case "Thumthing":
                 //     currentLevelBGM = levelBGM_Whatever;
