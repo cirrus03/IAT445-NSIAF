@@ -100,6 +100,8 @@ public class MainMenu : MonoBehaviour
             return;
         }
 
+        SaveSystem.SetPendingLoadData(data);
+
         if (GameProgress.Instance != null)
         {
             GameProgress.Instance.ApplySaveData(data);

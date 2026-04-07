@@ -113,17 +113,17 @@ public class SoundFXManager : MonoBehaviour
 
         switch (sceneName)
         {
-            case "MainMenu":
+            case "02_MainMenu":
                 currentLevelBGM = menuBGM;
                 break;
-            case "LabAreaClone":
+            case "04_Level1Crow":
                 currentLevelBGM = levelBGM_0;
                 break;
-            case "Level1SelfDoubt":
+            case "06_Level2Fox":
                 currentLevelBGM = levelBGM_SelfDoubt;
                 break;
                 // add more eventually here
-                // case "Level2Confusion":
+                // case "Thumthing":
                 //     currentLevelBGM = levelBGM_Whatever;
                 //     break;
         }

@@ -6,6 +6,8 @@ public static class SaveSystem
 {
     private static string SavePath => Path.Combine(Application.persistentDataPath, "save.json");
 
+    public static SaveData PendingLoadData { get; private set; }
+
     public static void SaveGame()
     {
         if (GameProgress.Instance == null)
@@ -15,16 +17,43 @@ public static class SaveSystem
         }
 
         SaveData data = new SaveData();
+
+        // scene
         data.sceneName = SceneManager.GetActiveScene().name;
+
+        // GameProgress
         data.questStage = GameProgress.Instance.currentQuestStage;
         data.dashUnlocked = GameProgress.Instance.dashUnlocked;
         data.wallJumpUnlocked = GameProgress.Instance.wallJumpUnlocked;
         data.doubleJumpUnlocked = GameProgress.Instance.doubleJumpUnlocked;
+
         data.level2QuestStage = GameProgress.Instance.level2QuestStage;
         data.level2LampAcquired = GameProgress.Instance.level2LampAcquired;
         data.level2PowerRestored = GameProgress.Instance.level2PowerRestored;
         data.level2BugQuestStarted = GameProgress.Instance.level2BugQuestStarted;
         data.level2BugQuestComplete = GameProgress.Instance.level2BugQuestComplete;
+        data.level2BugKillsCurrent = GameProgress.Instance.level2BugKillsCurrent;
+
+        data.playerMood = GameProgress.Instance.playerMood;
+        data.scene3DoorKeyCollected = GameProgress.Instance.scene3DoorKeyCollected;
+
+        // QuestManager
+        if (QuestManager.Instance != null)
+        {
+            data.currentQuest = QuestManager.Instance.currentQuest;
+            data.questActive = QuestManager.Instance.questActive;
+            data.questComplete = QuestManager.Instance.questComplete;
+            data.currentAmount = QuestManager.Instance.currentAmount;
+            data.requiredAmount = QuestManager.Instance.requiredAmount;
+            data.currentQuestId = QuestManager.Instance.currentQuestId;
+            data.currentQuestName = QuestManager.Instance.currentQuestName;
+        }
+
+        // checkpoint
+        if (CheckpointManager.Instance != null && CheckpointManager.Instance.GetCurrentCheckpoint() != null)
+        {
+            data.checkpointId = CheckpointManager.Instance.GetCurrentCheckpoint().CheckpointID;
+        }
 
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(SavePath, json);
@@ -42,8 +71,17 @@ public static class SaveSystem
 
         string json = File.ReadAllText(SavePath);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
-
         return data;
+    }
+
+    public static void SetPendingLoadData(SaveData data)
+    {
+        PendingLoadData = data;
+    }
+
+    public static void ClearPendingLoadData()
+    {
+        PendingLoadData = null;
     }
 
     public static bool HasSave()
@@ -58,5 +96,7 @@ public static class SaveSystem
             File.Delete(SavePath);
             Debug.Log("Save deleted.");
         }
+
+        PendingLoadData = null;
     }
 }
