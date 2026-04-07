@@ -77,7 +77,10 @@ public class FoxQuestGiver : MonoBehaviour
         // bug quest state
         if (bugQuestGroup != null && GameProgress.Instance.level2BugQuestStarted)
         {
-            bugQuestGroup.BeginQuest();
+            bugQuestGroup.RestoreQuestProgress(
+                GameProgress.Instance.level2BugKillsCurrent,
+                GameProgress.Instance.level2BugQuestComplete
+            );
         }
 
         // restoring objective text based on saved stage
@@ -96,7 +99,11 @@ public class FoxQuestGiver : MonoBehaviour
                 break;
 
             case 3:
-                if (bugQuestGroup != null)
+                if (GameProgress.Instance.level2BugQuestComplete)
+                {
+                    GameProgress.Instance.SetObjective("Talk to Fox");
+                }
+                else if (bugQuestGroup != null)
                 {
                     GameProgress.Instance.SetObjective(
                         "Clear the attic bugs",
@@ -165,10 +172,16 @@ public class FoxQuestGiver : MonoBehaviour
         {
             if (bugQuestGroup != null && !bugQuestGroup.IsComplete)
             {
+                GameProgress.Instance.SetObjective(
+                    "Clear the attic bugs",
+                    bugQuestGroup.CurrentKilled + " / " + bugQuestGroup.RequiredKills
+                );
+
                 PlayDowntimeDialogue(downtimeLines2);
             }
             else
             {
+                GameProgress.Instance.SetObjective("Talk to Fox");
                 dm.EnterDialogueMode(inkJSON, "secondtask_bugscleared");
             }
             return;

@@ -126,10 +126,40 @@ public class QuestManager : MonoBehaviour
         requiredAmount = 0;
         questActive = false;
         questComplete = true;
-        
+
         if (GameProgress.Instance != null)
         {
             GameProgress.Instance.ClearObjective();
+        }
+    }
+
+    public void ApplySaveData(SaveData data)
+    {
+        if (data == null) return;
+
+        currentQuest = data.currentQuest;
+        questActive = data.questActive;
+        questComplete = data.questComplete;
+
+        currentAmount = data.currentAmount;
+        requiredAmount = data.requiredAmount;
+        currentQuestId = data.currentQuestId;
+        currentQuestName = data.currentQuestName;
+
+        if (GameProgress.Instance != null)
+        {
+            if (!questActive)
+            {
+                GameProgress.Instance.ClearObjective();
+            }
+            else if (questComplete)
+            {
+                GameProgress.Instance.SetObjective("Talk to Crow");
+            }
+            else
+            {
+                GameProgress.Instance.SetObjective(currentQuestName, currentAmount + " / " + requiredAmount);
+            }
         }
     }
 }

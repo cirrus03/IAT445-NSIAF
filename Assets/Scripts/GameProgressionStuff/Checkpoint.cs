@@ -5,6 +5,9 @@ public class Checkpoint : MonoBehaviour
     [Header("Respawn Point")]
     [SerializeField] private Transform respawnPoint;
 
+    [SerializeField] private string checkpointID;
+    public string CheckpointID => checkpointID;
+
     public void ActivateCheckpoint()
     {
         if (CheckpointManager.Instance == null)

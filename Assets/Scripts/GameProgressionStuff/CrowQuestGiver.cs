@@ -36,7 +36,10 @@ public class CrowQuestGiver : MonoBehaviour
 };
 
     [SerializeField] private TutorialEnemyRespawner tutorialEnemyRespawner;
-
+    private void Start()
+    {
+        RestoreLevel1ObjectiveFromProgress();
+    }
     private void Update()
     {
         if (PauseMenu.isPaused)
@@ -60,7 +63,6 @@ public class CrowQuestGiver : MonoBehaviour
             Interact();
         }
     }
-
     void UpdateIndicators()
     {
         if (GameProgress.Instance == null || QuestManager.Instance == null)
@@ -87,7 +89,10 @@ public class CrowQuestGiver : MonoBehaviour
         else if (qm.questActive)
         {
             if (qm.questComplete)
+            {
                 showComplete = true;
+                GameProgress.Instance.SetObjective("Talk to Crow");
+            }
             else
                 showInProgress = true;
         }
@@ -152,7 +157,7 @@ public class CrowQuestGiver : MonoBehaviour
             if (qm.questActive && !qm.questComplete)
             {
                 PlayDowntimeDialogue(downtimeLines1);
-            } 
+            }
             else
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "firsttaskdone");
@@ -192,6 +197,41 @@ public class CrowQuestGiver : MonoBehaviour
         if (stage >= 4)
         {
             DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "lasttaskdone");
+        }
+    }
+
+    private void RestoreLevel1ObjectiveFromProgress()
+    {
+        if (GameProgress.Instance == null || QuestManager.Instance == null)
+            return;
+
+        int stage = GameProgress.Instance.currentQuestStage;
+        QuestManager qm = QuestManager.Instance;
+
+        if (qm.questActive && qm.questComplete)
+        {
+            GameProgress.Instance.SetObjective("Talk to Crow");
+            return;
+        }
+
+        switch (stage)
+        {
+            case 0:
+                GameProgress.Instance.ClearObjective();
+                break;
+
+            case 1:
+            case 2:
+            case 3:
+                if (qm.questActive)
+                    GameProgress.Instance.SetObjective("Complete the task");
+                else
+                    GameProgress.Instance.SetObjective("Talk to Crow");
+                break;
+
+            case 4:
+                GameProgress.Instance.SetObjective("Enter the portal");
+                break;
         }
     }
 
