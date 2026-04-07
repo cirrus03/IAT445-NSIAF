@@ -58,6 +58,6 @@ public class DeathScreenUI : MonoBehaviour
 
         Time.timeScale = 1f;
         IsDeathScreenOpen = false;
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("02_MainMenu");
     }
 }

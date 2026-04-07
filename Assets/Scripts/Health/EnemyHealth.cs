@@ -152,6 +152,24 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         }
     }
 
+    public void ResetEnemyState()
+    {
+        currentHealth = startingHealth;
+        isDying = false;
+
+        if (sr != null)
+        {
+            sr.color = originalColor;
+            sr.sprite = originalSprite;
+        }
+
+        if (flashRoutine != null)
+        {
+            StopCoroutine(flashRoutine);
+            flashRoutine = null;
+        }
+    }
+
     IEnumerator DieRoutine()
     {
         // stop all movement
@@ -187,8 +205,13 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             else sr.color = Color.red;
         }
         TrySpawnHealthDrop();
+        
         yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
+
+        if (GetComponent<EnemyResettable>() != null)
+            gameObject.SetActive(false);
+        else
+            Destroy(gameObject);
     }
 
     IEnumerator FlashDamage()
