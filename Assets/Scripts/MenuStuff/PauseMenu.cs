@@ -40,7 +40,8 @@ public class PauseMenu : MonoBehaviour
     {
         if (DeathScreenUI.IsDeathScreenOpen)
             return;
-
+        if (IsDialogueOpen())
+            return;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!isPaused)
