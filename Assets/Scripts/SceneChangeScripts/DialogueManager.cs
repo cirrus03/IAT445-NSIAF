@@ -48,6 +48,7 @@ public class DialogueManager : MonoBehaviour
     private bool isDowntimeLine = false;
     private string simpleText;
     private static DialogueManager instance;
+    private bool frozeWorldForDialogue = false;
 
     private void Awake()
     {
@@ -120,7 +121,7 @@ public class DialogueManager : MonoBehaviour
 
         dialogueIsPlaying = true;
         dialogueFinished = false;
-
+        FreezeWorldForDialogue();
         dialoguePanel.SetActive(true);
         ContinueStory();
     }
@@ -132,6 +133,9 @@ public class DialogueManager : MonoBehaviour
         isDowntimeLine = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+
+        UnfreezeWorldAfterDialogue();
+
         if (sceneSprite != null) sceneSprite.SetActive(false);
         if (foxSprite != null) foxSprite.SetActive(false);
         if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
@@ -404,6 +408,8 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = true;
         dialogueFinished = false;
 
+        FreezeWorldForDialogue();
+
         isDowntimeLine = true;
         simpleText = line;
 
@@ -487,5 +493,23 @@ public class DialogueManager : MonoBehaviour
     public void MakeChoice(int ChoiceIndex)
     {
         currentStory.ChooseChoiceIndex(ChoiceIndex);
+    }
+
+    private void FreezeWorldForDialogue()
+    {
+        if (!PauseMenu.isPaused)
+        {
+            Time.timeScale = 0f;
+            frozeWorldForDialogue = true;
+        }
+    }
+
+    private void UnfreezeWorldAfterDialogue()
+    {
+        if (frozeWorldForDialogue)
+        {
+            Time.timeScale = 1f;
+            frozeWorldForDialogue = false;
+        }
     }
 }
