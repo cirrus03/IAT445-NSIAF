@@ -139,7 +139,7 @@ public class QuestManager : MonoBehaviour
             {
                 QuestCompletePopup.Instance.Show("Quest Completed");
             }
-            
+
             PlayCompletionDialogue();
         }
     }
@@ -170,7 +170,7 @@ public class QuestManager : MonoBehaviour
                 break;
         }
 
-        dm.PlayDowntimeDialogue(line, Speaker.Nozomi);
+        dm.PlayTimedDowntimeDialogue(line, Speaker.Nozomi);
     }
 
     public void ApplySaveData(SaveData data)

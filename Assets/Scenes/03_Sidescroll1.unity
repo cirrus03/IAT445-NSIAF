@@ -3023,6 +3023,7 @@ MonoBehaviour:
   choices:
   - {fileID: 1530543714}
   - {fileID: 663338090}
+  freezeGameplayDuringDialogue: 0
 --- !u!1 &1502177094
 GameObject:
   m_ObjectHideFlags: 0
@@ -3874,6 +3875,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 317560341}
   - {fileID: 1747394995}
   - {fileID: 1202211152}
   - {fileID: 426620046}
@@ -3884,7 +3886,6 @@ RectTransform:
   - {fileID: 1124118056}
   - {fileID: 1826295564}
   - {fileID: 939053649}
-  - {fileID: 317560341}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

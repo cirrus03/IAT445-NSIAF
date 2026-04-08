@@ -16,6 +16,7 @@ public class SceneFader : MonoBehaviour
     {
         Instance = this;
     }
+
     private void Start()
     {
         if (fadeOnStart)
@@ -27,6 +28,7 @@ public class SceneFader : MonoBehaviour
             FadeIn(startFadeDuration);
         }
     }
+
     public void FadeIn(float duration)
     {
         StartCoroutine(FadeInRoutine(duration));
@@ -57,7 +59,7 @@ public class SceneFader : MonoBehaviour
         t = 0;
         while (t < fadeOutTime)
         {
-            t += Time.deltaTime;
+            t += Time.unscaledDeltaTime;
             c.a = 1 - (t / fadeOutTime);
             fadeText.color = c;
             yield return null;
@@ -99,7 +101,7 @@ public class SceneFader : MonoBehaviour
 
         while (t < duration)
         {
-            t += Time.unscaledDeltaTime;    
+            t += Time.unscaledDeltaTime;
             c.a = t / duration;
             image.color = c;
             yield return null;
@@ -107,7 +109,6 @@ public class SceneFader : MonoBehaviour
 
         c.a = 1;
         image.color = c;
+        isFading = false;
     }
-
-
 }

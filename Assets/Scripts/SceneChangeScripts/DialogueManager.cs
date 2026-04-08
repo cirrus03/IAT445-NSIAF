@@ -54,6 +54,16 @@ public class DialogueManager : MonoBehaviour
     private static DialogueManager instance;
     private bool frozeWorldForDialogue = false;
 
+    [Header("Dialogue Freeze")]
+    [SerializeField] private bool freezeGameplayDuringDialogue = false;
+
+    [Header("Popup Text")]
+    [SerializeField] private CanvasGroup dialogueCanvasGroup;
+    [SerializeField] private float timedPopupDuration = 1.6f;
+    [SerializeField] private float timedPopupFadeOutTime = 0.6f;
+
+    private Coroutine timedPopupRoutine;
+
     private void Awake()
     {
         if (instance != null)
@@ -70,6 +80,9 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
+        frozeWorldForDialogue = false;
+
         foreach (GameObject choice in choices)
         {
             if (choice != null)
@@ -450,6 +463,67 @@ public class DialogueManager : MonoBehaviour
             spriteToShow.SetActive(true);
     }
 
+    public void PlayTimedDowntimeDialogue(string line, Speaker speaker = Speaker.None)
+    {
+        if (timedPopupRoutine != null)
+        {
+            StopCoroutine(timedPopupRoutine);
+        }
+
+        timedPopupRoutine = StartCoroutine(PlayTimedDowntimeDialogueRoutine(line, speaker));
+    }
+
+    private IEnumerator PlayTimedDowntimeDialogueRoutine(string line, Speaker speaker)
+    {
+        dialogueIsPlaying = false;
+        dialogueFinished = false;
+        isDowntimeLine = false;
+
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(true);
+
+        if (dialogueText != null)
+            dialogueText.text = line;
+
+        HideAllSprites();
+
+        GameObject spriteToShow = GetSpeaker(speaker);
+        if (spriteToShow != null)
+            spriteToShow.SetActive(true);
+
+        if (dialogueCanvasGroup != null)
+            dialogueCanvasGroup.alpha = 1f;
+
+        yield return new WaitForSeconds(timedPopupDuration);
+
+        float t = 0f;
+
+        if (dialogueCanvasGroup != null)
+        {
+            while (t < timedPopupFadeOutTime)
+            {
+                t += Time.deltaTime;
+                dialogueCanvasGroup.alpha = 1f - (t / timedPopupFadeOutTime);
+                yield return null;
+            }
+
+            dialogueCanvasGroup.alpha = 0f;
+        }
+
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
+
+        if (dialogueText != null)
+            dialogueText.text = "";
+
+        HideAllSprites();
+
+        if (dialogueCanvasGroup != null)
+            dialogueCanvasGroup.alpha = 1f;
+
+        timedPopupRoutine = null;
+    }
+
     private void HideAllSprites()
     {
         if (kazumiSprite != null) kazumiSprite.SetActive(false);
@@ -531,6 +605,10 @@ public class DialogueManager : MonoBehaviour
     private IEnumerator NextLevelTransition(string transitionText)
     {
         dialoguePanel.SetActive(false);
+        UnfreezeWorldAfterDialogue();
+        dialogueIsPlaying = false;
+        dialogueFinished = true;
+        isDowntimeLine = false;
 
         if (sceneFader != null)
             sceneFader.FadeToBlack(0.3f);
@@ -542,11 +620,16 @@ public class DialogueManager : MonoBehaviour
                 sceneFader.FadeTextRoutine(transitionText, 1f, 2f, 1f)
             );
         }
+
+        Time.timeScale = 1f;
         SceneControl.instance.NextLevel();
     }
 
     private void FreezeWorldForDialogue()
     {
+        if (!freezeGameplayDuringDialogue)
+            return;
+
         if (!PauseMenu.isPaused)
         {
             Time.timeScale = 0f;
