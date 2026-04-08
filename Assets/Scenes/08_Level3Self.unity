@@ -4547,15 +4547,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: noJumpsLeftColor.b
-      value: 0.63857245
+      value: 0.81960785
       objectReference: {fileID: 0}
     - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: noJumpsLeftColor.g
-      value: 0.63857245
+      value: 0.49803922
       objectReference: {fileID: 0}
     - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: noJumpsLeftColor.r
-      value: 0.7735849
+      value: 0.40784314
       objectReference: {fileID: 0}
     - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: fallSpeedMultiplier
@@ -143971,6 +143971,9 @@ MonoBehaviour:
   tutorialEnemyRespawner: {fileID: 0}
   choices: []
   freezeGameplayDuringDialogue: 1
+  dialogueCanvasGroup: {fileID: 0}
+  timedPopupDuration: 1.6
+  timedPopupFadeOutTime: 0.6
 --- !u!4 &1826644576
 Transform:
   m_ObjectHideFlags: 0

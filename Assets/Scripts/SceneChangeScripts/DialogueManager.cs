@@ -57,6 +57,13 @@ public class DialogueManager : MonoBehaviour
     [Header("Dialogue Freeze")]
     [SerializeField] private bool freezeGameplayDuringDialogue = false;
 
+    [Header("Popup Text")]
+    [SerializeField] private CanvasGroup dialogueCanvasGroup;
+    [SerializeField] private float timedPopupDuration = 1.6f;
+    [SerializeField] private float timedPopupFadeOutTime = 0.6f;
+
+    private Coroutine timedPopupRoutine;
+
     private void Awake()
     {
         if (instance != null)
@@ -75,7 +82,7 @@ public class DialogueManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         frozeWorldForDialogue = false;
-        
+
         foreach (GameObject choice in choices)
         {
             if (choice != null)
@@ -454,6 +461,67 @@ public class DialogueManager : MonoBehaviour
         GameObject spriteToShow = GetSpeaker(speaker);
         if (spriteToShow != null)
             spriteToShow.SetActive(true);
+    }
+
+    public void PlayTimedDowntimeDialogue(string line, Speaker speaker = Speaker.None)
+    {
+        if (timedPopupRoutine != null)
+        {
+            StopCoroutine(timedPopupRoutine);
+        }
+
+        timedPopupRoutine = StartCoroutine(PlayTimedDowntimeDialogueRoutine(line, speaker));
+    }
+
+    private IEnumerator PlayTimedDowntimeDialogueRoutine(string line, Speaker speaker)
+    {
+        dialogueIsPlaying = false;
+        dialogueFinished = false;
+        isDowntimeLine = false;
+
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(true);
+
+        if (dialogueText != null)
+            dialogueText.text = line;
+
+        HideAllSprites();
+
+        GameObject spriteToShow = GetSpeaker(speaker);
+        if (spriteToShow != null)
+            spriteToShow.SetActive(true);
+
+        if (dialogueCanvasGroup != null)
+            dialogueCanvasGroup.alpha = 1f;
+
+        yield return new WaitForSeconds(timedPopupDuration);
+
+        float t = 0f;
+
+        if (dialogueCanvasGroup != null)
+        {
+            while (t < timedPopupFadeOutTime)
+            {
+                t += Time.deltaTime;
+                dialogueCanvasGroup.alpha = 1f - (t / timedPopupFadeOutTime);
+                yield return null;
+            }
+
+            dialogueCanvasGroup.alpha = 0f;
+        }
+
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
+
+        if (dialogueText != null)
+            dialogueText.text = "";
+
+        HideAllSprites();
+
+        if (dialogueCanvasGroup != null)
+            dialogueCanvasGroup.alpha = 1f;
+
+        timedPopupRoutine = null;
     }
 
     private void HideAllSprites()
