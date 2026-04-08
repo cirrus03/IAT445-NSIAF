@@ -686,7 +686,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1768, y: 423}
+  m_AnchoredPosition: {x: 1814, y: 339}
   m_SizeDelta: {x: 800, y: 380}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &659199964
@@ -1219,8 +1219,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1381,7 +1381,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 571, y: -344.0006}
+  m_AnchoredPosition: {x: 525, y: -338}
   m_SizeDelta: {x: 499.7342, y: 210.413}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1017166077
@@ -1431,8 +1431,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1470,7 +1470,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -16.504446, y: -32.767887, z: 281.8353, w: 178.94795}
+  m_margin: {x: -16.504446, y: -32.767887, z: 255.4297, w: 178.94795}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2519,9 +2519,14 @@ MonoBehaviour:
   sceneFader: {fileID: 949206867}
   sceneSprite: {fileID: 1395746617}
   nozomiHappy: {fileID: 1888210783}
+  nozomiNeutral: {fileID: 0}
+  nozomiAngry: {fileID: 0}
   kazumiSprite: {fileID: 1794076159}
   kazumiCheer: {fileID: 0}
+  kazumiPuppyeyes: {fileID: 0}
+  kazumiNeutral: {fileID: 0}
   foxSprite: {fileID: 0}
+  altFoxSprite: {fileID: 0}
   continueArrow: {fileID: 0}
   crowSprite: {fileID: 0}
   crowAnimator: {fileID: 0}
@@ -2726,7 +2731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1639266795
 MonoBehaviour:
   m_ObjectHideFlags: 0
