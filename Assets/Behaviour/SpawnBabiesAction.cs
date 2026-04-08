@@ -5,8 +5,8 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "EndSignatureAction", story: "[Boss] ends signature attack", category: "Action", id: "969d5033807bb61336e875c3a2f769b0")]
-public partial class EndSignatureAction : Action
+[NodeDescription(name: "SpawnBabies", story: "[Boss] spawns babies", category: "Action", id: "c73e0e9e17799173841b12b20ae4af00")]
+public partial class SpawnBabiesAction : Action
 {
     [SerializeReference] public BlackboardVariable<BossStateMachine> Boss;
 
@@ -17,14 +17,13 @@ public partial class EndSignatureAction : Action
 
     protected override Status OnUpdate()
     {   
-        Debug.Log("end signature");
-        Boss.Value.EndSignatureAttack();
+        Debug.Log("spawning minions");
+        Boss.Value.SpawnMinions();
         return Status.Success;
     }
 
     protected override void OnEnd()
     {
-        Debug.Log("signatre ended");
     }
 }
 
