@@ -116710,8 +116710,8 @@ MonoBehaviour:
   arrivalPoint: {fileID: 1027806644}
   requiresKey: 0
   lockedMessage: It's locked. I need a key.
-  interactMessage: Press E to enter.
-  interactKey: 101
+  interactMessage: Press F to enter.
+  interactKey: 102
   teleportCooldown: 0.35
 --- !u!61 &1144352891
 BoxCollider2D:
@@ -136913,8 +136913,8 @@ MonoBehaviour:
   arrivalPoint: {fileID: 1446627471}
   requiresKey: 1
   lockedMessage: It's locked. I need a key.
-  interactMessage: Press E to enter.
-  interactKey: 101
+  interactMessage: Press F to enter.
+  interactKey: 102
   teleportCooldown: 0.35
 --- !u!61 &1440501017
 BoxCollider2D:
@@ -149152,9 +149152,9 @@ SceneRoots:
   - {fileID: 1440501015}
   - {fileID: 1144352893}
   - {fileID: 562950953}
-  - {fileID: 1451408763}
   - {fileID: 452821476}
   - {fileID: 792419710}
   - {fileID: 986135407}
   - {fileID: 2065478113}
   - {fileID: 521104623}
+  - {fileID: 1451408763}

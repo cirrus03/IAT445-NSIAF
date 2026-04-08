@@ -94,7 +94,7 @@ public class CrowQuestGiver : MonoBehaviour
             if (qm.questComplete)
             {
                 showComplete = true;
-                GameProgress.Instance.SetObjective("Talk to Crow");
+                GameProgress.Instance.SetObjective("Check in with Professor");
             }
             else
             {
@@ -165,7 +165,7 @@ public class CrowQuestGiver : MonoBehaviour
             }
             else
             {
-                GameProgress.Instance.SetObjective("Talk to Crow");
+                GameProgress.Instance.SetObjective("Check in with Professor");
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "firsttaskdone");
             }
             return;
@@ -180,7 +180,7 @@ public class CrowQuestGiver : MonoBehaviour
             }
             else
             {
-                GameProgress.Instance.SetObjective("Talk to Crow");
+                GameProgress.Instance.SetObjective("Check in with Professor");
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "secondtaskdone");
             }
             return;
@@ -195,7 +195,7 @@ public class CrowQuestGiver : MonoBehaviour
             }
             else
             {
-                GameProgress.Instance.SetObjective("Talk to Crow");
+                GameProgress.Instance.SetObjective("Check in with Professor");
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "lasttaskdone");
             }
             return;
@@ -219,14 +219,14 @@ public class CrowQuestGiver : MonoBehaviour
 
         if (qm.questActive && qm.questComplete)
         {
-            GameProgress.Instance.SetObjective("Talk to Crow");
+            GameProgress.Instance.SetObjective("Check in with Professor");
             return;
         }
 
         switch (stage)
         {
             case 0:
-                GameProgress.Instance.ClearObjective();
+                GameProgress.Instance.SetObjective("Find Professor");
                 break;
 
             case 1:
@@ -235,7 +235,7 @@ public class CrowQuestGiver : MonoBehaviour
                 if (qm.questActive)
                     GameProgress.Instance.SetObjective(qm.currentQuestName, qm.currentAmount + " / " + qm.requiredAmount);
                 else
-                    GameProgress.Instance.SetObjective("Talk to Crow");
+                    GameProgress.Instance.SetObjective("Talk to Professor");
                 break;
 
             case 4:
