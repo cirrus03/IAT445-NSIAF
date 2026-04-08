@@ -24,9 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/06_Level2Fox.unity
     guid: b6615e389bc0d7548aef1a3027a399bb
   - enabled: 1
-    path: Assets/Scenes/07_Sidescroll3.unity
-    guid: 152468c4e14c5453eb112a231b16709c
-  - enabled: 1
     path: Assets/Scenes/08_Level3Self.unity
     guid: 474afcb5f7d63db4c8ecc4e002411913
   m_configObjects:
