@@ -106,7 +106,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (PauseMenu.isPaused) return;
         if (!dialogueIsPlaying) return;
-        if (currentStory.currentChoices.Count > 0) return;
+        if (currentStory != null && currentStory.currentChoices.Count > 0) return;
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
         {
             if (isDowntimeLine)
