@@ -46,7 +46,7 @@
 //         CheckPhaseTransition();
 //     }
 
-    
+
 //     //player locations
 //     // public float GetDistanceToPlayer()
 //     // {
@@ -76,7 +76,7 @@
 //     }
 
 //     //movement to player
-    
+
 //     public void MoveTowardsPlayer()
 //     {
 //         if (isBusy) return;
@@ -181,7 +181,7 @@
 //         isBusy = false;
 //     }
 
-    
+
 //     //managing phases/transitions
 //     private void CheckPhaseTransition()
 //     {
@@ -247,11 +247,88 @@ public class BossStateMachine : MonoBehaviour
     private bool isDashing = false;
     private bool isFlying = false;
 
+
+    [Header("Signature Attack")]
+    public GameObject minionPrefab;
+    public Transform[] summonPoints;
+
+    private int aliveMinions = 0;
+    private bool isInvincible = false;
+    private bool isPerformingSignature = false;
+
+
+
+
     void Update()
     {
         //cooldowns tick down
         if (dashTimer > 0) dashTimer -= Time.deltaTime;
         if (flyTimer > 0) flyTimer -= Time.deltaTime;
+    }
+
+        public void StartSignatureAttack()
+    {
+        if (isPerformingSignature) return;
+
+        Debug.Log("SIGNATURE ATTACK START");
+
+        isPerformingSignature = true;
+        isInvincible = true;
+
+        SpawnMinions();
+    }
+
+    void SpawnMinions()
+    {
+        aliveMinions = 0;
+
+        foreach (Transform point in summonPoints)
+        {
+            GameObject minion = Instantiate(minionPrefab, point.position, Quaternion.identity);
+
+            EnemyHealth health = minion.GetComponent<EnemyHealth>();
+
+            if (health != null)
+            {
+                health.SetBossOwner(this); // 🔥 KEY LINE
+            }
+
+            aliveMinions++;
+        }
+    }
+
+    public void OnMinionDied()
+    {
+        aliveMinions--;
+
+        Debug.Log("Minion died. Remaining: " + aliveMinions);
+
+        if (aliveMinions <= 0)
+        {
+            EndSignatureAttack();
+        }
+    }
+
+    void EndSignatureAttack()
+    {
+        Debug.Log("SIGNATURE ATTACK END");
+
+        isInvincible = false;
+        isPerformingSignature = false;
+
+        EnterStunnedState();
+    }
+
+    public void EnterStunnedState()
+    {
+        Debug.Log("BOSS STUNNED");
+
+        // Later this will trigger FSM state switch
+    }
+
+    public bool IsSignatureActive()
+    {
+        return isPerformingSignature;
     }
 
 
@@ -271,7 +348,7 @@ public class BossStateMachine : MonoBehaviour
         return flyTimer <= 0f && !isDashing && !isFlying;
     }
 
-  
+
     //attacks
     public void DashAttack()
     {
@@ -293,7 +370,7 @@ public class BossStateMachine : MonoBehaviour
         StartCoroutine(FlyRoutine());
     }
 
-  
+
     //COROUTINES
     private System.Collections.IEnumerator DashRoutine()
     {

@@ -41,6 +41,16 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     bool isDying = false;
 
+
+    //for the boss, shouldn't affect anything else it will just stay null
+    private BossStateMachine bossOwner;
+    public void SetBossOwner(BossStateMachine boss)
+    {
+        bossOwner = boss;
+    }
+
+
+
     private void Awake()
     {
         currentHealth = startingHealth;
