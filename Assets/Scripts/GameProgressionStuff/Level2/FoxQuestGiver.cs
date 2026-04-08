@@ -87,7 +87,7 @@ public class FoxQuestGiver : MonoBehaviour
         switch (stage)
         {
             case 0:
-                GameProgress.Instance.ClearObjective();
+                GameProgress.Instance.SetObjective("Find Fox");
                 break;
 
             case 1:
