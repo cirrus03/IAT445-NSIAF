@@ -20,7 +20,7 @@ public partial class DashAttackAction : Action
     {
         if (Boss.Value == null)
         {
-            Debug.LogError("Boss is NULL in DashAttackAction");
+            Debug.LogError("Boss is null in DashAttackAction");
             return Status.Failure;
         }
 

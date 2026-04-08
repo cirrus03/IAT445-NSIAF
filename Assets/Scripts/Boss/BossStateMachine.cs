@@ -253,9 +253,9 @@ public class BossStateMachine : MonoBehaviour
     public float moveSpeed = 3f;
 
     [Header("Dash")]
-    public float dashSpeed = 12f;
-    public float dashDuration = 0.3f;
-    public float dashCooldown = 2f;
+    public float dashSpeed = 18f;
+    public float dashDuration = 0.7f;
+    public float dashCooldown = 1f;
     private float dashTimer;
 
     [Header("Fly Attack")]
@@ -266,6 +266,32 @@ public class BossStateMachine : MonoBehaviour
 
     private bool isDashing = false;
     private bool isFlying = false;
+
+
+
+    /// //////////////////////////////////////////////
+    /// directions sprite is facing when attacking
+    private bool isFacingRight = false; // matches EnemyFlying's default
+
+    private void FaceDirection(Vector2 moveDirection)
+    {
+        if (moveDirection.x < -0.01f && !isFacingRight)
+        {
+            isFacingRight = true;
+            Vector3 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x); // face right
+            transform.localScale = scale;
+        }
+        else if (moveDirection.x > 0.01f && isFacingRight)
+        {
+            isFacingRight = false;
+            Vector3 scale = transform.localScale;
+            scale.x = -Mathf.Abs(scale.x); // face left
+            transform.localScale = scale;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
 
 
     [Header("Signature Attack")]
@@ -290,6 +316,10 @@ public class BossStateMachine : MonoBehaviour
         if (dashTimer > 0) dashTimer -= Time.deltaTime;
         if (flyTimer > 0) flyTimer -= Time.deltaTime;
     }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// signature attack minion spawn
 
     public void StartSignatureAttack()
     {
@@ -321,7 +351,7 @@ public class BossStateMachine : MonoBehaviour
 
             if (health != null)
             {
-                health.SetBossOwner(this); 
+                health.SetBossOwner(this);
             }
 
             aliveMinions++;
@@ -362,6 +392,7 @@ public class BossStateMachine : MonoBehaviour
         return isPerformingSignature;
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////\
 
     //conditions
     public float GetDistanceToPlayer()
@@ -408,6 +439,8 @@ public class BossStateMachine : MonoBehaviour
         isDashing = true;
 
         Vector2 direction = (player.position - transform.position).normalized;
+
+        FaceDirection(direction); 
 
         float timer = 0f;
 
