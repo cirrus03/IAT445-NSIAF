@@ -8,7 +8,7 @@ public enum BossState
     // Idle,
     Attack,
     Signature,
-    Stunned,
+    // Stunned,
     // PhaseTransition
 }
 
@@ -22,7 +22,7 @@ public class BossStateMachine : MonoBehaviour
     // public BehaviorGraph idleGraph;
     public BehaviorGraph attackGraph;
     public BehaviorGraph signatureGraph;
-    public BehaviorGraph stunnedGraph;
+    // public BehaviorGraph stunnedGraph;
     // public BehaviorGraph phaseTransitionGraph;
 
 
@@ -90,7 +90,9 @@ public class BossStateMachine : MonoBehaviour
 
     BossHealth healthScript;
     private bool halfHealthTriggered = false;
-    private bool lastHealthTriggered = false;
+    public bool lastHealthTriggered = false;
+
+    private float regainHealthAmount;
 
 
 
@@ -152,6 +154,9 @@ public class BossStateMachine : MonoBehaviour
     {
 
         SetState(BossState.Attack);
+        regainHealthAmount = Mathf.Floor((float)(int)healthScript.maxHealth / 3);
+        Debug.Log("regain health amount is: ");
+        Debug.Log(regainHealthAmount);
     }
 
     void Update()
@@ -182,18 +187,8 @@ public class BossStateMachine : MonoBehaviour
 
     private void checkHealth(float currHealth, float maxHealth)
     {
-        // if(currentState == BossState.Signature)
-        // {
-        //      Debug.Log("already in sig");
-        //     return;
-        // }
-
-        // if (currHealth == maxHealth / 2 || currHealth == 1)
-        // {
-        //     SetState(BossState.Signature);
-        // }
-
-
+        // Debug.Log("entered check health function");
+        
         if (currentState == BossState.Signature) return;
 
         if (!halfHealthTriggered && currHealth == maxHealth / 2f)
@@ -209,6 +204,13 @@ public class BossStateMachine : MonoBehaviour
             lastHealthTriggered = true;
             SetState(BossState.Signature);
         }
+    }
+
+    public void RegainHealth()
+    {
+        healthScript.currentHealth = healthScript.currentHealth + regainHealthAmount;
+        EnterAttackState();
+        Debug.Log("healed boss");
     }
 
 
@@ -247,12 +249,12 @@ public class BossStateMachine : MonoBehaviour
         // SpawnMinions();
     }
 
-    public void EndSignature()
-    {
-        isInvincible = false;
-        SetState(BossState.Attack);
-        Debug.Log("end zen mode switch to attack, notif 3/3");
-    }
+    // public void EndSignature()
+    // {
+    //     isInvincible = false;
+    //     SetState(BossState.Attack);
+    //     Debug.Log("end zen mode switch to attack, notif 3/3");
+    // }
 
     public void SpawnMinions()
     {
@@ -305,12 +307,12 @@ public class BossStateMachine : MonoBehaviour
         // EnterAttackState();
     }
 
-    public void EnterStunnedState()
-    {
-        Debug.Log("BOSS STUNNED");
-        SetState(BossState.Stunned); //added for testing
-        // Later this will trigger FSM state switch
-    }
+    // public void EnterStunnedState()
+    // {
+    //     Debug.Log("BOSS STUNNED");
+    //     SetState(BossState.Stunned); //added for testing
+    //     // Later this will trigger FSM state switch
+    // }
 
     public void EnterAttackState()
     {
@@ -328,18 +330,18 @@ public class BossStateMachine : MonoBehaviour
     /// //////////////////////////////////////
     /// 
     /// stun state
-    public void startStun()
-    {
-        Debug.Log("Begin the stun state");
-        Debug.Log("Play the falling down animation right here");
-    }
+    // public void startStun()
+    // {
+    //     Debug.Log("Begin the stun state");
+    //     Debug.Log("Play the falling down animation right here");
+    // }
 
-    public void endStun()
-    {
-        Debug.Log("play the get up animation");
-        Debug.Log("change state to attack");
-        SetState(BossState.Attack); // adding for testing
-    }
+    // public void endStun()
+    // {
+    //     Debug.Log("play the get up animation");
+    //     Debug.Log("change state to attack");
+    //     SetState(BossState.Attack); // adding for testing
+    // }
 
     ///////////////////////////////////////////////////////////////////////////////////////\
 
@@ -447,6 +449,8 @@ public class BossStateMachine : MonoBehaviour
 
     public void ResetBossState()
     {
+
+        Debug.Log("reset boss functionc called");
         StopAllCoroutines();
 
         isDashing = false;

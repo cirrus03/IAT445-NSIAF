@@ -5,8 +5,8 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "EnterStun", story: "[Boss] becomes stunned", category: "Action", id: "e6b0a00352db665e0f5b464e9deee7f7")]
-public partial class EnterStunAction : Action
+[NodeDescription(name: "RegainHealth", story: "[Boss] regains health", category: "Action", id: "585b77e2b4e509652354ab297bde291d")]
+public partial class RegainHealthAction : Action
 {
     [SerializeReference] public BlackboardVariable<BossStateMachine> Boss;
 
@@ -17,7 +17,7 @@ public partial class EnterStunAction : Action
 
     protected override Status OnUpdate()
     {   
-        // Boss.Value.startStun();
+        Boss.Value.RegainHealth();
         return Status.Success;
     }
 

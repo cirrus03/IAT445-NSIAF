@@ -5,7 +5,7 @@ public class BossHealth : MonoBehaviour, IDamageable
 {
     [Header("Health")]
     [SerializeField] public float maxHealth = 4;
-    public float currentHealth { get; private set; }
+    public float currentHealth { get; set; }
     public float MaxHealth => maxHealth;
 
     [Header("State")]
@@ -83,8 +83,8 @@ public class BossHealth : MonoBehaviour, IDamageable
                 return;
 
             // only let the player damage the boss while stunned (can comment out if you want)
-            if (onlyTakeDamageWhenStunned && bossStateMachine.currentState != BossState.Stunned)
-                return;
+            // if (onlyTakeDamageWhenStunned && bossStateMachine.currentState != BossState.Stunned)
+            //     return;
         }
 
         currentHealth -= damageAmount;

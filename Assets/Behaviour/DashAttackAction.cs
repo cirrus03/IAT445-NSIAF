@@ -12,7 +12,7 @@ public partial class DashAttackAction : Action
 
     protected override Status OnStart()
     {
-        Debug.Log("DashAttack node fired");
+        // Debug.Log("DashAttack node fired");
         return Status.Running;
     }
 

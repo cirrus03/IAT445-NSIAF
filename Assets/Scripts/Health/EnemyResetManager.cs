@@ -45,6 +45,7 @@ public class EnemyResetManager : MonoBehaviour
     {
         BossResettable[] bosses = FindObjectsByType<BossResettable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
+
         foreach (var boss in bosses)
         {
             if (boss != null)
