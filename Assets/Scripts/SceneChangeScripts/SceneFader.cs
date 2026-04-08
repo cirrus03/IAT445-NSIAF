@@ -44,7 +44,7 @@ public class SceneFader : MonoBehaviour
         float t = 0;
         while (t < fadeInTime)
         {
-            t += Time.deltaTime;
+            t += Time.unscaledDeltaTime;
             c.a = t / fadeInTime;
             fadeText.color = c;
             yield return null;
@@ -52,7 +52,7 @@ public class SceneFader : MonoBehaviour
 
         c.a = 1;
         fadeText.color = c;
-        yield return new WaitForSeconds(displayTime);
+        yield return new WaitForSecondsRealtime(displayTime);
         // fad eut
         t = 0;
         while (t < fadeOutTime)
@@ -75,7 +75,7 @@ public class SceneFader : MonoBehaviour
 
         while (t < duration)
         {
-            t += Time.deltaTime;
+            t += Time.unscaledDeltaTime;
             c.a = 1f - (t / duration);
             image.color = c;
             yield return null;
@@ -99,7 +99,7 @@ public class SceneFader : MonoBehaviour
 
         while (t < duration)
         {
-            t += Time.deltaTime;
+            t += Time.unscaledDeltaTime;    
             c.a = t / duration;
             image.color = c;
             yield return null;
