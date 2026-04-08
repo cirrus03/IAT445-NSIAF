@@ -139,7 +139,38 @@ public class QuestManager : MonoBehaviour
             {
                 QuestCompletePopup.Instance.Show("Quest Completed");
             }
+            
+            PlayCompletionDialogue();
         }
+    }
+
+    void PlayCompletionDialogue()
+    {
+        DialogueManager dm = DialogueManager.GetInstance();
+        if (dm == null) return;
+
+        string line = "";
+
+        switch (currentQuestId)
+        {
+            case "kill_first_enemy":
+                line = "Alright, I should go talk to the professor now.";
+                break;
+
+            case "collect_top_right_item":
+                line = "I've got the notes, time to head back.";
+                break;
+
+            case "collect_final_item":
+                line = "Finally, last task finished. I should report back now.";
+                break;
+
+            default:
+                line = "I should report back.";
+                break;
+        }
+
+        dm.PlayDowntimeDialogue(line, Speaker.Nozomi);
     }
 
     public void ApplySaveData(SaveData data)
