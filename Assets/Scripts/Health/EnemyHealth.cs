@@ -41,6 +41,16 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     bool isDying = false;
 
+
+    //for the boss, shouldn't affect anything else it will just stay null
+    private BossStateMachine bossOwner;
+    public void SetBossOwner(BossStateMachine boss)
+    {
+        bossOwner = boss;
+    }
+
+
+
     private void Awake()
     {
         currentHealth = startingHealth;
@@ -104,6 +114,17 @@ public class EnemyHealth : MonoBehaviour, IDamageable
                 }
             }
             isDying = true;
+
+            Debug.Log("Boss owner assigned: " + (bossOwner != null));
+            //just for alerting the boss if it's a boss minion
+            if (bossOwner != null)
+            {   
+                Debug.Log("Calling boss OnMinionDied()");
+                bossOwner.OnMinionDied();
+            }
+
+            
+
             StartCoroutine(DieRoutine());
         }
     }

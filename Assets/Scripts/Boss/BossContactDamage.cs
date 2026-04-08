@@ -1,7 +1,7 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
-public class EnemyDamage : MonoBehaviour
+public class BossContactDamage : MonoBehaviour
 {
     public float damage = 1f;
 
@@ -9,8 +9,8 @@ public class EnemyDamage : MonoBehaviour
     public float knockbackX = 12f;
     public float knockbackY = 6f;
 
-    [Header("Frezze frame + Stun")]
-    public float hitStopTime = 0.05f;   // freeze frame feel
+    [Header("Freeze frame + Stun")]
+    public float hitStopTime = 0.05f;   // freeze frame
     public float stunTime = 0.18f;      // controls locked
 
     [Header("Contact Re-hit")]
@@ -28,13 +28,11 @@ public class EnemyDamage : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Debug.Log("ontrigger enter2d going to try and damage player");
         TryDamagePlayer(other);
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        // Debug.Log("ontrigger stay 2d going to try and damage player");
         TryDamagePlayer(other);
     }
 
@@ -50,10 +48,9 @@ public class EnemyDamage : MonoBehaviour
         // iframes gate (prevents multi-hits)
         if (playerHealth.IsInvincible) return;
 
-        // Deal damage to player
+        // damage to player
         playerHealth.TakeDamage(damage);
 
-        // local cooldown so it doesnt hit every frame while overlapping
         touchDamageTimer = touchDamageCooldown;
 
         Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
@@ -66,18 +63,12 @@ public class EnemyDamage : MonoBehaviour
             rb.AddForce(new Vector2(dir * knockbackX, knockbackY), ForceMode2D.Impulse);
         }
 
-        // Stun + hit stop
+        // stun + hit stop
         var pm = other.GetComponent<PlayerMovement>();
         if (pm != null)
         {
             pm.StartCoroutine(pm.DamageStunRoutine(stunTime));
             pm.StartCoroutine(pm.HitStopRoutine(hitStopTime));
-        }
-
-        EnemyFlying flying = GetComponentInParent<EnemyFlying>();
-        if (flying != null)
-        {
-            flying.NotifyHitPlayer();
         }
     }
 }

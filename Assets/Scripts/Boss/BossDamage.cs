@@ -1,15 +1,15 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 
-public class EnemyDamage : MonoBehaviour
+public class BossDamage : MonoBehaviour
 {
-    public float damage = 1f;
+   public float damage = 1f;
 
     [Header("Knockback")]
     public float knockbackX = 12f;
     public float knockbackY = 6f;
 
-    [Header("Frezze frame + Stun")]
+    [Header("Freeze frame + Stun")]
     public float hitStopTime = 0.05f;   // freeze frame feel
     public float stunTime = 0.18f;      // controls locked
 
@@ -28,13 +28,11 @@ public class EnemyDamage : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Debug.Log("ontrigger enter2d going to try and damage player");
         TryDamagePlayer(other);
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        // Debug.Log("ontrigger stay 2d going to try and damage player");
         TryDamagePlayer(other);
     }
 
@@ -56,15 +54,15 @@ public class EnemyDamage : MonoBehaviour
         // local cooldown so it doesnt hit every frame while overlapping
         touchDamageTimer = touchDamageCooldown;
 
-        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            float dir = Mathf.Sign(other.transform.position.x - transform.position.x);
-            if (dir == 0) dir = 1f;
+        // Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
+        // if (rb != null)
+        // {
+        //     float dir = Mathf.Sign(other.transform.position.x - transform.position.x);
+        //     if (dir == 0) dir = 1f;
 
-            rb.linearVelocity = Vector2.zero;
-            rb.AddForce(new Vector2(dir * knockbackX, knockbackY), ForceMode2D.Impulse);
-        }
+        //     rb.linearVelocity = Vector2.zero;
+        //     rb.AddForce(new Vector2(dir * knockbackX, knockbackY), ForceMode2D.Impulse);
+        // }
 
         // Stun + hit stop
         var pm = other.GetComponent<PlayerMovement>();
@@ -74,10 +72,11 @@ public class EnemyDamage : MonoBehaviour
             pm.StartCoroutine(pm.HitStopRoutine(hitStopTime));
         }
 
-        EnemyFlying flying = GetComponentInParent<EnemyFlying>();
-        if (flying != null)
-        {
-            flying.NotifyHitPlayer();
-        }
+        // EnemyFlying flying = GetComponentInParent<EnemyFlying>();
+        // if (flying != null)
+        // {
+        //     flying.NotifyHitPlayer();
+        // }
     }
 }
+
