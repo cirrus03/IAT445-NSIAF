@@ -225,8 +225,28 @@
 
 using UnityEngine;
 
+public enum BossState
+{
+    Idle,
+    Attack,
+    Signature,
+    Stunned,
+    PhaseTransition
+}
 public class BossStateMachine : MonoBehaviour
 {
+
+
+
+    public BossState currentState;
+    public void SetState(BossState newState)
+    {
+        currentState = newState;
+        Debug.Log("Switched to: " + newState);
+
+        //will hoook later
+    }
+
     public Transform player;
 
     [Header("Movement")]
@@ -259,6 +279,11 @@ public class BossStateMachine : MonoBehaviour
 
 
 
+    void Start()
+    {
+        StartSignatureAttack(); //manually trigger for now , testign reasons
+    }
+
     void Update()
     {
         //cooldowns tick down
@@ -266,7 +291,7 @@ public class BossStateMachine : MonoBehaviour
         if (flyTimer > 0) flyTimer -= Time.deltaTime;
     }
 
-        public void StartSignatureAttack()
+    public void StartSignatureAttack()
     {
         if (isPerformingSignature) return;
 
@@ -276,6 +301,12 @@ public class BossStateMachine : MonoBehaviour
         isInvincible = true;
 
         SpawnMinions();
+    }
+
+    public void EndSignature()
+    {
+        isInvincible = false;
+        SetState(BossState.Stunned);
     }
 
     void SpawnMinions()
@@ -290,7 +321,7 @@ public class BossStateMachine : MonoBehaviour
 
             if (health != null)
             {
-                health.SetBossOwner(this); // 🔥 KEY LINE
+                health.SetBossOwner(this); 
             }
 
             aliveMinions++;

@@ -114,6 +114,17 @@ public class EnemyHealth : MonoBehaviour, IDamageable
                 }
             }
             isDying = true;
+
+            Debug.Log("Boss owner assigned: " + (bossOwner != null));
+            //just for alerting the boss if it's a boss minion
+            if (bossOwner != null)
+            {   
+                Debug.Log("Calling boss OnMinionDied()");
+                bossOwner.OnMinionDied();
+            }
+
+            
+
             StartCoroutine(DieRoutine());
         }
     }

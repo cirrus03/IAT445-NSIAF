@@ -28,13 +28,13 @@ public class EnemyDamage : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("ontrigger enter2d going to try and damage player");
+        // Debug.Log("ontrigger enter2d going to try and damage player");
         TryDamagePlayer(other);
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log("ontrigger stay 2d going to try and damage player");
+        // Debug.Log("ontrigger stay 2d going to try and damage player");
         TryDamagePlayer(other);
     }
 
