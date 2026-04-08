@@ -16,7 +16,7 @@ public partial class MoveToPlayerAction : Action
     [SerializeReference] public BlackboardVariable<float> flyRange;
     protected override Status OnStart()
     {
-        // Nothing special to start
+       
         return Status.Running;
     }
 

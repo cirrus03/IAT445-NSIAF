@@ -176,11 +176,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6afb583f699280a48801c23edb0f0a0b, type: 3}
---- !u!1 &65773216 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 291766274948151623, guid: 730d832921f599e48968f32d5f568b58, type: 3}
-  m_PrefabInstance: {fileID: 386690491}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &68440577
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,13 +510,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.BehaviorGraphAgent
-  m_Graph: {fileID: 3459905058717093328, guid: b4dcb595d3225514fb8877a96be9ec7e, type: 2}
+  m_Graph: {fileID: -2718165665856739337, guid: d81d06f056d617a468f90f59d79d8648, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 3319857882367525325
-  - rid: 3319857894218269058
-  - rid: 3319857894218269057
-  - rid: 3319857894218269056
-  - rid: 3319857894218269059
+  - rid: 3319857896328003682
   m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
@@ -536,38 +528,14 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 155914494}
-    - rid: 3319857894218269056
-      type: {class: 'BlackboardVariable`1[[BossStateMachine, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 13033953924374194338
-          m_Value1: 10296788275268463757
-        Name: New Boss State Machine
-        m_Value: {fileID: 155914497}
-    - rid: 3319857894218269057
-      type: {class: 'BlackboardVariable`1[[UnityEngine.Transform, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 10452192806849934969
-          m_Value1: 8004351864783350946
-        Name: Player
-        m_Value: {fileID: 386690492}
-    - rid: 3319857894218269058
+    - rid: 3319857896328003682
       type: {class: 'BlackboardVariable`1[[UnityEngine.Animator, UnityEngine.AnimationModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
-          m_Value0: 6186808639963032433
-          m_Value1: 7753391781717530275
-        Name: Boss_animator
+          m_Value0: 15598644338522793411
+          m_Value1: 17632340256869246495
+        Name: BossAnimator
         m_Value: {fileID: 1133040364}
-    - rid: 3319857894218269059
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 1638054527205859847
-          m_Value1: 18310433755459459389
-        Name: Target
-        m_Value: {fileID: 65773216}
 --- !u!114 &155914497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,6 +548,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b37d0cf40370ad43ac4238d5a12d399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  BossAnimator: {fileID: 1133040364}
+  agent: {fileID: 155914496}
+  attackGraph: {fileID: 3459905058717093328, guid: b4dcb595d3225514fb8877a96be9ec7e, type: 2}
+  signatureGraph: {fileID: -5236934415233674364, guid: 5c18be9570f6c104f8ee6bb40aa58b7b, type: 2}
+  stunnedGraph: {fileID: 0}
   currentState: 0
   player: {fileID: 386690492}
   moveSpeed: 5
@@ -5988,7 +5961,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 15989277922337540, guid: 730d832921f599e48968f32d5f568b58, type: 3}
   m_PrefabInstance: {fileID: 386690491}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 65773216}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6dec342845702f34dbeb41d14d237bd1, type: 3}
@@ -5999,7 +5972,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
   m_PrefabInstance: {fileID: 386690491}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 65773216}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b849d522e35af6c48a4e9073d1902fa6, type: 3}

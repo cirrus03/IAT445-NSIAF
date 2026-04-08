@@ -19,7 +19,9 @@ public partial class UpdateDistanceAction : Action
    protected override Status OnUpdate()
 {
     Distance.Value = Boss.Value.GetDistanceToPlayer();
-    Debug.Log("found distance");
+    // Debug.Log("found distance");
+    Debug.Log("Boss: " + Boss.Value);
+    Debug.Log("Distance: " + Distance.Value);
     return Status.Success;
 }
 
