@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
     [Header("Health")]
-    [SerializeField] private float startingHealth = 3f;
+    [SerializeField] public float startingHealth = 3f;
     public float currentHealth { get; private set; }
 
     [Header("Drops")]

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Behavior;
+using System;
 
 
 public enum BossState
@@ -10,6 +11,7 @@ public enum BossState
     Stunned,
     // PhaseTransition
 }
+
 public class BossStateMachine : MonoBehaviour
 {
 
@@ -31,21 +33,27 @@ public class BossStateMachine : MonoBehaviour
     public void SetState(BossState newState)
     {
         currentState = newState;
-        Debug.Log("Switched to: " + newState);
+        // Debug.Log("Switched to: " + newState);
+
+        StopAllCoroutines(); // kill any in-flight dash/fly routines
+    isDashing = false;   // reset flags since coroutines got killed
+    isFlying = false;
 
         switch (newState)
         {
             case BossState.Attack:
                 agent.Graph = attackGraph;
+                // Debug.Log("Switched to: " + newState);
                 break;
 
             case BossState.Signature:
                 agent.Graph = signatureGraph;
+                // Debug.Log("Switched to: " + newState);
                 break;
 
-            case BossState.Stunned:
-                agent.Graph = stunnedGraph;
-                break;
+            // case BossState.Stunned:
+            //     agent.Graph = stunnedGraph;
+            //     break;
 
             default:
                 agent.Graph = attackGraph;
@@ -79,6 +87,12 @@ public class BossStateMachine : MonoBehaviour
 
     private bool isDashing = false;
     private bool isFlying = false;
+
+    BossHealth healthScript;
+    private bool halfHealthTriggered = false;
+    private bool lastHealthTriggered = false;
+
+
 
     [Header("Mmm Bubble")]
     public GameObject signatureShieldVisual;
@@ -127,11 +141,16 @@ public class BossStateMachine : MonoBehaviour
         // agent.SetVariableValue("Boss", this);
         // agent.SetVariableValue("Player", player);
         InjectBlackboardVariables();
+
+        //get references from enemy health
+        healthScript = GetComponent<BossHealth>();
+        if (healthScript == null)
+        Debug.LogError("BossHealth component not found on " + gameObject.name);
     }
 
     void Start()
     {
-        // StartSignatureAttack(); //manually trigger for now , testign reasons
+
         SetState(BossState.Attack);
     }
 
@@ -148,12 +167,50 @@ public class BossStateMachine : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SetState(BossState.Signature);
-            StartSignatureAttack(); //turned this one here beacuse i didnt know where else to call it :')
+            // StartSignatureAttack(); //turned this one here beacuse i didnt know where else to call it :')
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            SetState(BossState.Stunned);
+        //control listening for hp for zen mode change
+        if (healthScript != null)
+        {
+            float maxHealth = healthScript.maxHealth;
+            float currentHealth = healthScript.currentHealth;
+            checkHealth(currentHealth, maxHealth);
+        }
+
     }
+
+    private void checkHealth(float currHealth, float maxHealth)
+    {   
+        // if(currentState == BossState.Signature)
+        // {
+        //      Debug.Log("already in sig");
+        //     return;
+        // }
+           
+        // if (currHealth == maxHealth / 2 || currHealth == 1)
+        // {
+        //     SetState(BossState.Signature);
+        // }
+
+
+    if (currentState == BossState.Signature) return;
+
+    if (!halfHealthTriggered && currHealth == maxHealth / 2f)
+    {
+        halfHealthTriggered = true;
+        Debug.Log("checking health has resulted switching to sig ver 1");
+        SetState(BossState.Signature);
+        return;
+    }
+
+    if (!lastHealthTriggered && currHealth <= 1f)
+    {
+        lastHealthTriggered = true;
+        SetState(BossState.Signature);
+    }
+    }
+
 
 
     private void InjectBlackboardVariables()
@@ -169,10 +226,11 @@ public class BossStateMachine : MonoBehaviour
 
     public void StartSignatureAttack()
     {
-        Debug.Log("Shield object assigned? " + (signatureShieldVisual != null));
+        
         if (isPerformingSignature) return;
 
         Debug.Log("SIGNATURE ATTACK START");
+        Debug.Log("Shield object assigned? " + (signatureShieldVisual != null));
 
         isPerformingSignature = true;
         isInvincible = true;
@@ -186,17 +244,20 @@ public class BossStateMachine : MonoBehaviour
         if (bossHurtbox != null)
             bossHurtbox.enabled = false;
 
-        SpawnMinions();
+        // SpawnMinions();
     }
 
     public void EndSignature()
     {
         isInvincible = false;
-        SetState(BossState.Stunned);
+        SetState(BossState.Attack);
+        Debug.Log("end zen mode switch to attack, notif 3/3");
     }
 
-    void SpawnMinions()
+    public void SpawnMinions()
     {
+        if(aliveMinions > 0) return;
+
         aliveMinions = 0;
 
         foreach (Transform point in summonPoints)
@@ -221,14 +282,16 @@ public class BossStateMachine : MonoBehaviour
         Debug.Log("Minion died. Remaining: " + aliveMinions);
 
         if (aliveMinions <= 0)
-        {
+        {   
+            // SetState(BossState.Attack);
             EndSignatureAttack();
         }
     }
 
-    void EndSignatureAttack()
+    public void EndSignatureAttack()
     {
-        Debug.Log("SIGNATURE ATTACK END");
+        Debug.Log("SIGNATURE ATTACK END, switching to attack, end notif 1/3");
+         EnterAttackState();
 
         isInvincible = false;
         isPerformingSignature = false;
@@ -239,7 +302,7 @@ public class BossStateMachine : MonoBehaviour
         if (bossHurtbox != null)
             bossHurtbox.enabled = true;
 
-        EnterStunnedState();
+        // EnterAttackState();
     }
 
     public void EnterStunnedState()
@@ -247,6 +310,13 @@ public class BossStateMachine : MonoBehaviour
         Debug.Log("BOSS STUNNED");
         SetState(BossState.Stunned); //added for testing
         // Later this will trigger FSM state switch
+    }
+
+    public void EnterAttackState()
+    {
+        Debug.Log("ZEN MODE OVER, setting attack state, notif 2/3");
+        SetState(BossState.Attack); //added for testing
+      
     }
 
     public bool IsSignatureActive()
