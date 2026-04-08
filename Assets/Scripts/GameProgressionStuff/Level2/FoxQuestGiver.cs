@@ -8,6 +8,8 @@ public class FoxQuestGiver : MonoBehaviour
 
     [Header("Dialogue")]
     [SerializeField] private TextAsset inkJSON;
+    [SerializeField] private GameObject emptyEasel;
+    [SerializeField] private GameObject filledEasel;
 
     [Header("Scene References")]
     [SerializeField] private Elevator mainToUpperElevator;
@@ -25,8 +27,8 @@ public class FoxQuestGiver : MonoBehaviour
     private string[] downtimeLines2 =
     {
         "Goodness, the area is still swarming with bugs.",
-        "They make my skin crawl... Please get rid of them.",
-        "Are you sure they're all gone?"
+        "They're awfully noisy, aren't they?",
+        "To the right, more bugs swarm the area."
     };
     private void Start()
     {
@@ -176,6 +178,8 @@ public class FoxQuestGiver : MonoBehaviour
             }
             else
             {
+                emptyEasel.SetActive(false);
+                filledEasel.SetActive(true);
                 dm.EnterDialogueMode(inkJSON, "secondtask_bugscleared");
             }
             return;
