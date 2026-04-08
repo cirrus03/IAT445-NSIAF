@@ -10380,6 +10380,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4084525520516846053, guid: 2c2cee3c794b40c4b8c5da5ed3931d9f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8478415195819041977, guid: 2c2cee3c794b40c4b8c5da5ed3931d9f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -121.55
@@ -131922,8 +131926,8 @@ Transform:
   m_GameObject: {fileID: 1267623549}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.59, y: 0.52, z: 0}
-  m_LocalScale: {x: 5.858322, y: 5.858322, z: 5.858322}
+  m_LocalPosition: {x: -0.51, y: 0.52, z: 0}
+  m_LocalScale: {x: 3.407272, y: 3.6835372, z: 3.6835372}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 155914495}
@@ -131962,8 +131966,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.094558656, y: -0.04389981}
-  m_Size: {x: 2.154762, y: 2.154762}
+  m_Offset: {x: 0.09256199, y: -0.067648895}
+  m_Size: {x: 2.0511153, y: 1.8972819}
   m_Direction: 0
 --- !u!212 &1267623552
 SpriteRenderer:
