@@ -16,7 +16,16 @@ public partial class StartSignatureAttackAction : Action
     }
 
     protected override Status OnUpdate()
-    {
+    {   
+        Debug.Log("in teh start signature action");
+        Debug.Log(Boss.Value.currentState);
+
+        if(Boss.Value.currentState != BossState.Signature)
+        {
+            Debug.Log("you don't belong in signature graph");
+            // return Status.Failure;
+        }
+
         Boss.Value.StartSignatureAttack();
         return Status.Success;
     }

@@ -4,8 +4,8 @@ using System.Collections;
 public class BossHealth : MonoBehaviour, IDamageable
 {
     [Header("Health")]
-    [SerializeField] private float maxHealth = 100f;
-    public float CurrentHealth { get; private set; }
+    [SerializeField] public float maxHealth = 4;
+    public float currentHealth { get; private set; }
     public float MaxHealth => maxHealth;
 
     [Header("State")]
@@ -38,7 +38,7 @@ public class BossHealth : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        CurrentHealth = maxHealth;
+        currentHealth = maxHealth;
 
         bossStateMachine = GetComponent<BossStateMachine>();
         agent = GetComponent<Unity.Behavior.BehaviorGraphAgent>();
@@ -87,10 +87,10 @@ public class BossHealth : MonoBehaviour, IDamageable
                 return;
         }
 
-        CurrentHealth -= damageAmount;
-        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
+        currentHealth -= damageAmount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        Debug.Log($"Boss took {damageAmount} damage. HP: {CurrentHealth}");
+        Debug.Log($"Boss took {damageAmount} damage. HP: {currentHealth}");
 
         if (flashOnDamage)
         {
@@ -98,7 +98,7 @@ public class BossHealth : MonoBehaviour, IDamageable
             flashRoutine = StartCoroutine(FlashDamageRoutine());
         }
 
-        if (CurrentHealth <= 0)
+        if (currentHealth <= 0)
         {
             Die();
             return;
@@ -202,7 +202,7 @@ public class BossHealth : MonoBehaviour, IDamageable
         isDead = false;
         IsInvincible = false;
         hitInvincible = false;
-        CurrentHealth = maxHealth;
+        currentHealth = maxHealth;
 
         if (rb != null)
         {

@@ -13,7 +13,7 @@ public partial class MoveToPlayerAction : Action
 {
     [SerializeReference] public BlackboardVariable<BossStateMachine> Boss;
     [SerializeReference] public BlackboardVariable<float> dashRange;
-    [SerializeReference] public BlackboardVariable<float> flyRange;
+    // [SerializeReference] public BlackboardVariable<float> flyRange;
     protected override Status OnStart()
     {
        
@@ -31,7 +31,8 @@ public partial class MoveToPlayerAction : Action
         float distance = Boss.Value.GetDistanceToPlayer();
 
         //if boss is in range for any attack, stop moving so attacks can run
-        if (distance <= dashRange || distance >= flyRange)
+        // if (distance <= dashRange || distance >= flyRange)
+        if (distance <= dashRange)
         {
             return Status.Failure; //fail so Try In Order moves to Dash/Fly
         }
