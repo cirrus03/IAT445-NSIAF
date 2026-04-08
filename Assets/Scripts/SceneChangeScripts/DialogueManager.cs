@@ -411,6 +411,7 @@ public class DialogueManager : MonoBehaviour
 
                 QuestManager.Instance.ClearQuest();
                 GameProgress.Instance.currentQuestStage = 4;
+                GameProgress.Instance.SetObjective("Enter the portal");
             }
 
             if (tag == "openportal")

@@ -88,6 +88,13 @@ public class QuestManager : MonoBehaviour
         }
 
         Debug.Log($"Force completed quest: {questId}");
+
+        if (QuestCompletePopup.Instance != null)
+        {
+            QuestCompletePopup.Instance.Show("Quest Completed");
+        }
+
+        PlayCompletionDialogue();
     }
 
     public void RegisterEnemyKilled()

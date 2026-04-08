@@ -298,6 +298,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetTrigger("Jump");
 
             jumpsRemaining = canDoubleJump ? 1 : 0;//oops accidentally gave three jumps
+            UpdateJumpTint();
 
             // force flip
             if (transform.localScale.x != wallJumpDirection)
