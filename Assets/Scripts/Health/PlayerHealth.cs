@@ -129,12 +129,19 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
             PlayerDeath?.Invoke();
 
-            // show death screen
-            DeathScreenUI deathScreen = FindFirstObjectByType<DeathScreenUI>();
-            if (deathScreen != null)
-            {
+            BossEncounterController encounter = BossEncounterController.ActiveEncounter;
 
-                deathScreen.ShowDeathScreen();
+            if (encounter != null && encounter.ShouldOverrideDeathScreen())
+            {
+                encounter.HandleBossFightDeath();
+            }
+            else
+            {
+                DeathScreenUI deathScreen = FindFirstObjectByType<DeathScreenUI>();
+                if (deathScreen != null)
+                {
+                    deathScreen.ShowDeathScreen();
+                }
             }
 
             //play death sound here
@@ -172,7 +179,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         isDying = false;
         damageIFramesActive = false;
-        moodInvincibleActive = false; 
+        moodInvincibleActive = false;
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
