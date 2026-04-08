@@ -57,6 +57,7 @@ public class BossStateMachine : MonoBehaviour
         }
 
         agent.Restart(); 
+        InjectBlackboardVariables();
     }
 
     public Transform player;
@@ -119,8 +120,9 @@ public class BossStateMachine : MonoBehaviour
     {
         agent = GetComponent<BehaviorGraphAgent>();
 
-        agent.SetVariableValue("Boss", this);
-        agent.SetVariableValue("Player", player);
+        // agent.SetVariableValue("Boss", this);
+        // agent.SetVariableValue("Player", player);
+        InjectBlackboardVariables();
     }
 
     void Start()
@@ -144,6 +146,14 @@ public class BossStateMachine : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
             SetState(BossState.Stunned);
+    }
+
+
+    private void InjectBlackboardVariables()
+    {
+        agent.SetVariableValue("Boss", this);
+        agent.SetVariableValue("Player", player);
+        agent.SetVariableValue("BossAnimator", BossAnimator);
     }
 
 

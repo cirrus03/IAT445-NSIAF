@@ -32,8 +32,8 @@ MonoBehaviour:
           rid: 3319857890855747616
         BlackboardGroupReferences: []
         Root:
-          rid: 3319857894218268887
-        m_VersionTimestamp: 639111858782439888
+          rid: 3319857896328004181
+        m_VersionTimestamp: 639111954835649610
     - rid: 3319857890855747616
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -48,33 +48,6 @@ MonoBehaviour:
         - rid: 3319857894218268890
         - rid: 3319857894218268891
         - rid: 3319857894218268892
-    - rid: 3319857894218268887
-      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 15125724891755229540
-          m_Value1: 9729901632644989125
-        Graph:
-          rid: 3319857890855747615
-        m_Parent:
-          rid: -2
-        m_Child:
-          rid: 3319857894218268888
-        Repeat: 0
-        AllowMultipleRepeatsPerTick: 0
-    - rid: 3319857894218268888
-      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 6113913253629845312
-          m_Value1: 2763189372129280538
-        Graph:
-          rid: 3319857890855747615
-        m_Parent:
-          rid: 3319857894218268887
-        m_Children:
-        - rid: 3319857894218268893
-        m_RegisteredObservers: []
     - rid: 3319857894218268889
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -107,7 +80,34 @@ MonoBehaviour:
           m_Value1: 9908292822396540006
         Name: BossAnimator
         m_Value: {fileID: 0}
-    - rid: 3319857894218268893
+    - rid: 3319857896328004181
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 15125724891755229540
+          m_Value1: 9729901632644989125
+        Graph:
+          rid: 3319857890855747615
+        m_Parent:
+          rid: -2
+        m_Child:
+          rid: 3319857896328004182
+        Repeat: 0
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 3319857896328004182
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 6113913253629845312
+          m_Value1: 2763189372129280538
+        Graph:
+          rid: 3319857890855747615
+        m_Parent:
+          rid: 3319857896328004181
+        m_Children:
+        - rid: 3319857896328004183
+        m_RegisteredObservers: []
+    - rid: 3319857896328004183
       type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -116,12 +116,12 @@ MonoBehaviour:
         Graph:
           rid: 3319857890855747615
         m_Parent:
-          rid: 3319857894218268888
+          rid: 3319857896328004182
         m_Children:
-        - rid: 3319857894218268894
-        - rid: 3319857894218268895
+        - rid: 3319857896328004184
+        - rid: 3319857896328004185
         m_RegisteredObservers: []
-    - rid: 3319857894218268894
+    - rid: 3319857896328004184
       type: {class: StartSignatureAttackAction, ns: , asm: Assembly-CSharp}
       data:
         ID:
@@ -130,10 +130,10 @@ MonoBehaviour:
         Graph:
           rid: 3319857890855747615
         m_Parent:
-          rid: 3319857894218268893
+          rid: 3319857896328004183
         Boss:
           rid: 3319857894218268890
-    - rid: 3319857894218268895
+    - rid: 3319857896328004185
       type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         ID:
@@ -142,12 +142,12 @@ MonoBehaviour:
         Graph:
           rid: 3319857890855747615
         m_Parent:
-          rid: 3319857894218268893
+          rid: 3319857896328004183
         m_Children:
-        - rid: 3319857894218268896
-        - rid: 3319857894218268897
+        - rid: 3319857896328004186
+        - rid: 3319857896328004187
         m_RegisteredObservers: []
-    - rid: 3319857894218268896
+    - rid: 3319857896328004186
       type: {class: WaitForSignatureEndAction, ns: , asm: Assembly-CSharp}
       data:
         ID:
@@ -156,10 +156,10 @@ MonoBehaviour:
         Graph:
           rid: 3319857890855747615
         m_Parent:
-          rid: 3319857894218268895
+          rid: 3319857896328004185
         Boss:
           rid: 3319857894218268890
-    - rid: 3319857894218268897
+    - rid: 3319857896328004187
       type: {class: EndSignatureAction, ns: , asm: Assembly-CSharp}
       data:
         ID:
@@ -168,7 +168,7 @@ MonoBehaviour:
         Graph:
           rid: 3319857890855747615
         m_Parent:
-          rid: 3319857894218268895
+          rid: 3319857896328004185
         Boss:
           rid: 3319857894218268890
 --- !u!114 &11400000
@@ -192,7 +192,7 @@ MonoBehaviour:
   - rid: 3319857890855747664
   - rid: 3319857890855747680
   - rid: 3319857894218268756
-  m_VersionTimestamp: 639111858782439888
+  m_VersionTimestamp: 639111954835649610
   m_SerializedVersion: 2
   m_DebugInfo: {fileID: 3143389835530152989}
   m_RuntimeGraph: {fileID: -5236934415233674364}
@@ -295,7 +295,7 @@ MonoBehaviour:
     - rid: 3319857890855747620
       type: {class: StartNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: 0, y: 0}
+        Position: {x: 15.58376, y: -95.37266}
         ID:
           m_Value0: 15125724891755229540
           m_Value1: 9729901632644989125
