@@ -54,6 +54,9 @@ public class DialogueManager : MonoBehaviour
     private static DialogueManager instance;
     private bool frozeWorldForDialogue = false;
 
+    [Header("Dialogue Freeze")]
+    [SerializeField] private bool freezeGameplayDuringDialogue = false;
+
     private void Awake()
     {
         if (instance != null)
@@ -70,6 +73,9 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
+        frozeWorldForDialogue = false;
+        
         foreach (GameObject choice in choices)
         {
             if (choice != null)
@@ -531,6 +537,10 @@ public class DialogueManager : MonoBehaviour
     private IEnumerator NextLevelTransition(string transitionText)
     {
         dialoguePanel.SetActive(false);
+        UnfreezeWorldAfterDialogue();
+        dialogueIsPlaying = false;
+        dialogueFinished = true;
+        isDowntimeLine = false;
 
         if (sceneFader != null)
             sceneFader.FadeToBlack(0.3f);
@@ -542,11 +552,16 @@ public class DialogueManager : MonoBehaviour
                 sceneFader.FadeTextRoutine(transitionText, 1f, 2f, 1f)
             );
         }
+
+        Time.timeScale = 1f;
         SceneControl.instance.NextLevel();
     }
 
     private void FreezeWorldForDialogue()
     {
+        if (!freezeGameplayDuringDialogue)
+            return;
+
         if (!PauseMenu.isPaused)
         {
             Time.timeScale = 0f;

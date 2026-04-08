@@ -143951,9 +143951,14 @@ MonoBehaviour:
   sceneFader: {fileID: 0}
   sceneSprite: {fileID: 463386274}
   nozomiHappy: {fileID: 0}
+  nozomiNeutral: {fileID: 0}
+  nozomiAngry: {fileID: 0}
   kazumiSprite: {fileID: 0}
   kazumiCheer: {fileID: 0}
+  kazumiPuppyeyes: {fileID: 0}
+  kazumiNeutral: {fileID: 0}
   foxSprite: {fileID: 643217733}
+  altFoxSprite: {fileID: 0}
   continueArrow: {fileID: 0}
   crowSprite: {fileID: 0}
   crowAnimator: {fileID: 0}
@@ -143965,6 +143970,7 @@ MonoBehaviour:
   levelExitPortal: {fileID: 0}
   tutorialEnemyRespawner: {fileID: 0}
   choices: []
+  freezeGameplayDuringDialogue: 1
 --- !u!4 &1826644576
 Transform:
   m_ObjectHideFlags: 0
