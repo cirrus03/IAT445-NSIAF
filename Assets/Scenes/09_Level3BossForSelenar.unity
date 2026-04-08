@@ -506,6 +506,7 @@ GameObject:
   - component: {fileID: 155914498}
   - component: {fileID: 155914501}
   - component: {fileID: 155914502}
+  - component: {fileID: 155914503}
   m_Layer: 8
   m_Name: Boss
   m_TagString: Enemy
@@ -586,8 +587,8 @@ MonoBehaviour:
   flyDuration: 5
   flyCooldown: 4
   signatureShieldVisual: {fileID: 1267623549}
-  bossHurtbox: {fileID: 1267623551}
-  minionPrefab: {fileID: 1474573750511936422, guid: 61c50c925e6f02446a9993e06823c0af, type: 3}
+  bossHurtbox: {fileID: 1133040365}
+  minionPrefab: {fileID: 1474573750511936422, guid: 5f952de5c87f8774eacb7c6382b18a2d, type: 3}
   summonPoints:
   - {fileID: 1639043266}
   - {fileID: 2090234227}
@@ -638,6 +639,20 @@ MonoBehaviour:
   hurtSprite: {fileID: 0}
   deathDelay: 1
   destroyOnDeath: 1
+--- !u!114 &155914503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155914494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68af7b757a64f9349bb217711da8a717, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossFacePlayer
+  player: {fileID: 386690492}
+  visualToFlip: {fileID: 1133040362}
 --- !u!1 &192081845
 GameObject:
   m_ObjectHideFlags: 0
@@ -4861,9 +4876,29 @@ PrefabInstance:
       value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
+      propertyPath: noJumpsLeftColor.b
+      value: 0.6698113
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
+      propertyPath: noJumpsLeftColor.g
+      value: 0.43384022
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
+      propertyPath: noJumpsLeftColor.r
+      value: 0.38229796
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: fallSpeedMultiplier
       value: 3.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
+      propertyPath: playerRenderers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
+      propertyPath: 'playerRenderers.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1492579753}
     - target: {fileID: 3207523418519364129, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: slider
       value: 
@@ -114226,6 +114261,7 @@ GameObject:
   - component: {fileID: 1133040365}
   - component: {fileID: 1133040366}
   - component: {fileID: 1133040367}
+  - component: {fileID: 1133040368}
   m_Layer: 8
   m_Name: sprite
   m_TagString: Enemy
@@ -114245,7 +114281,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1934807313}
   m_Father: {fileID: 155914495}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1133040363
@@ -114420,6 +114457,19 @@ MonoBehaviour:
   hitStopTime: 0.05
   stunTime: 0.18
   touchDamageCooldown: 0.15
+--- !u!114 &1133040368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133040361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669864679111f9147a07188ba1bfd587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossAttackHitboxController
+  swordHitbox: {fileID: 1934807315}
 --- !u!1 &1144352889
 GameObject:
   m_ObjectHideFlags: 0
@@ -131854,9 +131904,11 @@ GameObject:
   - component: {fileID: 1267623550}
   - component: {fileID: 1267623552}
   - component: {fileID: 1267623551}
+  - component: {fileID: 1267623553}
+  - component: {fileID: 1267623554}
   m_Layer: 8
   m_Name: BossShield
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131972,6 +132024,48 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!50 &1267623553
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267623549}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &1267623554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267623549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63da4288861b10445a589bdcd776edf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossBubble
+  bounceX: 14
+  bounceY: 6
+  bounceCooldown: 0.2
 --- !u!4 &1294840007 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3337447011263610803, guid: cde77635f531fe246bb77c20ec061786, type: 3}
@@ -142729,6 +142823,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!212 &1492579753 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1810003946063990170, guid: 730d832921f599e48968f32d5f568b58, type: 3}
+  m_PrefabInstance: {fileID: 386690491}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1507559344
 GameObject:
   m_ObjectHideFlags: 0
@@ -144903,6 +145002,94 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9c4961ec50b62408c6f92aef523e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyResettable
+--- !u!1 &1934807312
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1934807313}
+  - component: {fileID: 1934807315}
+  - component: {fileID: 1934807314}
+  m_Layer: 8
+  m_Name: SwordHitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1934807313
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934807312}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1133040362}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1934807314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934807312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5321523624e0ccc41b9ff8e33586e1b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossDamage
+  damage: 1
+  knockbackX: 12
+  knockbackY: 6
+  hitStopTime: 0.05
+  stunTime: 0.18
+  touchDamageCooldown: 0.15
+--- !u!70 &1934807315
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934807312}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -2.2092311, y: 0.042512447}
+  m_Size: {x: 4.918466, y: 2.6433809}
+  m_Direction: 1
 --- !u!1 &1940067327 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 96100757446257361, guid: f06146f2947bba14fa0a83bdeb424d3f, type: 3}

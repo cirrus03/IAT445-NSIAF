@@ -6,6 +6,7 @@ public class BossResettable : MonoBehaviour
     private Quaternion startRotation;
 
     private BossHealth bossHealth;
+    private BossStateMachine bossStateMachine;
     private Rigidbody2D rb;
 
     private void Awake()
@@ -14,6 +15,7 @@ public class BossResettable : MonoBehaviour
         startRotation = transform.rotation;
 
         bossHealth = GetComponent<BossHealth>();
+        bossStateMachine = GetComponent<BossStateMachine>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -30,5 +32,8 @@ public class BossResettable : MonoBehaviour
 
         if (bossHealth != null)
             bossHealth.ResetBoss();
+
+        if (bossStateMachine != null)
+            bossStateMachine.ResetBossState();
     }
 }

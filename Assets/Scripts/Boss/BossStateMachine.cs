@@ -36,8 +36,8 @@ public class BossStateMachine : MonoBehaviour
         // Debug.Log("Switched to: " + newState);
 
         StopAllCoroutines(); // kill any in-flight dash/fly routines
-    isDashing = false;   // reset flags since coroutines got killed
-    isFlying = false;
+        isDashing = false;   // reset flags since coroutines got killed
+        isFlying = false;
 
         switch (newState)
         {
@@ -145,7 +145,7 @@ public class BossStateMachine : MonoBehaviour
         //get references from enemy health
         healthScript = GetComponent<BossHealth>();
         if (healthScript == null)
-        Debug.LogError("BossHealth component not found on " + gameObject.name);
+            Debug.LogError("BossHealth component not found on " + gameObject.name);
     }
 
     void Start()
@@ -181,34 +181,34 @@ public class BossStateMachine : MonoBehaviour
     }
 
     private void checkHealth(float currHealth, float maxHealth)
-    {   
+    {
         // if(currentState == BossState.Signature)
         // {
         //      Debug.Log("already in sig");
         //     return;
         // }
-           
+
         // if (currHealth == maxHealth / 2 || currHealth == 1)
         // {
         //     SetState(BossState.Signature);
         // }
 
 
-    if (currentState == BossState.Signature) return;
+        if (currentState == BossState.Signature) return;
 
-    if (!halfHealthTriggered && currHealth == maxHealth / 2f)
-    {
-        halfHealthTriggered = true;
-        Debug.Log("checking health has resulted switching to sig ver 1");
-        SetState(BossState.Signature);
-        return;
-    }
+        if (!halfHealthTriggered && currHealth == maxHealth / 2f)
+        {
+            halfHealthTriggered = true;
+            Debug.Log("checking health has resulted switching to sig ver 1");
+            SetState(BossState.Signature);
+            return;
+        }
 
-    if (!lastHealthTriggered && currHealth <= 1f)
-    {
-        lastHealthTriggered = true;
-        SetState(BossState.Signature);
-    }
+        if (!lastHealthTriggered && currHealth <= 1f)
+        {
+            lastHealthTriggered = true;
+            SetState(BossState.Signature);
+        }
     }
 
 
@@ -226,7 +226,7 @@ public class BossStateMachine : MonoBehaviour
 
     public void StartSignatureAttack()
     {
-        
+
         if (isPerformingSignature) return;
 
         Debug.Log("SIGNATURE ATTACK START");
@@ -256,7 +256,7 @@ public class BossStateMachine : MonoBehaviour
 
     public void SpawnMinions()
     {
-        if(aliveMinions > 0) return;
+        if (aliveMinions > 0) return;
 
         aliveMinions = 0;
 
@@ -282,7 +282,7 @@ public class BossStateMachine : MonoBehaviour
         Debug.Log("Minion died. Remaining: " + aliveMinions);
 
         if (aliveMinions <= 0)
-        {   
+        {
             // SetState(BossState.Attack);
             EndSignatureAttack();
         }
@@ -291,7 +291,7 @@ public class BossStateMachine : MonoBehaviour
     public void EndSignatureAttack()
     {
         Debug.Log("SIGNATURE ATTACK END, switching to attack, end notif 1/3");
-         EnterAttackState();
+        EnterAttackState();
 
         isInvincible = false;
         isPerformingSignature = false;
@@ -316,7 +316,7 @@ public class BossStateMachine : MonoBehaviour
     {
         Debug.Log("ZEN MODE OVER, setting attack state, notif 2/3");
         SetState(BossState.Attack); //added for testing
-      
+
     }
 
     public bool IsSignatureActive()
@@ -443,5 +443,31 @@ public class BossStateMachine : MonoBehaviour
             player.position,
             moveSpeed * Time.deltaTime
         );
+    }
+
+    public void ResetBossState()
+    {
+        StopAllCoroutines();
+
+        isDashing = false;
+        isFlying = false;
+
+        dashTimer = 0f;
+        flyTimer = 0f;
+
+        aliveMinions = 0;
+        isInvincible = false;
+        isPerformingSignature = false;
+
+        halfHealthTriggered = false;
+        lastHealthTriggered = false;
+
+        if (signatureShieldVisual != null)
+            signatureShieldVisual.SetActive(false);
+
+        if (bossHurtbox != null)
+            bossHurtbox.enabled = true;
+
+        SetState(BossState.Attack);
     }
 }
