@@ -23,9 +23,14 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private SceneFader sceneFader;
     [SerializeField] private GameObject sceneSprite;
     [SerializeField] private GameObject nozomiHappy;
+    [SerializeField] private GameObject nozomiNeutral;
+    [SerializeField] private GameObject nozomiAngry;
     [SerializeField] private GameObject kazumiSprite;
     [SerializeField] private GameObject kazumiCheer;
+    [SerializeField] private GameObject kazumiPuppyeyes;
+    [SerializeField] private GameObject kazumiNeutral;
     [SerializeField] private GameObject foxSprite;
+    [SerializeField] private GameObject altFoxSprite;
     [SerializeField] private GameObject continueArrow;
     [SerializeField] private GameObject crowSprite;
     [SerializeField] private Animator crowAnimator;
@@ -37,7 +42,6 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject levelExitPortal;
     [SerializeField] private TutorialEnemyRespawner tutorialEnemyRespawner;
 
-
     [Header("Choices UI")]
     [SerializeField] private GameObject[] choices;
     private TextMeshProUGUI[] choicesText;
@@ -48,6 +52,17 @@ public class DialogueManager : MonoBehaviour
     private bool isDowntimeLine = false;
     private string simpleText;
     private static DialogueManager instance;
+    private bool frozeWorldForDialogue = false;
+
+    [Header("Dialogue Freeze")]
+    [SerializeField] private bool freezeGameplayDuringDialogue = false;
+
+    [Header("Popup Text")]
+    [SerializeField] private CanvasGroup dialogueCanvasGroup;
+    [SerializeField] private float timedPopupDuration = 1.6f;
+    [SerializeField] private float timedPopupFadeOutTime = 0.6f;
+
+    private Coroutine timedPopupRoutine;
 
     private void Awake()
     {
@@ -65,16 +80,17 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
+        frozeWorldForDialogue = false;
+
+        foreach (GameObject choice in choices)
+        {
+            if (choice != null)
+                choice.SetActive(false);
+        }
+        HideAllSprites();
         if (continueArrow != null) continueArrow.SetActive(false);
-        if (sceneSprite != null) sceneSprite.SetActive(false);
-        if (nozomiHappy != null) nozomiHappy.SetActive(false);
-        if (kazumiSprite != null) kazumiSprite.SetActive(false);
-        if (kazumiCheer != null) kazumiCheer.SetActive(false);
         if (dialoguePanel != null) dialoguePanel.SetActive(false);
-        if (crowSprite != null) crowSprite.SetActive(false);
-        if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
-        if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
-        if (foxSprite != null) foxSprite.SetActive(false);
 
         // choices
         choicesText = new TextMeshProUGUI[choices.Length];
@@ -90,6 +106,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (PauseMenu.isPaused) return;
         if (!dialogueIsPlaying) return;
+        if (currentStory != null && currentStory.currentChoices.Count > 0) return;
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
         {
             if (isDowntimeLine)
@@ -120,7 +137,7 @@ public class DialogueManager : MonoBehaviour
 
         dialogueIsPlaying = true;
         dialogueFinished = false;
-
+        FreezeWorldForDialogue();
         dialoguePanel.SetActive(true);
         ContinueStory();
     }
@@ -132,10 +149,9 @@ public class DialogueManager : MonoBehaviour
         isDowntimeLine = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
-        if (sceneSprite != null) sceneSprite.SetActive(false);
-        if (foxSprite != null) foxSprite.SetActive(false);
-        if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
-        if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
+
+        UnfreezeWorldAfterDialogue();
+        HideAllSprites();
     }
 
     private void ContinueStory()
@@ -155,7 +171,7 @@ public class DialogueManager : MonoBehaviour
 
             if (dialogueText != null)
                 dialogueText.text = text;
-            // DisplayChoices();
+            DisplayChoices();
         }
         else
         {
@@ -167,13 +183,9 @@ public class DialogueManager : MonoBehaviour
     {
         foreach (string tag in tags)
         {
-
             if (tag == "nextlevel")
             {
-                if (SceneControl.instance != null)
-                {
-                    SceneControl.instance.NextLevel();
-                }
+                StartCoroutine(NextLevelTransition("MINDSCAPE: The Fox's Attic"));
             }
             if (tag == "fadein")
             {
@@ -181,55 +193,70 @@ public class DialogueManager : MonoBehaviour
                 if (sceneSprite != null) sceneSprite.SetActive(true);
             }
 
-            if (tag == "kazumi" || tag == "kazumipuppyeyes" || tag == "kazumicheerful")
+            if (tag == "kazumi")
             {
+                HideAllSprites();
                 if (kazumiSprite != null) kazumiSprite.SetActive(true);
-                if (kazumiCheer != null) kazumiCheer.SetActive(false);
-                if (sceneSprite != null) sceneSprite.SetActive(false);
-                if (nozomiHappy != null) nozomiHappy.SetActive(false);
             }
 
-            if (tag == "kazumihappy")
+            if (tag == "kazumipuppyeyes")
             {
+                HideAllSprites();
+                if (kazumiPuppyeyes != null) kazumiPuppyeyes.SetActive(true);
+            }
+
+            if (tag == "kazumicheerful")
+            {
+                HideAllSprites();
                 if (kazumiCheer != null) kazumiCheer.SetActive(true);
-                if (sceneSprite != null) sceneSprite.SetActive(false);
-                if (nozomiHappy != null) nozomiHappy.SetActive(false);
-                if (kazumiSprite != null) kazumiSprite.SetActive(false);
+            }
+
+            if (tag == "kazumineutral")
+            {
+                HideAllSprites();
+                if (kazumiNeutral != null) kazumiNeutral.SetActive(true);
             }
 
             if (tag == "nozomi")
             {
+                HideAllSprites();
                 if (sceneSprite != null) sceneSprite.SetActive(true);
-                if (nozomiHappy != null) nozomiHappy.SetActive(false);
-                if (kazumiSprite != null) kazumiSprite.SetActive(false);
-                if (kazumiCheer != null) kazumiCheer.SetActive(false);
-                if (crowSprite != null) crowSprite.SetActive(false);
-                if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
-                if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
-                if (foxSprite != null) foxSprite.SetActive(false);
             }
 
             if (tag == "nozomihappy")
             {
+                HideAllSprites();
                 if (nozomiHappy != null) nozomiHappy.SetActive(true);
-                if (sceneSprite != null) sceneSprite.SetActive(false);
-                if (kazumiSprite != null) kazumiSprite.SetActive(false);
-                if (kazumiCheer != null) kazumiCheer.SetActive(false);
+            }
+
+            if (tag == "nozomineutral")
+            {
+                HideAllSprites();
+                if (nozomiNeutral != null) nozomiNeutral.SetActive(true);
+            }
+
+            if (tag == "nozomiangry")
+            {
+                HideAllSprites();
+                if (nozomiAngry != null) nozomiAngry.SetActive(true);
             }
 
             if (tag == "crow")
             {
-                if (sceneSprite != null) sceneSprite.SetActive(false);
-                if (nozomiHappy != null) nozomiHappy.SetActive(false);
-                if (kazumiSprite != null) kazumiSprite.SetActive(false);
-                if (kazumiCheer != null) kazumiCheer.SetActive(false);
+                HideAllSprites();
                 if (crowSprite != null) crowSprite.SetActive(true);
             }
 
             if (tag == "fox")
             {
-                if (sceneSprite != null) sceneSprite.SetActive(false);
+                HideAllSprites();
                 if (foxSprite != null) foxSprite.SetActive(true);
+            }
+
+            if (tag == "altfox")
+            {
+                HideAllSprites();
+                if (altFoxSprite != null) altFoxSprite.SetActive(true);
             }
 
             if (tag == "crowjump")
@@ -243,7 +270,7 @@ public class DialogueManager : MonoBehaviour
 
             if (tag == "crowdisappear")
             {
-                if (sceneSprite != null) sceneSprite.SetActive(false);
+                HideAllSprites();
                 if (crowAnimator != null)
                 {
                     crowAnimator.SetBool("isDisappearing", true);
@@ -263,10 +290,7 @@ public class DialogueManager : MonoBehaviour
                     crowParent.SetActive(true);
                 }
 
-                if (sceneSprite != null) sceneSprite.SetActive(false);
-                if (nozomiHappy != null) nozomiHappy.SetActive(false);
-                if (kazumiSprite != null) kazumiSprite.SetActive(false);
-                if (kazumiCheer != null) kazumiCheer.SetActive(false);
+                HideAllSprites();
                 if (crowSprite != null) crowSprite.SetActive(true);
                 if (crowInWorldObject != null) crowInWorldObject.SetActive(true);
 
@@ -278,16 +302,14 @@ public class DialogueManager : MonoBehaviour
 
             if (tag == "whiteduocrow")
             {
-                if (sceneSprite != null) sceneSprite.SetActive(false);
-                if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
+                HideAllSprites();
                 if (whitecrowSprite != null) whitecrowSprite.SetActive(true);
             }
 
             if (tag == "blackduocrow")
             {
-                if (sceneSprite != null) sceneSprite.SetActive(false);
+                HideAllSprites();
                 if (blackcrowSprite != null) blackcrowSprite.SetActive(true);
-                if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
             }
             // quest stuff pls
             if (tag == "start_first_quest")
@@ -396,6 +418,28 @@ public class DialogueManager : MonoBehaviour
                 if (levelExitPortal != null)
                     levelExitPortal.SetActive(true);
             }
+
+            if (tag.StartsWith("setMood:"))
+            {
+                string mood = tag.Split(':')[1].ToLower();
+
+                switch (mood)
+                {
+                    case "happy":
+                        GameProgress.Instance.SetPlayerMood(GameProgress.MoodState.Happy);
+                        break;
+                    case "sad":
+                        GameProgress.Instance.SetPlayerMood(GameProgress.MoodState.Sad);
+                        break;
+                    case "angry":
+                        GameProgress.Instance.SetPlayerMood(GameProgress.MoodState.Angry);
+                        break;
+                    default:
+                        GameProgress.Instance.SetPlayerMood(GameProgress.MoodState.Neutral);
+                        break;
+                }
+                Debug.Log("Mood tag received: " + tag);
+            }
         }
     }
 
@@ -403,6 +447,8 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueIsPlaying = true;
         dialogueFinished = false;
+
+        FreezeWorldForDialogue();
 
         isDowntimeLine = true;
         simpleText = line;
@@ -417,16 +463,82 @@ public class DialogueManager : MonoBehaviour
             spriteToShow.SetActive(true);
     }
 
+    public void PlayTimedDowntimeDialogue(string line, Speaker speaker = Speaker.None)
+    {
+        if (timedPopupRoutine != null)
+        {
+            StopCoroutine(timedPopupRoutine);
+        }
+
+        timedPopupRoutine = StartCoroutine(PlayTimedDowntimeDialogueRoutine(line, speaker));
+    }
+
+    private IEnumerator PlayTimedDowntimeDialogueRoutine(string line, Speaker speaker)
+    {
+        dialogueIsPlaying = false;
+        dialogueFinished = false;
+        isDowntimeLine = false;
+
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(true);
+
+        if (dialogueText != null)
+            dialogueText.text = line;
+
+        HideAllSprites();
+
+        GameObject spriteToShow = GetSpeaker(speaker);
+        if (spriteToShow != null)
+            spriteToShow.SetActive(true);
+
+        if (dialogueCanvasGroup != null)
+            dialogueCanvasGroup.alpha = 1f;
+
+        yield return new WaitForSeconds(timedPopupDuration);
+
+        float t = 0f;
+
+        if (dialogueCanvasGroup != null)
+        {
+            while (t < timedPopupFadeOutTime)
+            {
+                t += Time.deltaTime;
+                dialogueCanvasGroup.alpha = 1f - (t / timedPopupFadeOutTime);
+                yield return null;
+            }
+
+            dialogueCanvasGroup.alpha = 0f;
+        }
+
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
+
+        if (dialogueText != null)
+            dialogueText.text = "";
+
+        HideAllSprites();
+
+        if (dialogueCanvasGroup != null)
+            dialogueCanvasGroup.alpha = 1f;
+
+        timedPopupRoutine = null;
+    }
+
     private void HideAllSprites()
     {
-        if (sceneSprite != null) sceneSprite.SetActive(false);
-        if (nozomiHappy != null) nozomiHappy.SetActive(false);
         if (kazumiSprite != null) kazumiSprite.SetActive(false);
         if (kazumiCheer != null) kazumiCheer.SetActive(false);
+        if (kazumiNeutral != null) kazumiNeutral.SetActive(false);
+        if (kazumiPuppyeyes != null) kazumiPuppyeyes.SetActive(false);
+        if (sceneSprite != null) sceneSprite.SetActive(false);
+        if (nozomiHappy != null) nozomiHappy.SetActive(false);
+        if (nozomiNeutral != null) nozomiNeutral.SetActive(false);
+        if (nozomiAngry != null) nozomiAngry.SetActive(false);
         if (crowSprite != null) crowSprite.SetActive(false);
+        if (foxSprite != null) foxSprite.SetActive(false);
+        if (altFoxSprite != null) altFoxSprite.SetActive(false);
         if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
         if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
-        if (foxSprite != null) foxSprite.SetActive(false);
     }
 
     public GameObject GetSpeaker(Speaker speaker)
@@ -487,5 +599,50 @@ public class DialogueManager : MonoBehaviour
     public void MakeChoice(int ChoiceIndex)
     {
         currentStory.ChooseChoiceIndex(ChoiceIndex);
+        ContinueStory();
+    }
+
+    private IEnumerator NextLevelTransition(string transitionText)
+    {
+        dialoguePanel.SetActive(false);
+        UnfreezeWorldAfterDialogue();
+        dialogueIsPlaying = false;
+        dialogueFinished = true;
+        isDowntimeLine = false;
+
+        if (sceneFader != null)
+            sceneFader.FadeToBlack(0.3f);
+
+        yield return new WaitForSecondsRealtime(0.3f);
+        if (sceneFader != null)
+        {
+            yield return sceneFader.StartCoroutine(
+                sceneFader.FadeTextRoutine(transitionText, 1f, 2f, 1f)
+            );
+        }
+
+        Time.timeScale = 1f;
+        SceneControl.instance.NextLevel();
+    }
+
+    private void FreezeWorldForDialogue()
+    {
+        if (!freezeGameplayDuringDialogue)
+            return;
+
+        if (!PauseMenu.isPaused)
+        {
+            Time.timeScale = 0f;
+            frozeWorldForDialogue = true;
+        }
+    }
+
+    private void UnfreezeWorldAfterDialogue()
+    {
+        if (frozeWorldForDialogue)
+        {
+            Time.timeScale = 1f;
+            frozeWorldForDialogue = false;
+        }
     }
 }

@@ -4547,15 +4547,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: noJumpsLeftColor.b
-      value: 0.63857245
+      value: 0.81960785
       objectReference: {fileID: 0}
     - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: noJumpsLeftColor.g
-      value: 0.63857245
+      value: 0.49803922
       objectReference: {fileID: 0}
     - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: noJumpsLeftColor.r
-      value: 0.7735849
+      value: 0.40784314
       objectReference: {fileID: 0}
     - target: {fileID: 1856873649843733272, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: fallSpeedMultiplier
@@ -143951,9 +143951,14 @@ MonoBehaviour:
   sceneFader: {fileID: 0}
   sceneSprite: {fileID: 463386274}
   nozomiHappy: {fileID: 0}
+  nozomiNeutral: {fileID: 0}
+  nozomiAngry: {fileID: 0}
   kazumiSprite: {fileID: 0}
   kazumiCheer: {fileID: 0}
+  kazumiPuppyeyes: {fileID: 0}
+  kazumiNeutral: {fileID: 0}
   foxSprite: {fileID: 643217733}
+  altFoxSprite: {fileID: 0}
   continueArrow: {fileID: 0}
   crowSprite: {fileID: 0}
   crowAnimator: {fileID: 0}
@@ -143965,6 +143970,10 @@ MonoBehaviour:
   levelExitPortal: {fileID: 0}
   tutorialEnemyRespawner: {fileID: 0}
   choices: []
+  freezeGameplayDuringDialogue: 1
+  dialogueCanvasGroup: {fileID: 0}
+  timedPopupDuration: 1.6
+  timedPopupFadeOutTime: 0.6
 --- !u!4 &1826644576
 Transform:
   m_ObjectHideFlags: 0

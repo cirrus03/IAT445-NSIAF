@@ -7,8 +7,15 @@ public class SceneFader : MonoBehaviour
 {
     public Image image;
     public TextMeshProUGUI fadeText;
+    public static SceneFader Instance;
+    public bool isFading { get; private set; }
     [SerializeField] private bool fadeOnStart = false;
     [SerializeField] private float startFadeDuration = 1.5f;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -21,6 +28,7 @@ public class SceneFader : MonoBehaviour
             FadeIn(startFadeDuration);
         }
     }
+
     public void FadeIn(float duration)
     {
         StartCoroutine(FadeInRoutine(duration));
@@ -38,7 +46,7 @@ public class SceneFader : MonoBehaviour
         float t = 0;
         while (t < fadeInTime)
         {
-            t += Time.deltaTime;
+            t += Time.unscaledDeltaTime;
             c.a = t / fadeInTime;
             fadeText.color = c;
             yield return null;
@@ -46,12 +54,12 @@ public class SceneFader : MonoBehaviour
 
         c.a = 1;
         fadeText.color = c;
-        yield return new WaitForSeconds(displayTime);
+        yield return new WaitForSecondsRealtime(displayTime);
         // fad eut
         t = 0;
         while (t < fadeOutTime)
         {
-            t += Time.deltaTime;
+            t += Time.unscaledDeltaTime;
             c.a = 1 - (t / fadeOutTime);
             fadeText.color = c;
             yield return null;
@@ -63,12 +71,13 @@ public class SceneFader : MonoBehaviour
 
     IEnumerator FadeInRoutine(float duration)
     {
+        isFading = true;
         float t = 0;
         Color c = image.color;
 
         while (t < duration)
         {
-            t += Time.deltaTime;
+            t += Time.unscaledDeltaTime;
             c.a = 1f - (t / duration);
             image.color = c;
             yield return null;
@@ -76,6 +85,7 @@ public class SceneFader : MonoBehaviour
 
         c.a = 0;
         image.color = c;
+        isFading = false;
     }
 
     public void FadeToBlack(float duration)
@@ -85,12 +95,13 @@ public class SceneFader : MonoBehaviour
 
     IEnumerator FadeToBlackRoutine(float duration)
     {
+        isFading = true;
         float t = 0;
         Color c = image.color;
 
         while (t < duration)
         {
-            t += Time.deltaTime;
+            t += Time.unscaledDeltaTime;
             c.a = t / duration;
             image.color = c;
             yield return null;
@@ -98,7 +109,6 @@ public class SceneFader : MonoBehaviour
 
         c.a = 1;
         image.color = c;
+        isFading = false;
     }
-
-
 }
