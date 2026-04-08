@@ -1,40 +1,58 @@
 using UnityEngine;
+using System.Collections;
 
 public class BossContactDamage : MonoBehaviour
 {
-    [Header("Damage")]
     public float damage = 1f;
 
     [Header("Knockback")]
     public float knockbackX = 12f;
     public float knockbackY = 6f;
 
-    [Header("Timing")]
-    public float hitCooldown = 0.2f;
+    [Header("Freeze frame + Stun")]
+    public float hitStopTime = 0.05f;   // freeze frame
+    public float stunTime = 0.18f;      // controls locked
 
-    private float timer;
+    [Header("Contact Re-hit")]
+    public float touchDamageCooldown = 0.15f;
+
+    private float touchDamageTimer = 0f;
 
     private void Update()
     {
-        if (timer > 0f)
-            timer -= Time.deltaTime;
+        if (touchDamageTimer > 0f)
+        {
+            touchDamageTimer -= Time.deltaTime;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        TryDamagePlayer(other);
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (timer > 0f) return;
+        TryDamagePlayer(other);
+    }
+
+    private void TryDamagePlayer(Collider2D other)
+    {
+        if (touchDamageTimer > 0f) return;
+
         if (!other.CompareTag("Player")) return;
 
         var playerHealth = other.GetComponent<PlayerHealth>();
         if (playerHealth == null) return;
 
+        // iframes gate (prevents multi-hits)
         if (playerHealth.IsInvincible) return;
 
-        // Damage
+        // damage to player
         playerHealth.TakeDamage(damage);
-        timer = hitCooldown;
 
-        // Knockback
+        touchDamageTimer = touchDamageCooldown;
+
         Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
@@ -45,12 +63,12 @@ public class BossContactDamage : MonoBehaviour
             rb.AddForce(new Vector2(dir * knockbackX, knockbackY), ForceMode2D.Impulse);
         }
 
-        // Stun / hitstop (reuses your existing system)
+        // stun + hit stop
         var pm = other.GetComponent<PlayerMovement>();
         if (pm != null)
         {
-            pm.StartCoroutine(pm.DamageStunRoutine(0.18f));
-            pm.StartCoroutine(pm.HitStopRoutine(0.05f));
+            pm.StartCoroutine(pm.DamageStunRoutine(stunTime));
+            pm.StartCoroutine(pm.HitStopRoutine(hitStopTime));
         }
     }
 }

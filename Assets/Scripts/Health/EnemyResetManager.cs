@@ -15,6 +15,7 @@ public class EnemyResetManager : MonoBehaviour
     private void HandlePlayerDeath()
     {
         ResetPlacedEnemies();
+        ResetBosses();
         DespawnSpawnedEnemies();
     }
 
@@ -37,6 +38,17 @@ public class EnemyResetManager : MonoBehaviour
         {
             if (enemy != null)
                 Destroy(enemy.gameObject);
+        }
+    }
+
+    private void ResetBosses()
+    {
+        BossResettable[] bosses = FindObjectsByType<BossResettable>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+        foreach (var boss in bosses)
+        {
+            if (boss != null)
+                boss.ResetBoss();
         }
     }
 }

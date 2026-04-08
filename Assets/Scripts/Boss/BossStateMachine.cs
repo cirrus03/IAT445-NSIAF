@@ -11,7 +11,7 @@ public enum BossState
     // PhaseTransition
 }
 public class BossStateMachine : MonoBehaviour
-{   
+{
 
     public Animator BossAnimator;
     public BehaviorGraphAgent agent;
@@ -26,7 +26,7 @@ public class BossStateMachine : MonoBehaviour
 
 
     public BossState currentState;
-    
+
 
     public void SetState(BossState newState)
     {
@@ -51,12 +51,12 @@ public class BossStateMachine : MonoBehaviour
                 agent.Graph = attackGraph;
                 break;
 
-            // case BossState.PhaseTransition:
-            //     agent.Graph = phaseTransitionGraph;
-            //     break;
+                // case BossState.PhaseTransition:
+                //     agent.Graph = phaseTransitionGraph;
+                //     break;
         }
 
-        agent.Restart(); 
+        agent.Restart();
         InjectBlackboardVariables();
     }
 
@@ -79,6 +79,10 @@ public class BossStateMachine : MonoBehaviour
 
     private bool isDashing = false;
     private bool isFlying = false;
+
+    [Header("Mmm Bubble")]
+    public GameObject signatureShieldVisual;
+    public Collider2D bossHurtbox;
 
 
 
@@ -142,7 +146,10 @@ public class BossStateMachine : MonoBehaviour
             SetState(BossState.Attack);
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
             SetState(BossState.Signature);
+            StartSignatureAttack(); //turned this one here beacuse i didnt know where else to call it :')
+        }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
             SetState(BossState.Stunned);
@@ -162,12 +169,22 @@ public class BossStateMachine : MonoBehaviour
 
     public void StartSignatureAttack()
     {
+        Debug.Log("Shield object assigned? " + (signatureShieldVisual != null));
         if (isPerformingSignature) return;
 
         Debug.Log("SIGNATURE ATTACK START");
 
         isPerformingSignature = true;
         isInvincible = true;
+
+        if (signatureShieldVisual != null)
+        {
+            signatureShieldVisual.SetActive(true);
+            Debug.Log("Shield turned on: " + signatureShieldVisual.activeSelf);
+        }
+
+        if (bossHurtbox != null)
+            bossHurtbox.enabled = false;
 
         SpawnMinions();
     }
@@ -216,13 +233,19 @@ public class BossStateMachine : MonoBehaviour
         isInvincible = false;
         isPerformingSignature = false;
 
+        if (signatureShieldVisual != null)
+            signatureShieldVisual.SetActive(false);
+
+        if (bossHurtbox != null)
+            bossHurtbox.enabled = true;
+
         EnterStunnedState();
     }
 
     public void EnterStunnedState()
     {
         Debug.Log("BOSS STUNNED");
-
+        SetState(BossState.Stunned); //added for testing
         // Later this will trigger FSM state switch
     }
 
@@ -245,8 +268,9 @@ public class BossStateMachine : MonoBehaviour
     {
         Debug.Log("play the get up animation");
         Debug.Log("change state to attack");
+        SetState(BossState.Attack); // adding for testing
     }
-  
+
     ///////////////////////////////////////////////////////////////////////////////////////\
 
     //conditions
@@ -295,7 +319,7 @@ public class BossStateMachine : MonoBehaviour
 
         Vector2 direction = (player.position - transform.position).normalized;
 
-        FaceDirection(direction); 
+        FaceDirection(direction);
 
         float timer = 0f;
 
