@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Behavior;
 using System;
+using NUnit.Framework.Constraints;
 
 
 public enum BossState
@@ -209,6 +210,7 @@ public class BossStateMachine : MonoBehaviour
     public void RegainHealth()
     {
         healthScript.currentHealth = healthScript.currentHealth + regainHealthAmount;
+        EndSignatureAttack();
         EnterAttackState();
         Debug.Log("healed boss");
     }
