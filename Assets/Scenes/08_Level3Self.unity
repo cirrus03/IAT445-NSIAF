@@ -510,7 +510,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   maxHealth: 4
-  bossHealthBar: {fileID: 0}
   bossHealthBarRoot: {fileID: 8667893920783075636}
   onlyTakeDamageWhenStunned: 0
   flashOnDamage: 1
@@ -520,7 +519,8 @@ MonoBehaviour:
   hurtSprite: {fileID: 0}
   deathDelay: 1
   destroyOnDeath: 1
-  levelExit: {fileID: 0}
+  levelExit: {fileID: 769816920}
+  inkJSON: {fileID: 4900000, guid: 025e9eacfbcbf4602b201b5ae0bcd49b, type: 3}
 --- !u!114 &155685280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4770,11 +4770,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5620646120440825784, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -140.7
+      value: -88.8
       objectReference: {fileID: 0}
     - target: {fileID: 5620646120440825784, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 58.5
+      value: -37.27
       objectReference: {fileID: 0}
     - target: {fileID: 5620646120440825784, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: m_LocalPosition.z
@@ -117216,7 +117216,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00012207031, y: -0.00012207031}
+  m_AnchoredPosition: {x: -0.00024414062, y: -0.00012207031}
   m_SizeDelta: {x: 2018.7124, y: 1261.9512}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1045005655 stripped
@@ -138055,10 +138055,10 @@ MonoBehaviour:
   level3QuestStage: 0
   scene3DoorKeyCollected: 0
   level3HazardSpawnUnlocked: 0
-  level3BossRoomEntered: 0
-  level3BossFightStarted: 0
-  level3BossPlayerDiedHere: 0
-  level3BossDefeated: 0
+  level3BossRoomEntered: 1
+  level3BossFightStarted: 1
+  level3BossPlayerDiedHere: 1
+  level3BossDefeated: 1
 --- !u!4 &1451408763
 Transform:
   m_ObjectHideFlags: 0
@@ -147944,7 +147944,7 @@ Transform:
   m_GameObject: {fileID: 1549501986}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -140.64, y: 57.6496, z: -10}
+  m_LocalPosition: {x: -88.740005, y: -38.1204, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -148284,6 +148284,8 @@ RectTransform:
   - {fileID: 1554506393}
   - {fileID: 362129855}
   - {fileID: 2256159923909729929}
+  - {fileID: 1044475368}
+  - {fileID: 1668586787}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -149300,7 +149302,7 @@ Transform:
   m_GameObject: {fileID: 1739796375}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -140.64, y: 57.6496, z: -10}
+  m_LocalPosition: {x: -83.00815, y: -38.198093, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -150152,7 +150154,7 @@ MonoBehaviour:
   reEntryLine: Here we go again...
   bossDeathLine: MY ATTACKS HAVE NO AFFECT ON YOU? WHO DECIDED THAT.
   retryPlayerLine: Oh.. that didn't go well.
-  inkJSON: {fileID: 4900000, guid: cd05eb203f4af4ff4b23894d66e10e6e, type: 3}
+  inkJSON: {fileID: 4900000, guid: 025e9eacfbcbf4602b201b5ae0bcd49b, type: 3}
   deathScreenUI: {fileID: 1567546493}
 --- !u!61 &1911624505
 BoxCollider2D:

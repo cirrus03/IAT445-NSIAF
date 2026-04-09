@@ -25,6 +25,7 @@ public class BossHealth : MonoBehaviour, IDamageable
     [SerializeField] private float deathDelay = 1f;
     [SerializeField] private bool destroyOnDeath = false;
     [SerializeField] private GameObject levelExit;
+    [SerializeField] private TextAsset inkJSON;
 
     private bool isDead = false;
     private bool hitInvincible = false;
@@ -109,6 +110,7 @@ public class BossHealth : MonoBehaviour, IDamageable
         if (currentHealth <= 0)
         {
             Die();
+            DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "after_boss");
             levelExit.SetActive(true);
             return;
         }
