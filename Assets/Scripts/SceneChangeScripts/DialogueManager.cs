@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using TMPro;
 using Ink.Runtime;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+
 
 public enum Speaker
 {
@@ -187,6 +189,10 @@ public class DialogueManager : MonoBehaviour
             if (tag == "nextlevel")
             {
                 StartCoroutine(NextLevelTransition("MINDSCAPE: The Fox's Attic"));
+            }
+            if (tag == "backtomain")
+            {
+                SceneManager.LoadScene("02_MainMenu");
             }
             if (tag == "fadein")
             {
