@@ -13,10 +13,11 @@ public class BossEncounterController : MonoBehaviour
     [SerializeField] private float retryPlayerLineDuration = 1.8f;
 
     [Header("Dialogue Lines (temp placeholders)")]
-    [TextArea][SerializeField] private string firstIntroLine = "Hm.. something is off about this place...";
-    [TextArea][SerializeField] private string reEntryLine = "Here we go again...";
-    [TextArea][SerializeField] private string bossDeathLine = "MY ATTACKS HAVE NO AFFECT ON YOU? WHO DECIDED THAT.";
-    [TextArea][SerializeField] private string retryPlayerLine = "Oh.. that didn't go well.";
+    [TextArea] [SerializeField] private string firstIntroLine = "Hm.. something is off about this place...";
+    [TextArea] [SerializeField] private string reEntryLine = "Here we go again...";
+    [TextArea] [SerializeField] private string bossDeathLine = "MY ATTACKS HAVE NO AFFECT ON YOU? WHO DECIDED THAT.";
+    [TextArea] [SerializeField] private string retryPlayerLine = "Oh.. that didn't go well.";
+    [SerializeField] private TextAsset inkJSON;
 
     [Header("References")]
     [SerializeField] private DeathScreenUI deathScreenUI;
@@ -96,6 +97,7 @@ public class BossEncounterController : MonoBehaviour
         }
         else
         {
+            DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "boss_fight");
             yield return StartCoroutine(PlayTempDialogue(reEntryLine, reEntryDialogueDuration));
         }
 

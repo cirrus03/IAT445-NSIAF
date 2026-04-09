@@ -4769,11 +4769,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5620646120440825784, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -70.6
+      value: -140.7
       objectReference: {fileID: 0}
     - target: {fileID: 5620646120440825784, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.4
+      value: 58.5
       objectReference: {fileID: 0}
     - target: {fileID: 5620646120440825784, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11087,81 +11087,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!1 &643217733
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 643217734}
-  - component: {fileID: 643217736}
-  - component: {fileID: 643217735}
-  m_Layer: 5
-  m_Name: Foxsprite
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &643217734
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 643217733}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4999965, y: 0.64615357, z: 1.4999965}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 1643633250}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -360, y: 450}
-  m_SizeDelta: {x: 400, y: 1000}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &643217735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 643217733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 686e59fc690dbec479acbbeb21e5c73e, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &643217736
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 643217733}
-  m_CullTransparentMesh: 1
 --- !u!1001 &659923323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -117345,7 +117270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1144352890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117419,7 +117344,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1144352889}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -147727,12 +147652,87 @@ Transform:
   m_GameObject: {fileID: 1549501986}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -70.54, y: 16.549599, z: -10}
+  m_LocalPosition: {x: -140.64, y: 57.6496, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1554506392
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1554506393}
+  - component: {fileID: 1554506395}
+  - component: {fileID: 1554506394}
+  m_Layer: 5
+  m_Name: NozomiAngry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1554506393
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554506392}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 0.64616, z: 1.5}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1643633250}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -424.5, y: 394}
+  m_SizeDelta: {x: 200, y: 1274}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1554506394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554506392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -3775703119138621970, guid: dfb974174ab234cb5ae55b96e4d72c0e, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1554506395
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554506392}
+  m_CullTransparentMesh: 1
 --- !u!1 &1560454659
 GameObject:
   m_ObjectHideFlags: 0
@@ -147988,7 +147988,8 @@ RectTransform:
   - {fileID: 384415357}
   - {fileID: 1507559345}
   - {fileID: 463386275}
-  - {fileID: 643217734}
+  - {fileID: 1930710895}
+  - {fileID: 1554506393}
   - {fileID: 362129855}
   - {fileID: 2256159923909729929}
   m_Father: {fileID: 0}
@@ -148870,7 +148871,7 @@ Transform:
   m_GameObject: {fileID: 1739796375}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -70.54, y: 16.549599, z: -10}
+  m_LocalPosition: {x: -140.64, y: 57.6496, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -149023,13 +149024,14 @@ MonoBehaviour:
   sceneSprite: {fileID: 463386274}
   nozomiHappy: {fileID: 0}
   nozomiNeutral: {fileID: 0}
-  nozomiAngry: {fileID: 0}
+  nozomiAngry: {fileID: 1554506392}
   kazumiSprite: {fileID: 0}
   kazumiCheer: {fileID: 0}
   kazumiPuppyeyes: {fileID: 0}
   kazumiNeutral: {fileID: 0}
-  foxSprite: {fileID: 643217733}
+  foxSprite: {fileID: 0}
   altFoxSprite: {fileID: 0}
+  evilNozomi: {fileID: 1930710894}
   continueArrow: {fileID: 0}
   crowSprite: {fileID: 0}
   crowAnimator: {fileID: 0}
@@ -149038,7 +149040,7 @@ MonoBehaviour:
   crowSecondSpawn: {fileID: 0}
   whitecrowSprite: {fileID: 0}
   blackcrowSprite: {fileID: 0}
-  levelExitPortal: {fileID: 0}
+  levelExitPortal: {fileID: 1144352889}
   tutorialEnemyRespawner: {fileID: 0}
   choices: []
   freezeGameplayDuringDialogue: 1
@@ -149721,6 +149723,7 @@ MonoBehaviour:
   reEntryLine: Here we go again...
   bossDeathLine: MY ATTACKS HAVE NO AFFECT ON YOU? WHO DECIDED THAT.
   retryPlayerLine: Oh.. that didn't go well.
+  inkJSON: {fileID: 4900000, guid: cd05eb203f4af4ff4b23894d66e10e6e, type: 3}
   deathScreenUI: {fileID: 1567546493}
 --- !u!61 &1911624505
 BoxCollider2D:
@@ -149783,6 +149786,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1930710894
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1930710895}
+  - component: {fileID: 1930710897}
+  - component: {fileID: 1930710896}
+  m_Layer: 5
+  m_Name: EvilNozomi
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1930710895
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930710894}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.67, y: 1.150156, z: 2.67}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1643633250}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -392, y: 132}
+  m_SizeDelta: {x: 200, y: 1274}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1930710896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930710894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -7226884864702419760, guid: 92785a0f7c73c4bd68e8be2b7f8d5e48, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1930710897
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930710894}
+  m_CullTransparentMesh: 1
 --- !u!1 &1940067327 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 96100757446257361, guid: f06146f2947bba14fa0a83bdeb424d3f, type: 3}

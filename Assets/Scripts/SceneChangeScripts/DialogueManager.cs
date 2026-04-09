@@ -31,6 +31,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject kazumiNeutral;
     [SerializeField] private GameObject foxSprite;
     [SerializeField] private GameObject altFoxSprite;
+    [SerializeField] private GameObject evilNozomi;
     [SerializeField] private GameObject continueArrow;
     [SerializeField] private GameObject crowSprite;
     [SerializeField] private Animator crowAnimator;
@@ -257,6 +258,12 @@ public class DialogueManager : MonoBehaviour
             {
                 HideAllSprites();
                 if (altFoxSprite != null) altFoxSprite.SetActive(true);
+            }
+
+            if (tag == "evilnozomi")
+            {
+                HideAllSprites();
+                if (evilNozomi != null) evilNozomi.SetActive(true);
             }
 
             if (tag == "crowjump")
@@ -540,6 +547,7 @@ public class DialogueManager : MonoBehaviour
         if (altFoxSprite != null) altFoxSprite.SetActive(false);
         if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
         if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
+        if (evilNozomi != null) evilNozomi.SetActive(false);
     }
 
     public GameObject GetSpeaker(Speaker speaker)
