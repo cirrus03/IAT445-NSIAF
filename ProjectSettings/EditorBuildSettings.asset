@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/08_Level3Self.unity
     guid: 474afcb5f7d63db4c8ecc4e002411913
+  - enabled: 1
+    path: Assets/Scenes/09_Sidescroll.unity
+    guid: 3f99453c847ea4044ac6df96276f92c9
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 99f9c9493070a9d4c979a8fec7c5a8d3, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

@@ -509,7 +509,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367baf06b855c544f9ceea443ce806b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  maxHealth: 4
+  maxHealth: 10
   bossHealthBarRoot: {fileID: 8667893920783075636}
   onlyTakeDamageWhenStunned: 0
   flashOnDamage: 1
@@ -4770,11 +4770,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5620646120440825784, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -88.8
+      value: -91.2
       objectReference: {fileID: 0}
     - target: {fileID: 5620646120440825784, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -37.27
+      value: -42
       objectReference: {fileID: 0}
     - target: {fileID: 5620646120440825784, guid: 730d832921f599e48968f32d5f568b58, type: 3}
       propertyPath: m_LocalPosition.z
@@ -137868,7 +137868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TeleportDoor
   linkedDoor: {fileID: 1144352890}
   arrivalPoint: {fileID: 1446627471}
-  requiresKey: 0
+  requiresKey: 1
   lockedMessage: It's locked. I need a key.
   interactMessage: Press F to enter.
   interactKey: 102
@@ -138025,7 +138025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1451408762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138051,14 +138051,14 @@ MonoBehaviour:
   level2BugQuestStarted: 0
   level2BugQuestComplete: 0
   playerJustDied: 0
-  playerMood: 1
+  playerMood: 3
   level3QuestStage: 0
-  scene3DoorKeyCollected: 0
-  level3HazardSpawnUnlocked: 0
+  scene3DoorKeyCollected: 1
+  level3HazardSpawnUnlocked: 1
   level3BossRoomEntered: 1
-  level3BossFightStarted: 1
-  level3BossPlayerDiedHere: 1
-  level3BossDefeated: 1
+  level3BossFightStarted: 0
+  level3BossPlayerDiedHere: 0
+  level3BossDefeated: 0
 --- !u!4 &1451408763
 Transform:
   m_ObjectHideFlags: 0
@@ -147657,6 +147657,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1507559344}
   m_CullTransparentMesh: 1
+--- !u!1 &1507890025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1507890027}
+  - component: {fileID: 1507890026}
+  m_Layer: 0
+  m_Name: SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1507890026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507890025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74333d79611c745968fd80a95d744c5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneControl
+--- !u!4 &1507890027
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507890025}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 429.02322, y: 158.44931, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1509213617
 GameObject:
   m_ObjectHideFlags: 0
@@ -147944,7 +147988,7 @@ Transform:
   m_GameObject: {fileID: 1549501986}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -88.740005, y: -38.1204, z: -10}
+  m_LocalPosition: {x: -91.14, y: -42.8504, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -148277,6 +148321,7 @@ RectTransform:
   - {fileID: 509056482}
   - {fileID: 1619478644}
   - {fileID: 457173268}
+  - {fileID: 1044475368}
   - {fileID: 384415357}
   - {fileID: 1507559345}
   - {fileID: 463386275}
@@ -148284,7 +148329,6 @@ RectTransform:
   - {fileID: 1554506393}
   - {fileID: 362129855}
   - {fileID: 2256159923909729929}
-  - {fileID: 1044475368}
   - {fileID: 1668586787}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -149302,7 +149346,7 @@ Transform:
   m_GameObject: {fileID: 1739796375}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -83.00815, y: -38.198093, z: -10}
+  m_LocalPosition: {x: -83.197624, y: -42.621338, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -150714,3 +150758,4 @@ SceneRoots:
   - {fileID: 1451408763}
   - {fileID: 769816925}
   - {fileID: 941092458}
+  - {fileID: 1507890027}
