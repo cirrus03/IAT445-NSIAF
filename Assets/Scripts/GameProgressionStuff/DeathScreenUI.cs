@@ -40,12 +40,18 @@ public class DeathScreenUI : MonoBehaviour
         IsDeathScreenOpen = false;
 
         CheckpointManager checkpoint = FindFirstObjectByType<CheckpointManager>();
-
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         if (player != null && checkpoint != null)
         {
             checkpoint.RespawnPlayerAtCheckpoint(player);
+        }
+
+        BossEncounterController encounter = FindFirstObjectByType<BossEncounterController>();
+        if (encounter != null)
+        {
+            encounter.ResetEncounterState();
+            encounter.OnRetryRespawned();
         }
 
         if (deathScreenPanel != null)

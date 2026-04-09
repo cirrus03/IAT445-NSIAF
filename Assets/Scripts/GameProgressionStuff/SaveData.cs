@@ -20,6 +20,11 @@ public class SaveData
     public bool scene3DoorKeyCollected;
     public int level3QuestStage;
     public bool level3HazardSpawnUnlocked;
+
+    public bool level3BossRoomEntered;
+    public bool level3BossFightStarted;
+    public bool level3BossPlayerDiedHere;
+    public bool level3BossDefeated;
     // QuestManager
     public QuestManager.QuestType currentQuest;
     public bool questActive;
