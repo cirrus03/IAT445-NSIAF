@@ -59,12 +59,12 @@ public class BossEncounterController : MonoBehaviour
     {
         if (!hasEnteredBefore)
         {
-            DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "bossdialogue");
+            DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "boss_fight");
             hasEnteredBefore = true;
         }
         else
         {
-            DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "bossdialogue");
+            DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "boss_fight");
             yield return StartCoroutine(PlayTempDialogue(reEntryLine, reEntryDialogueDuration));
         }
 
