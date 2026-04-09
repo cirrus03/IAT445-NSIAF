@@ -17,6 +17,7 @@ public class BossEncounterController : MonoBehaviour
     [TextArea] [SerializeField] private string reEntryLine = "Here we go again...";
     [TextArea] [SerializeField] private string bossDeathLine = "MY ATTACKS HAVE NO AFFECT ON YOU? WHO DECIDED THAT.";
     [TextArea] [SerializeField] private string retryPlayerLine = "Oh.. that didn't go well.";
+    [SerializeField] private TextAsset inkJSON;
 
     [Header("References")]
     [SerializeField] private DeathScreenUI deathScreenUI;
@@ -24,7 +25,7 @@ public class BossEncounterController : MonoBehaviour
     private bool encounterStarted = false;
     private bool bossFightActive = false;
     private bool deathSequencePlaying = false;
-    private bool hasEnteredBefore = false;
+    private bool hasEnteredBefore = true;
 
     public static BossEncounterController ActiveEncounter { get; private set; }
 
@@ -56,15 +57,14 @@ public class BossEncounterController : MonoBehaviour
 
     private IEnumerator BeginEncounterRoutine()
     {
-        Debug.Log("Boss room entered");
-
         if (!hasEnteredBefore)
         {
-            yield return StartCoroutine(PlayTempDialogue(firstIntroLine, firstIntroDialogueDuration));
+            DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "bossdialogue");
             hasEnteredBefore = true;
         }
         else
         {
+            DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "bossdialogue");
             yield return StartCoroutine(PlayTempDialogue(reEntryLine, reEntryDialogueDuration));
         }
 
