@@ -21,6 +21,7 @@ public class BossHealth : MonoBehaviour, IDamageable
     [Header("Death")]
     [SerializeField] private float deathDelay = 1f;
     [SerializeField] private bool destroyOnDeath = false;
+    [SerializeField] private GameObject levelExit;
 
     private bool isDead = false;
     private bool hitInvincible = false;
@@ -101,6 +102,7 @@ public class BossHealth : MonoBehaviour, IDamageable
         if (currentHealth <= 0)
         {
             Die();
+            levelExit.SetActive(true);
             return;
         }
 
