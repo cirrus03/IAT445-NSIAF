@@ -94,20 +94,14 @@ public class PlayerAttackHitbox : MonoBehaviour
                 audioManager.PlaySFX(audioManager.enemyHit, 0.2f);
             }
 
-            // enemy hit
-            EnemyHealth enemyHealth = other.GetComponentInParent<EnemyHealth>();
-            if (enemyHealth != null)
-            {
-                ApplyPooogo();
+            ApplyPooogo();
 
-                EnemyKnockback kb = enemyHealth.GetComponent<EnemyKnockback>();
-                if (kb != null)
-                {
-                    kb.Apply(playerRoot.position);
-                }
+            EnemyKnockback kb = other.GetComponentInParent<EnemyKnockback>();
+            if (kb != null)
+            {
+                kb.Apply(playerRoot.position);
             }
 
-            // consume swing on enemy hit and stop — don't process geometry
             smacked = true;
             if (hitboxCol != null) hitboxCol.enabled = false;
             return;
