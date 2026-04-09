@@ -1401,7 +1401,7 @@ Transform:
   m_GameObject: {fileID: 686771465}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.14, y: -1.97, z: 0}
+  m_LocalPosition: {x: -3.47, y: -1.97, z: 0}
   m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1630,7 +1630,7 @@ Transform:
   m_GameObject: {fileID: 804652954}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: -2.02911, z: 0}
+  m_LocalPosition: {x: 3.26, y: -2.02911, z: 0}
   m_LocalScale: {x: 0.97, y: 0.97, z: 0.97}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3271,7 +3271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c1001719f70440fa33dfe9d4a6cc13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::introdialogue2lol
-  inkJSON: {fileID: 4900000, guid: 4690c82c4ae7c4dde8c3eb49f79bd901, type: 3}
+  inkJSON: {fileID: 4900000, guid: a993ed9679be441a781f7e045d1db04f, type: 3}
 --- !u!1 &1794076159
 GameObject:
   m_ObjectHideFlags: 0
@@ -3828,7 +3828,7 @@ Transform:
   m_GameObject: {fileID: 2095873591}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: -0.14, z: -10}
+  m_LocalPosition: {x: 0.99, y: -0.14, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

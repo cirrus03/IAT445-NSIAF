@@ -192,7 +192,7 @@ public class DialogueManager : MonoBehaviour
             }
             if (tag == "backtomain")
             {
-                SceneManager.LoadScene("02_MainMenu");
+                StartCoroutine(ReturnToMainTransition("THE END"));
             }
             if (tag == "fadein")
             {
@@ -554,6 +554,31 @@ public class DialogueManager : MonoBehaviour
         if (whitecrowSprite != null) whitecrowSprite.SetActive(false);
         if (blackcrowSprite != null) blackcrowSprite.SetActive(false);
         if (evilNozomi != null) evilNozomi.SetActive(false);
+    }
+
+    private IEnumerator ReturnToMainTransition(string transitionText)
+    {
+        dialoguePanel.SetActive(false);
+        UnfreezeWorldAfterDialogue();
+        dialogueIsPlaying = false;
+        dialogueFinished = true;
+        isDowntimeLine = false;
+
+        if (sceneFader != null)
+            sceneFader.FadeToBlack(1.5f);
+
+        yield return new WaitForSecondsRealtime(1.5f);
+
+        if (sceneFader != null)
+        {
+            yield return sceneFader.StartCoroutine(
+                sceneFader.FadeTextRoutine(transitionText, 1f, 2f, 1f)
+            );
+        }
+
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene("01_Title");
     }
 
     public GameObject GetSpeaker(Speaker speaker)

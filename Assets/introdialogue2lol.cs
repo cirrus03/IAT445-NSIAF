@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-
 public class introdialogue2lol : MonoBehaviour
 {
     [SerializeField] private TextAsset inkJSON;
@@ -27,8 +26,6 @@ public class introdialogue2lol : MonoBehaviour
             Debug.LogWarning("IntroDialogueStarter: inkJSON is not assigned.");
             yield break;
         }
-
-        Debug.Log("Starting intro dialogue");
-        DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "THE_END");
+        DialogueManager.GetInstance().EnterDialogueMode(inkJSON, "the_end");
     }
 }
