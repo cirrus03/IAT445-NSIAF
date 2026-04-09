@@ -13,10 +13,10 @@ public class BossEncounterController : MonoBehaviour
     [SerializeField] private float retryPlayerLineDuration = 1.8f;
 
     [Header("Dialogue Lines (temp placeholders)")]
-    [TextArea] [SerializeField] private string firstIntroLine = "Hm.. something is off about this place...";
-    [TextArea] [SerializeField] private string reEntryLine = "Here we go again...";
-    [TextArea] [SerializeField] private string bossDeathLine = "MY ATTACKS HAVE NO AFFECT ON YOU? WHO DECIDED THAT.";
-    [TextArea] [SerializeField] private string retryPlayerLine = "Oh.. that didn't go well.";
+    [TextArea][SerializeField] private string firstIntroLine = "Hm.. something is off about this place...";
+    [TextArea][SerializeField] private string reEntryLine = "Here we go again...";
+    [TextArea][SerializeField] private string bossDeathLine = "MY ATTACKS HAVE NO AFFECT ON YOU? WHO DECIDED THAT.";
+    [TextArea][SerializeField] private string retryPlayerLine = "Oh.. that didn't go well.";
 
     [Header("References")]
     [SerializeField] private DeathScreenUI deathScreenUI;
@@ -24,7 +24,6 @@ public class BossEncounterController : MonoBehaviour
     private bool encounterStarted = false;
     private bool bossFightActive = false;
     private bool deathSequencePlaying = false;
-    private bool hasEnteredBefore = false;
 
     public static BossEncounterController ActiveEncounter { get; private set; }
 
@@ -43,6 +42,27 @@ public class BossEncounterController : MonoBehaviour
     {
         if (bossRoot != null)
             bossRoot.SetActive(false);
+
+        if (GameProgress.Instance != null)
+        {
+            if (GameProgress.Instance.level3BossDefeated)
+            {
+                encounterStarted = true;
+                bossFightActive = false;
+
+                if (bossRoot != null)
+                    bossRoot.SetActive(false);
+            }
+            else if (GameProgress.Instance.level3BossFightStarted)
+            {
+                // player had already attempted the fight before saving
+                encounterStarted = false;
+                bossFightActive = false;
+
+                if (bossRoot != null)
+                    bossRoot.SetActive(false);
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -51,6 +71,10 @@ public class BossEncounterController : MonoBehaviour
         if (encounterStarted) return;
 
         encounterStarted = true;
+
+        if (GameProgress.Instance != null)
+            GameProgress.Instance.level3BossFightStarted = true;
+
         StartCoroutine(BeginEncounterRoutine());
     }
 
@@ -58,10 +82,17 @@ public class BossEncounterController : MonoBehaviour
     {
         Debug.Log("Boss room entered");
 
-        if (!hasEnteredBefore)
+        bool firstEntry = true;
+
+        if (GameProgress.Instance != null)
+            firstEntry = !GameProgress.Instance.level3BossRoomEntered;
+
+        if (firstEntry)
         {
             yield return StartCoroutine(PlayTempDialogue(firstIntroLine, firstIntroDialogueDuration));
-            hasEnteredBefore = true;
+
+            if (GameProgress.Instance != null)
+                GameProgress.Instance.level3BossRoomEntered = true;
         }
         else
         {
@@ -72,6 +103,12 @@ public class BossEncounterController : MonoBehaviour
             bossRoot.SetActive(true);
 
         bossFightActive = true;
+
+        BossHealth bossHealth = bossRoot.GetComponent<BossHealth>();
+        if (bossHealth != null)
+        {
+            bossHealth.ShowBossHealthBar();
+        }
 
         Debug.Log("Boss fight started");
     }
@@ -86,6 +123,14 @@ public class BossEncounterController : MonoBehaviour
         if (!bossFightActive || deathSequencePlaying)
             return;
 
+        if (bossRoot != null)
+        {
+            BossHealth bossHealth = bossRoot.GetComponent<BossHealth>();
+            if (bossHealth != null)
+            {
+                bossHealth.HideBossHealthBar();
+            }
+        }
         StartCoroutine(BossDeathSequenceRoutine());
     }
 
@@ -94,6 +139,9 @@ public class BossEncounterController : MonoBehaviour
         deathSequencePlaying = true;
 
         Time.timeScale = 1f;
+
+        if (GameProgress.Instance != null)
+            GameProgress.Instance.level3BossPlayerDiedHere = true;
 
         yield return StartCoroutine(PlayTempDialogue(bossDeathLine, bossDeathLineDuration));
 
@@ -126,8 +174,28 @@ public class BossEncounterController : MonoBehaviour
         deathSequencePlaying = false;
 
         if (bossRoot != null)
+        {
+            BossHealth bossHealth = bossRoot.GetComponent<BossHealth>();
+            if (bossHealth != null)
+            {
+                bossHealth.HideBossHealthBar();
+            }
+
             bossRoot.SetActive(false);
+        }
 
         encounterStarted = false;
+    }
+
+    public void MarkBossDefeated()
+    {
+        bossFightActive = false;
+        encounterStarted = true;
+
+        if (GameProgress.Instance != null)
+            GameProgress.Instance.level3BossDefeated = true;
+
+        if (bossRoot != null)
+            bossRoot.SetActive(false);
     }
 }
