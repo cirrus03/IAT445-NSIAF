@@ -39,6 +39,11 @@ public static class SaveSystem
         data.level3QuestStage = GameProgress.Instance.level3QuestStage;
         data.level3HazardSpawnUnlocked = GameProgress.Instance.level3HazardSpawnUnlocked;
 
+        data.level3BossRoomEntered = GameProgress.Instance.level3BossRoomEntered;
+        data.level3BossFightStarted = GameProgress.Instance.level3BossFightStarted;
+        data.level3BossPlayerDiedHere = GameProgress.Instance.level3BossPlayerDiedHere;
+        data.level3BossDefeated = GameProgress.Instance.level3BossDefeated;
+
         // QuestManager
         if (QuestManager.Instance != null)
         {

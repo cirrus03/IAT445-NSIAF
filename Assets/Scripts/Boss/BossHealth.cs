@@ -8,6 +8,9 @@ public class BossHealth : MonoBehaviour, IDamageable
     public float currentHealth { get; set; }
     public float MaxHealth => maxHealth;
 
+    [Header("Boss UI")]
+    [SerializeField] private GameObject bossHealthBarRoot;
+
     [Header("State")]
     public bool IsInvincible { get; private set; } = false;
     [SerializeField] private bool onlyTakeDamageWhenStunned = false;
@@ -41,6 +44,11 @@ public class BossHealth : MonoBehaviour, IDamageable
     {
         currentHealth = maxHealth;
 
+
+        if (bossHealthBarRoot != null)
+        {
+            bossHealthBarRoot.SetActive(false);
+        }
         bossStateMachine = GetComponent<BossStateMachine>();
         agent = GetComponent<Unity.Behavior.BehaviorGraphAgent>();
         rb = GetComponent<Rigidbody2D>();
@@ -90,7 +98,6 @@ public class BossHealth : MonoBehaviour, IDamageable
 
         currentHealth -= damageAmount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
         Debug.Log($"Boss took {damageAmount} damage. HP: {currentHealth}");
 
         if (flashOnDamage)
@@ -157,7 +164,7 @@ public class BossHealth : MonoBehaviour, IDamageable
 
         isDead = true;
         Debug.Log("BOSS DEAD");
-
+        HideBossHealthBar();
         // disable behavior / movement
         if (bossStateMachine != null) bossStateMachine.enabled = false;
         if (agent != null) agent.enabled = false;
@@ -180,6 +187,15 @@ public class BossHealth : MonoBehaviour, IDamageable
             if (col != null) col.enabled = false;
         }
 
+        BossEncounterController encounter = FindFirstObjectByType<BossEncounterController>();
+        if (encounter != null)
+        {
+            encounter.MarkBossDefeated();
+        }
+        else if (GameProgress.Instance != null)
+        {
+            GameProgress.Instance.level3BossDefeated = true;
+        }
         // TODO:
         // - play animation
         // - trigger win condition
@@ -205,6 +221,8 @@ public class BossHealth : MonoBehaviour, IDamageable
         IsInvincible = false;
         hitInvincible = false;
         currentHealth = maxHealth;
+
+        HideBossHealthBar();
 
         if (rb != null)
         {
@@ -242,5 +260,16 @@ public class BossHealth : MonoBehaviour, IDamageable
 
         if (agent != null)
             agent.enabled = true;
+    }
+    public void ShowBossHealthBar()
+    {
+        if (bossHealthBarRoot != null)
+            bossHealthBarRoot.SetActive(true);
+    }
+
+    public void HideBossHealthBar()
+    {
+        if (bossHealthBarRoot != null)
+            bossHealthBarRoot.SetActive(false);
     }
 }

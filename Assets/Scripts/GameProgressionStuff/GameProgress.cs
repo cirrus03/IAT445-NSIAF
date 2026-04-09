@@ -55,6 +55,12 @@ public class GameProgress : MonoBehaviour
     public bool scene3DoorKeyCollected = false;
     public bool level3HazardSpawnUnlocked = false;
 
+    [Header("Level 3 Boss Progress")]
+    public bool level3BossRoomEntered = false;
+    public bool level3BossFightStarted = false;
+    public bool level3BossPlayerDiedHere = false;
+    public bool level3BossDefeated = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -130,6 +136,12 @@ public class GameProgress : MonoBehaviour
         scene3DoorKeyCollected = false;
         level3QuestStage = 0;
         level3HazardSpawnUnlocked = false;
+
+        level3BossRoomEntered = false;
+        level3BossFightStarted = false;
+        level3BossPlayerDiedHere = false;
+        level3BossDefeated = false;
+
         ClearObjective();
     }
 
@@ -162,6 +174,10 @@ public class GameProgress : MonoBehaviour
         scene3DoorKeyCollected = data.scene3DoorKeyCollected;
         level3QuestStage = data.level3QuestStage;
         level3HazardSpawnUnlocked = data.level3HazardSpawnUnlocked;
+        level3BossRoomEntered = data.level3BossRoomEntered;
+        level3BossFightStarted = data.level3BossFightStarted;
+        level3BossPlayerDiedHere = data.level3BossPlayerDiedHere;
+        level3BossDefeated = data.level3BossDefeated;
     }
 
 }
